@@ -71,7 +71,7 @@ class ACF:
             return acf
 
     def search_key(self, key: str) -> str:
-        return self.dict["AppState"][key]
+        return str(self.dict["AppState"][key])
 
     def date_to_str(self, epoch: int) -> str | None:
         if epoch == 0:
@@ -89,7 +89,7 @@ class ACF:
     def get_last_updated(self) -> str | None:
         return self.get_date_by_key("LastUpdated")
 
-    def get_last_played(self) -> str:
+    def get_last_played(self) -> str | None:
         return self.get_date_by_key("LastPlayed")
 
     def get_allows_downloads(self) -> int | None:

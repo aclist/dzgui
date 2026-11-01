@@ -389,16 +389,18 @@ def get_running_app() -> int | None:
     return None
 
 
-def get_last_updated(path: Path, appid: int) -> str:
+def get_last_updated(path: Path, appid: int) -> str | None:
     root_path = get_app_path(path, appid)
     acf = root_path.joinpath(f"steamapps/appmanifest_{appid}.acf")
     return ACF(acf).get_last_updated()
 
-def get_last_played(path: Path, appid: int) -> str:
+
+def get_last_played(path: Path, appid: int) -> str | None:
     root_path = get_app_path(path, appid)
     acf = root_path.joinpath(f"steamapps/appmanifest_{appid}.acf")
     # TODO: make tests for this, use fixtures
     return ACF(acf).get_last_played()
+
 
 def get_app_allows_downloads(path: Path, appid: int) -> bool:
     try:
