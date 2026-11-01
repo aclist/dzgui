@@ -2,7 +2,7 @@ from pathlib import Path
 from typing import Callable, TYPE_CHECKING
 
 from dzgui.api import pefile as PeFile
-from dzgui.api.steam import get_last_played, get_last_updated
+from dzgui.api.steam import get_last_updated
 
 from dzgui.config import query
 from dzgui.const.constants import (

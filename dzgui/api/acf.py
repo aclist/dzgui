@@ -2,7 +2,7 @@ import logging
 import re
 
 from collections.abc import Iterator
-from datetime import date, datetime
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 from warnings import deprecated
