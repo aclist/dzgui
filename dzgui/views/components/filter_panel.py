@@ -313,6 +313,8 @@ class FilterPanel(Gtk.Box):
         return True
 
     def toggle_check(self, digit: int) -> None:
+        if not self.button_grid.is_sensitive():
+            return
         checks = self.button_grid.get_checkboxes()
         check = checks[digit]
         state = check.get_active()
