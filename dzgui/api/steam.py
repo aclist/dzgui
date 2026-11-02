@@ -398,7 +398,6 @@ def get_last_updated(path: Path, appid: int) -> str | None:
 def get_last_played(path: Path, appid: int) -> str | None:
     root_path = get_app_path(path, appid)
     acf = root_path.joinpath(f"steamapps/appmanifest_{appid}.acf")
-    # TODO: make tests for this, use fixtures
     return ACF(acf).get_last_played()
 
 
