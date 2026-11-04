@@ -201,19 +201,43 @@ class ServerModelManager:
 
     @call_on_thread(dialog.querying)
     def add_by_ip(self, addr: str) -> None:
-        res = Servers.query_by_ip(addr)
-        self._parse_single_record(res)
+        self.preserve_on_fail = True
+        try:
+            res = Servers.query_by_ip(addr)
+            self._parse_single_record(res)
+        except Exception as e:
+            logger.warning(e)
+            self.thread_man.set_cleanup_func(
+                StoredFunc(self._cleanup_on_failure), destroy_first=True
+            )
+            return
 
     @call_on_thread(dialog.querying)
     def add_by_record(self, record: Servers.Record) -> None:
+        self.preserve_on_fail = True
         # NOTE: rationale: a raw Record as shown in server browser may resolve to a different IP
-        res = Servers.query_by_record(record)
-        self._parse_single_record(res)
+        try:
+            res = Servers.query_by_record(record)
+            self._parse_single_record(res)
+        except Exception as e:
+            logger.warning(e)
+            self.thread_man.set_cleanup_func(
+                StoredFunc(self._cleanup_on_failure), destroy_first=True
+            )
+            return
 
     @call_on_thread(dialog.querying)
     def remove_by_record(self, record: Servers.Record) -> None:
-        res = Servers.query_by_record(record)
-        self._parse_single_record(res, delete=True)
+        self.preserve_on_fail = True
+        try:
+            res = Servers.query_by_record(record)
+            self._parse_single_record(res, delete=True)
+        except Exception as e:
+            logger.warning(e)
+            self.thread_man.set_cleanup_func(
+                StoredFunc(self._cleanup_on_failure), destroy_first=True
+            )
+            return
 
     def update_history(
         self,
@@ -280,7 +304,6 @@ class ServerModelManager:
         proxy_man.update_playercount(self.playercount)
 
     def _parse_single_record(self, response: "A2SInfo", delete: bool = False) -> None:
-        self.preserve_on_fail = True
         try:
             row = response.as_row()
         except Exception as e:
