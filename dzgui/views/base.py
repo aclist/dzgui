@@ -78,6 +78,15 @@ class OuterWindow(Gtk.ApplicationWindow):
         MainController.loaded = True
         MainController.populate_model(MainController.get_active_treeview())
 
+        try:
+            from dzgui.util.save_screenshot import IdleScreenshot
+
+            scrot = app.get_automation_param("screenshot_path")
+            self.fullscreen()
+            IdleScreenshot(MainController, self, scrot)
+        except KeyError:
+            pass
+
     def _on_delete_event(self, window: "OuterWindow", event: Gdk.EventKey) -> None:
         self.halt_proc_and_quit()
 
@@ -290,6 +299,14 @@ class App(ColorAwareApp, Gtk.Application):  # type: ignore
 
         self._setup_signals()
         self.connect("activate", self._on_activate)
+
+        self.automation_params: dict[str, Any] = {}
+
+    def get_automation_param(self, key: str) -> Any:
+        return self.automation_params[key]
+
+    def set_automation_param(self, key: str, value: Any) -> None:
+        self.automation_params[key] = value
 
     def _on_activate(self, app: Self) -> None:
         self.win = OuterWindow(app)

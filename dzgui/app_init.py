@@ -121,7 +121,7 @@ def load_steam_icon() -> None:
         logger.critical(e)
 
 
-def load_gui(version: str, is_debug: bool) -> None:
+def build_gui(version: str, is_debug: bool) -> App | None:
     lock = lock_acquire()  # noqa
 
     set_locale()
@@ -151,7 +151,7 @@ def load_gui(version: str, is_debug: bool) -> None:
         wizard = SetupWizard(_is_steam_deck, XDG, xdg_paths)
 
         if not wizard.is_setup_complete():
-            return
+            return None
 
     setup_logger(XDG.debug)
     with open(XDG.debug, "w") as f:
@@ -186,4 +186,4 @@ def load_gui(version: str, is_debug: bool) -> None:
     print(boot.all_ok)
     load_steam_icon()
     app = App(prefs)
-    app.run(None)
+    return app
