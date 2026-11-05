@@ -16,9 +16,7 @@ logger = logging.getLogger(APP_NAME)
 
 class ContextMixin(TreeView):
     def present_menu(
-        self,
-        widget: Gtk.Widget,
-        event: Gdk.EventButton | Gdk.EventKey,
+        self, widget: Gtk.Widget, event: Gdk.Event
     ) -> bool:
 
         if self.menu is None:
