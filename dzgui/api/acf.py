@@ -1,15 +1,17 @@
 import logging
 import re
 
-from collections.abc import Iterator
 from datetime import datetime
 from pathlib import Path
-from typing import Any
+from typing import Any, TYPE_CHECKING
 from warnings import deprecated
 
 from dzgui.const.constants import APP_NAME
 
 logger = logging.getLogger(APP_NAME)
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
 
 
 class ACF:
@@ -43,7 +45,7 @@ class ACF:
     def dequote(cls, s: str) -> str:
         return s.rstrip('"').lstrip('"')
 
-    def parse(self, lines: Iterator[list[str]]) -> dict[str, str]:
+    def parse(self, lines: "Iterator[list[str]]") -> dict[str, str]:
         acf: dict[str, Any] = {}
         try:
             while True:
