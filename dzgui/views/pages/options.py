@@ -2,6 +2,7 @@ from pathlib import Path
 from typing import Callable, TYPE_CHECKING
 
 from dzgui.api import pefile as PeFile
+from dzgui.api.steam import get_last_updated
 
 from dzgui.config import query
 from dzgui.const.constants import (
@@ -340,8 +341,10 @@ class Options(ScrollableMixin, Gtk.ScrolledWindow):  # type: ignore
                 [LeftLabel(options.flatpak_label), self.flatpak_toggle],
             )
 
-        self.dayz_version_label = Gtk.Label(label=strings.null)
-        self.dayz_exp_version_label = Gtk.Label(label=strings.null)
+        self.dayz_version_label = Gtk.Label(label=strings.null, halign=Gtk.Align.START)
+        self.dayz_exp_version_label = Gtk.Label(
+            label=strings.null, halign=Gtk.Align.START
+        )
 
         version_rows = [
             [LeftLabel(APPNAME_DAYZ), self.dayz_version_label],
@@ -467,10 +470,18 @@ class Options(ScrollableMixin, Gtk.ScrolledWindow):  # type: ignore
         dayz_version = PeFile.get_pretty_version(steam_path, APPID_DAYZ)
         if dayz_version is None:
             dayz_version = strings.null
+        else:
+            last_updated = get_last_updated(steam_path, APPID_DAYZ)
+            if last_updated is not None:
+                dayz_version += f" (updated at {last_updated})"
 
         dayz_exp_version = PeFile.get_pretty_version(steam_path, APPID_DAYZ_EXP)
         if dayz_exp_version is None:
             dayz_exp_version = strings.null
+        else:
+            last_updated = get_last_updated(steam_path, APPID_DAYZ_EXP)
+            if last_updated is not None:
+                dayz_exp_version += f" (updated at {last_updated})"
 
         self.dayz_version_label.set_text(dayz_version)
         self.dayz_exp_version_label.set_text(dayz_exp_version)

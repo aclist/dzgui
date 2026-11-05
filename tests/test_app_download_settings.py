@@ -3,7 +3,7 @@ import pytest
 from _pytest.monkeypatch import MonkeyPatch
 from pathlib import Path
 
-from dzgui.api.steam import get_app_allows_downloads
+from dzgui.api.steam import get_app_allows_downloads, get_last_updated
 from tests.fixtures import fixture_path
 
 pytestmark = pytest.mark.apitest
@@ -41,6 +41,14 @@ def patch_api() -> None:
     mp.setattr("dzgui.api.steam.get_app_path", mock_path)
     yield
     mp.undo()
+
+
+def test_no_last_update(steam_path) -> None:
+    assert get_last_updated(steam_path, 555) is None
+
+
+def test_last_update(steam_path) -> None:
+    assert get_last_updated(steam_path, 444) == "2026-10-22 00:09:33"
 
 
 def test_app_allows_downloads(steam_path) -> None:

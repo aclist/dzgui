@@ -2,6 +2,7 @@ import logging
 import re
 
 from collections.abc import Iterator
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 from warnings import deprecated
@@ -68,6 +69,28 @@ class ACF:
                         acf[k] = v
         except StopIteration:
             return acf
+
+    def search_key(self, key: str) -> str:
+        return str(self.dict["AppState"][key])
+
+    def date_to_str(self, epoch: int) -> str | None:
+        if epoch == 0:
+            return None
+        return datetime.fromtimestamp(epoch).isoformat(" ")
+
+    def get_date_by_key(self, key: str) -> str | None:
+        try:
+            stamp = int(self.search_key(key))
+            return self.date_to_str(stamp)
+        except Exception as e:
+            logger.critical(e)
+            return None
+
+    def get_last_updated(self) -> str | None:
+        return self.get_date_by_key("LastUpdated")
+
+    def get_last_played(self) -> str | None:
+        return self.get_date_by_key("LastPlayed")
 
     def get_allows_downloads(self) -> int | None:
         try:
