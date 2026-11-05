@@ -396,6 +396,7 @@ def get_last_updated(path: Path, appid: int) -> str | None:
         return ACF(acf).get_last_updated()
     except Exception as e:
         logger.critical(e)
+        return None
 
 
 def get_last_played(path: Path, appid: int) -> str | None:
@@ -405,6 +406,7 @@ def get_last_played(path: Path, appid: int) -> str | None:
         return ACF(acf).get_last_played()
     except Exception as e:
         logger.critical(e)
+        return None
 
 
 def get_app_allows_downloads(path: Path, appid: int) -> bool:
