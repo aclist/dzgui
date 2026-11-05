@@ -1,7 +1,7 @@
 import logging
 import signal
 
-from typing import TYPE_CHECKING, Literal, Self
+from typing import Any, Literal, Self, TYPE_CHECKING
 
 from dzgui.const.constants import (
     APP_NAME,
@@ -47,7 +47,7 @@ logger = logging.getLogger(APP_NAME)
 
 
 class OuterWindow(Gtk.ApplicationWindow):
-    def __init__(self, app: Gtk.Application) -> None:
+    def __init__(self, app: "App") -> None:
         super().__init__(
             application=app, title=APP_NAME, border_width=10, icon_name=APP_NAME_LOWER
         )
@@ -347,5 +347,6 @@ class App(ColorAwareApp, Gtk.Application):  # type: ignore
         flag: Gdk.ModifierType,
     ) -> None:
         self.win.halt_proc_and_quit()
+
 
 MainController = Controller()
