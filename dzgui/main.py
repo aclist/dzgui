@@ -42,6 +42,9 @@ def main() -> None:
     test_libgi_missing()
 
     # NOTE: only import ligbirepository modules after the above check
-    from dzgui.app_init import load_gui
+    from dzgui.app_init import build_gui
 
-    load_gui(version, args.debug)
+    app = build_gui(version, args.debug)
+    if app is None:
+        sys.exit(0)
+    app.run(None)
