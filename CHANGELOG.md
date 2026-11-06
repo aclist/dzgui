@@ -53,6 +53,10 @@
 - Expand/collapse changelog versions
 - Support local light/dark mode changes on system theme
 - Server time calculator
+- Add "Unmodded" filter to servers
+- List timestamp of last DayZ client update
+- Validate mods via Mod page to pull in updates
+- Support for Nasdara (Badlands) DLC
 
 ### Changed
 - Conform to PEP 440 versioning for beta versions
@@ -74,6 +78,7 @@
 - Enable LAN page Empty/Full filters on first run of app
 - Propagate subscribed mods to Steam client
 - Make j/k keys in context menus follow same wraparound logic as down arrow/up arrow
+- Use SQLite DB for geolocation records
 
 ### Dropped
 - Battlemetrics API support
@@ -92,6 +97,8 @@
 - Moved dialogs out of threads
 - History table not being in lock-step with state file
 - Current keyword filter not being applied when refreshing table
+- Steam Flatpak cannot run DZGUI as a non-Steam game
+- Collisions between native Steam and Steam Flatpak clients
 
 ### Unreleased
 - Load offline mods

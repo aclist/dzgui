@@ -108,14 +108,9 @@ class TreeView(CursorMixin, Gtk.TreeView):  # type: ignore
 
     def _on_key_release(self, treeview: Gtk.TreeView, event: Gdk.EventKey) -> None:
         """
-        Suppresses spamming on keydown
-        TODO: explain this better
+        Adds debounce to key press/release events to prevent spamming
+        when rapidly navigating through records
         """
-        # TODO: multisel
-        # if event.keyval is Gdk.KEY_space:
-        #    it = self.get_focused_row_iter()
-        #    self.get_selection().select_iter(it)
-        #    return True
 
         model = self.get_model()
         if model is None:
