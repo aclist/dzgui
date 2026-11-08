@@ -109,8 +109,14 @@ def get_local_signatures(version_file: Path) -> dict[str, int]:
     lines = version_file.read_text().splitlines()
     for line in lines:
         data = line.split(",")
-        _id = data[0]
-        mod_hash = int(data[1])
+        try:
+            _id = data[0]
+            mod_hash = int(data[1])
+        except (IndexError, ValueError):
+            # NOTE: skip malformed lines (e.g. `<id>,null`) so that one bad
+            # entry does not block connecting; the mod is treated as unsynced
+            logger.warning(f"Skipping malformed version entry: {line!r}")
+            continue
         hashes[_id] = mod_hash
     return hashes
 
