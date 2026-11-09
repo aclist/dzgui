@@ -14,7 +14,7 @@ from dzgui.const.constants import (
     HERO_PATH,
     FLATPAK_ROOT_PATH,
     LEGACY_CONFIG_PATH,
-    TMP_PATH
+    TMP_PATH,
 )
 from dzgui.const.boilerplate import config_boilerplate
 from dzgui.const.endpoints import STEAM_API_SETUP

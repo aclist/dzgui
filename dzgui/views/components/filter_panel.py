@@ -10,7 +10,12 @@ from dzgui.const.constants import (
     SEARCH_ICON,
 )
 from dzgui.util.format import format_exception
-from dzgui.util.strings import all_maps
+from dzgui.strings.filters import (
+    all_maps,
+    filters_heading,
+    keyword_placeholder,
+    map_placeholder,
+)
 from dzgui.views.components.maps_combo import MapsCombo
 from dzgui.views.components.labels import BoldLabel
 
@@ -42,7 +47,10 @@ class ButtonGrid(Gtk.Grid):
         self.checks: list[Gtk.CheckButton] = []
 
         flowbox = Gtk.FlowBox(
-            halign=Gtk.Align.CENTER, min_children_per_line=3, max_children_per_line=3, selection_mode=Gtk.SelectionMode.NONE
+            halign=Gtk.Align.CENTER,
+            min_children_per_line=3,
+            max_children_per_line=3,
+            selection_mode=Gtk.SelectionMode.NONE,
         )
 
         for check in defaults.keys():
@@ -99,8 +107,7 @@ class ButtonGrid(Gtk.Grid):
 
 class KeywordEntry(Gtk.Entry):
     def __init__(self, controller: "Controller") -> None:
-        # TODO :strings
-        super().__init__(placeholder_text="Filter by keyword")
+        super().__init__(placeholder_text=keyword_placeholder)
 
         self.keyword = ""
         self.controller = controller
@@ -174,8 +181,7 @@ class FilterPanel(Gtk.Box):
         self.keyword_entry = KeywordEntry(self.controller)
         self.button_grid = ButtonGrid(self.controller, defaults, tooltips)
 
-        # TODO: strings
-        self.filters_label = BoldLabel("Filters")
+        self.filters_label = BoldLabel(filters_heading)
 
         self.emitter.connect(
             "request_keyword_focus", lambda _: self.keyword_entry.grab_focus()
@@ -195,8 +201,7 @@ class FilterPanel(Gtk.Box):
 
         self.maps_entry: Gtk.Entry = self.maps_combo.get_child()  # type: ignore
         self.maps_entry.set_completion(completion)
-        # TODO: strings
-        self.maps_entry.set_placeholder_text("Filter by map")
+        self.maps_entry.set_placeholder_text(map_placeholder)
         self.maps_entry.connect("changed", self._on_map_completion, True)
         self.maps_entry.connect("key-press-event", self._on_map_entry_keypress)
         self.maps_entry.connect("activate", self._on_maps_activated)

@@ -3,6 +3,11 @@ from typing import Self, TYPE_CHECKING
 from dzgui.const.constants import CARET_DOWN, CARET_UP, UDP_PORT
 from dzgui.model.servers import ServerModelManager
 from dzgui.strings import connect_panel
+from dzgui.strings.buttons import (
+    dock_button_collapse,
+    dock_button_expand,
+    unset_button_label,
+)
 from dzgui.util.keys import is_ctrl_mask
 from dzgui.views.components.buttons import (
     AddButton,
@@ -36,21 +41,18 @@ class DockButton(IconButton):
         self.child = child
         self.connect("clicked", self._on_click)
 
-        self.collapse_text = "Collapse the connection panel"
-        self.expand_text = "Expand the connection panel"
-
         self.set_margin_top(10)
-        self.set_tooltip_text(self.collapse_text)
+        self.set_tooltip_text(dock_button_collapse)
 
     def collapse(self) -> None:
         self.set_image(Icon(CARET_UP))
         self.child.hide()
-        self.set_tooltip_text(self.expand_text)
+        self.set_tooltip_text(dock_button_expand)
 
     def expand(self) -> None:
         self.set_image(Icon(CARET_DOWN))
         self.child.show()
-        self.set_tooltip_text(self.collapse_text)
+        self.set_tooltip_text(dock_button_collapse)
 
     def _on_click(self, button: Self) -> None:
         if self.expanded:
@@ -81,7 +83,6 @@ class LanPanel(Gtk.Frame):
         self.scan = Gtk.Button(label=connect_panel.lan_scan_button)
         self.scan.connect("clicked", self._on_scan_clicked)
 
-        # TODO: strings
         self.early_abort = Gtk.CheckButton(label=connect_panel.lan_checkbox)
         self.early_abort.set_active(True)
         self.early_abort.set_tooltip_text(connect_panel.lan_abort_tooltip)
@@ -189,8 +190,7 @@ class FavPanel(Gtk.Frame):
         self.fav_button.connect("clicked", self._on_connect_clicked)
         self.copy_button = CopyIpButton(self.controller, self.get_fav_ip)
 
-        # TODO: strings
-        self.unset_button = CloseButton("Unset")
+        self.unset_button = CloseButton(unset_button_label)
         self.unset_button.connect("clicked", self._on_unset_clicked)
 
         if favorite is None:

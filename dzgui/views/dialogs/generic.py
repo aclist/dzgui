@@ -140,8 +140,7 @@ class WaitDialog(GenericDialog):
         self.cur_job += 1
 
     def _on_cancel_clicked(self, button: Gtk.Button) -> None:
-        # TODO: strings
-        GLib.idle_add(self.update_text, "Caught cancel signal, cleaning up")
+        GLib.idle_add(self.update_text, dialogs.caught_cancel_signal)
         self.controller.set_cancel_event()
 
     def show_cancel(self, state: bool) -> None:
