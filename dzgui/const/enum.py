@@ -58,7 +58,7 @@ class ModButtonMeta:
 class ButtonTypeMeta:
     label: str
     tooltip: str
-    opens: NotebookPage
+    opens: NotebookPage | None
 
 
 @dataclass(slots=True, frozen=True)
@@ -295,7 +295,7 @@ class ButtonType(Enum):
         return self.value.tooltip
 
     @property
-    def opens(self) -> str:
+    def opens(self) -> NotebookPage | None:
         return self.value.opens
 
 

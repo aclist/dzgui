@@ -19,7 +19,7 @@ if TYPE_CHECKING:
 
 class ContextualButton(Gtk.Button):
     def __init__(
-        self, label: str, opens: "NotebookPage", tooltip: str, context: ButtonType
+        self, label: str, opens: "NotebookPage" | None, tooltip: str, context: ButtonType
     ) -> None:
         super().__init__(
             label=label,

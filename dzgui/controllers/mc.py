@@ -196,7 +196,9 @@ class Controller(GObject.GObject):
     def show_developers_page(self) -> None:
         self.open_page(NotebookPage.DEVELOPERS)
 
-    def open_page(self, page: NotebookPage) -> None:
+    def open_page(self, page: NotebookPage | None) -> None:
+        if page is None:
+            return
         self.mediator.grid.notebook.set_page_by_enum(page)
 
     def open_page_by_button(self, button: "ContextualButton") -> None:
