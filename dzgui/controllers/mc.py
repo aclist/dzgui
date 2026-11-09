@@ -32,7 +32,7 @@ from dzgui.views.dialogs.generic import ExceptionDialog
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, Gdk, GLib, GObject  # noqa E402
+from gi.repository import Gtk, Gdk, GLib, GObject
 
 logger = logging.getLogger(APP_NAME)
 

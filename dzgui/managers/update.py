@@ -15,11 +15,6 @@ from dzgui.strings import dialogs
 from dzgui.managers.threading import call_on_thread, StoredFunc, ThreadingManager
 from dzgui.views.dialogs.generic import ExceptionDialog, QuitDialog
 
-import gi
-
-gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, GLib  # noqa E402
-
 if TYPE_CHECKING:
     from dzgui.controllers.mc import Controller
 

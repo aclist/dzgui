@@ -8,7 +8,7 @@ from dzgui.views.components.buttons import ClipboardButton
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, GLib, Gdk, GObject, Pango  # noqa E402
+from gi.repository import Gtk, GLib
 
 if TYPE_CHECKING:
     from dzgui.controllers.mc import Controller

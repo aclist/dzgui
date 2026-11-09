@@ -2,8 +2,9 @@ from typing import Literal
 from dzgui.util import css
 
 import gi
+
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, GLib  # noqa E402
+from gi.repository import Gtk, GLib
 
 
 class Toast(Gtk.EventBox):

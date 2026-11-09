@@ -17,7 +17,7 @@ from dzgui.views.components.labels import BoldLabel
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, Gdk, Pango, GLib  # noqa E402
+from gi.repository import Gtk, Gdk, Pango, GLib
 
 logger = logging.getLogger(APP_NAME)
 
@@ -42,7 +42,10 @@ class ButtonGrid(Gtk.Grid):
         self.checks: list[Gtk.CheckButton] = []
 
         flowbox = Gtk.FlowBox(
-            halign=Gtk.Align.CENTER, min_children_per_line=3, max_children_per_line=3, selection_mode=Gtk.SelectionMode.NONE
+            halign=Gtk.Align.CENTER,
+            min_children_per_line=3,
+            max_children_per_line=3,
+            selection_mode=Gtk.SelectionMode.NONE,
         )
 
         for check in defaults.keys():

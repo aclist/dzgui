@@ -3,7 +3,7 @@ from dzgui.views.trees.tree_base import TreeView
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, GLib, Gdk, GObject, Pango  # noqa E402
+from gi.repository import Gtk
 
 
 class ModsMixin:
