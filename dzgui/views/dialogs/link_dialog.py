@@ -1,7 +1,6 @@
 import textwrap
 from typing import Self, TYPE_CHECKING
 
-from dzgui.const.constants import NO_EXPAND, NO_FILL
 from dzgui.util.strings import notice
 from dzgui.views.dialogs.generic import GenericDialog
 from dzgui.views.components.buttons import SteamTextButton
@@ -42,7 +41,7 @@ class WorkshopLinkDialog(GenericDialog):
             button.set_margin_start(60)
             button.set_margin_end(60)
             button.connect("clicked", self._on_button_clicked, uid)
-            self.dialogBox.pack_end(button, NO_EXPAND, NO_FILL, 0)
+            self.dialogBox.pack_end(button, expand=False, fill=False, padding=0)
 
         self.show_all()
         self.connect("response", self._on_dialog_response)

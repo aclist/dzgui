@@ -1,6 +1,5 @@
 from typing import Literal, Self, TYPE_CHECKING
 
-from dzgui.const.constants import NO_EXPAND, NO_FILL, NO_PADDING, EXPAND, FILL
 from dzgui.strings import dialogs
 from dzgui.util import strings
 from dzgui.views.components.buttons import ClipboardButton
@@ -46,7 +45,7 @@ class GenericDialog(Gtk.MessageDialog):
 
     def pack(self, widget: Gtk.Widget) -> None:
         content = self.get_content_area()
-        content.pack_start(widget, EXPAND, FILL, NO_PADDING)
+        content.pack_start(widget, expand=True, fill=True, padding=0)
 
 
 class ConfirmationDialog(GenericDialog):
@@ -121,13 +120,13 @@ class WaitDialog(GenericDialog):
         spinner_box.add(spinner)
 
         if self.jobs > 1:
-            content.pack_start(self.prog, NO_EXPAND, NO_FILL, 0)
+            content.pack_start(self.prog, expand=False, fill=False, padding=0)
         else:
-            content.pack_start(spinner_box, NO_EXPAND, NO_FILL, 0)
+            content.pack_start(spinner_box, expand=False, fill=False, padding=0)
             spinner.start()
 
         if show_cancel is True:
-            content.pack_start(self.cancel, NO_EXPAND, NO_FILL, 0)
+            content.pack_start(self.cancel, expand=False, fill=False, padding=0)
 
     def update_text(self, msg: str) -> None:
         self.format_secondary_text(msg)
@@ -272,7 +271,7 @@ class ExceptionDialog(TextBufferDialog):
             bottom_margin=10,
         )
         textview.set_buffer(Gtk.TextBuffer(text=trace))
-        box.pack_start(textview, EXPAND, FILL, 0)
+        box.pack_start(textview, expand=True, fill=True, padding=0)
 
         self.error_details = Gtk.ScrolledWindow(
             overlay_scrolling=False,
@@ -296,7 +295,7 @@ class ExceptionDialog(TextBufferDialog):
         )
 
         details_textview.set_buffer(self.details_buffer)
-        details_box.pack_start(details_textview, EXPAND, FILL, 10)
+        details_box.pack_start(details_textview, expand=True, fill=True, padding=10)
         self.error_details.add(details_box)
 
         self.error_notebook = Gtk.Notebook(show_tabs=False, margin_bottom=15)

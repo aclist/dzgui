@@ -3,10 +3,6 @@ from typing import Literal, TYPE_CHECKING
 
 from dzgui.const.constants import (
     APP_NAME,
-    EXPAND,
-    NO_EXPAND,
-    NO_FILL,
-    NO_PADDING,
     SEARCH_ICON,
 )
 from dzgui.util.format import format_exception
@@ -42,7 +38,10 @@ class ButtonGrid(Gtk.Grid):
         self.checks: list[Gtk.CheckButton] = []
 
         flowbox = Gtk.FlowBox(
-            halign=Gtk.Align.CENTER, min_children_per_line=3, max_children_per_line=3, selection_mode=Gtk.SelectionMode.NONE
+            halign=Gtk.Align.CENTER,
+            min_children_per_line=3,
+            max_children_per_line=3,
+            selection_mode=Gtk.SelectionMode.NONE,
         )
 
         for check in defaults.keys():
@@ -201,7 +200,7 @@ class FilterPanel(Gtk.Box):
         self.maps_entry.connect("key-press-event", self._on_map_entry_keypress)
         self.maps_entry.connect("activate", self._on_maps_activated)
 
-        self.maps_combo.pack_start(renderer_text, EXPAND)
+        self.maps_combo.pack_start(renderer_text, expand=True)
         self.maps_combo.connect("changed", self._on_map_changed)
         self.maps_combo.connect("key-press-event", self._on_combo_keypress)
 
@@ -211,7 +210,7 @@ class FilterPanel(Gtk.Box):
             self.maps_combo,
             self.button_grid,
         ):
-            self.pack_start(el, NO_EXPAND, NO_FILL, NO_PADDING)
+            self.pack_start(el, expand=False, fill=False, padding=0)
 
     def _on_maps_activated(self, entry: Gtk.Entry) -> None:
         text = entry.get_text()

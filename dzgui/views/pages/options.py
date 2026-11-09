@@ -13,9 +13,6 @@ from dzgui.const.constants import (
     FLATPAK_RUN_CMD,
     FLATPAK_SANDBOX,
     FLATPAK_STEAM_PATH,
-    NO_EXPAND,
-    NO_FILL,
-    NO_PADDING,
     VIEW_CONCEAL,
     VIEW_REVEAL,
 )
@@ -234,8 +231,8 @@ class ToggleField(Gtk.Box):
         self.radio1 = Gtk.RadioButton.new_with_label(None, first_option)
         self.radio2 = Gtk.RadioButton.new_from_widget(self.radio1)
         self.radio2.set_label(second_option)
-        self.pack_start(self.radio1, NO_EXPAND, NO_FILL, NO_PADDING)
-        self.pack_start(self.radio2, NO_EXPAND, NO_FILL, NO_PADDING)
+        self.pack_start(self.radio1, expand=False, fill=False, padding=0)
+        self.pack_start(self.radio2, expand=False, fill=False, padding=0)
 
     def set_suboption_active(self, state: bool) -> None:
         # NOTE: defer connection of signal until after state is set
