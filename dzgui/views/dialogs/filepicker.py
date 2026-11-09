@@ -16,14 +16,14 @@ class FilePicker(Gtk.FileChooserDialog):
             transient_for=parent,
             resizable=True,
         )
-        self.add_buttons("_Cancel", Gtk.ResponseType.CANCEL)
-        self.add_buttons("_Save", Gtk.ResponseType.OK)
+        self.add_buttons("_Cancel", Gtk.ResponseType.CANCEL)  # type: ignore[no-untyped-call]
+        self.add_buttons("_Save", Gtk.ResponseType.OK)  # type: ignore[no-untyped-call]
         self.set_default_response(Gtk.ResponseType.OK)
 
         self.set_current_name(picker.placeholder)
 
     def pick_file(self) -> Path | None:
-        res = self.run()
+        res = self.run()  # type: ignore[no-untyped-call]
         if res in (Gtk.ResponseType.CANCEL, Gtk.ResponseType.DELETE_EVENT):
             self.destroy()
             return None
@@ -43,12 +43,12 @@ class FolderPicker(Gtk.FileChooserDialog):
             parent=parent,
             resizable=True,
         )
-        self.add_buttons("_Cancel", Gtk.ResponseType.CANCEL)
-        self.add_buttons("_OK", Gtk.ResponseType.OK)
+        self.add_buttons("_Cancel", Gtk.ResponseType.CANCEL)  # type: ignore[no-untyped-call]
+        self.add_buttons("_OK", Gtk.ResponseType.OK)  # type: ignore[no-untyped-call]
         self.set_default_response(Gtk.ResponseType.OK)
 
     def pick_folder(self) -> Path | None:
-        res = self.run()
+        res = self.run()  # type: ignore[no-untyped-call]
         if res in (Gtk.ResponseType.CANCEL, Gtk.ResponseType.DELETE_EVENT):
             self.destroy()
             return None

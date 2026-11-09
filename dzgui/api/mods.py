@@ -114,10 +114,6 @@ def get_delimited_mods(steam_path: Path) -> list[Any]:
     return parse_mods(mods)
 
 
-def get_missing_mods(local: list, remote: list) -> list:
-    return [mod for mod in remote if mod not in local]
-
-
 def _hash(uid: str, use_custom: bool = False) -> str:
     md5 = hashlib.md5()
     md5.update(uid.encode("ascii"))
@@ -152,7 +148,7 @@ def remove_stale_signatures(
 
 
 def find_stale_mods(config: Path) -> list[int]:
-    def push_record(rec: str) -> list:
+    def push_record(rec: str) -> list[int]:
         record = fqip_to_record(rec)
         if record is None:
             return []

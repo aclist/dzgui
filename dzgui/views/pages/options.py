@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Callable, TYPE_CHECKING
+from typing import Any, Callable, TYPE_CHECKING
 
 from dzgui.api import pefile as PeFile
 from dzgui.api.steam import get_last_updated
@@ -406,7 +406,8 @@ class Options(ScrollableMixin, Gtk.ScrolledWindow):  # type: ignore
     def _on_link_button_clicked(self, button: Gtk.Button, url: str) -> None:
         open_links.open_link_by_url(url)
 
-    def _make_grid(self, rows: list) -> Gtk.Grid:
+    # TODO: use FlowBox
+    def _make_grid(self, rows: list[list[Any]]) -> Gtk.Grid:
         grid = Gtk.Grid(
             orientation=Gtk.Orientation.VERTICAL,
             column_spacing=10,

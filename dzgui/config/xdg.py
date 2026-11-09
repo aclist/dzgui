@@ -51,7 +51,7 @@ def is_writeable(path_str: str) -> bool:
     return True
 
 
-def get_xdg_paths() -> dict:
+def get_xdg_paths() -> dict[str, Path]:
     home = Path.home()
     xdg_paths = {
         "XDG_CONFIG_HOME": home / ".config",
@@ -73,7 +73,7 @@ def get_xdg_paths() -> dict:
     return resolved_paths
 
 
-def parse_filepaths(xdg: dict) -> Xdg:
+def parse_filepaths(xdg: dict[str, Path]) -> Xdg:
     config = xdg["XDG_CONFIG_HOME"]
     state = xdg["XDG_STATE_HOME"]
     share = xdg["XDG_DATA_HOME"]

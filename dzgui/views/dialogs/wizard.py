@@ -426,7 +426,7 @@ class PreferencesPage(EnumeratedWizardPage):
 
 
 class FlatpakOverridePage(EnumeratedWizardPage):
-    def __init__(self, xdg_paths: dict[str, str]) -> None:
+    def __init__(self, xdg_paths: dict[str, Path]) -> None:
         super().__init__(
             enum=PageNum.FLATPAK,
             heading=wizard.heading_flatpak,
@@ -476,7 +476,7 @@ class CompletionPage(EnumeratedWizardPage):
 
 
 class Assistant(Gtk.Assistant):
-    def __init__(self, is_deck: bool, XDG: "Xdg", xdg_paths: dict[str, str]):
+    def __init__(self, is_deck: bool, XDG: "Xdg", xdg_paths: dict[str, Path]):
         super().__init__()
         if is_deck:
             # NOTE: deemed to be "safe" dimensions that exclude taskbar size
@@ -781,7 +781,7 @@ class SteamPathPage(EnumeratedWizardPage):
 
 
 class SetupWizard(ColorAwareApp, Gtk.Application):  # type: ignore
-    def __init__(self, is_deck: bool, XDG: "Xdg", xdg_paths: dict[str, str]) -> None:
+    def __init__(self, is_deck: bool, XDG: "Xdg", xdg_paths: dict[str, Path]) -> None:
         super().__init__()
         GLib.set_prgname(APP_NAME)
         self.win = Window(is_deck, XDG, xdg_paths)
@@ -792,7 +792,7 @@ class SetupWizard(ColorAwareApp, Gtk.Application):  # type: ignore
 
 
 class Window(Gtk.Window):
-    def __init__(self, is_deck: bool, XDG: "Xdg", xdg_paths: dict[str, str]) -> None:
+    def __init__(self, is_deck: bool, XDG: "Xdg", xdg_paths: dict[str, Path]) -> None:
         super().__init__(title=APP_NAME, icon_name=APP_NAME)
         self.assistant = Assistant(is_deck, XDG, xdg_paths)
 
