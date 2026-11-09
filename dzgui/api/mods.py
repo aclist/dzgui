@@ -18,8 +18,7 @@ from dzgui.const.constants import (
 
 from dzgui.config.query import lookup
 from dzgui.const.enum import Preferences
-
-from typing import Any
+from dzgui.init.migrate import clean_legacy_versions_file
 
 logger = logging.getLogger(APP_NAME)
 
@@ -132,6 +131,8 @@ def remove_stale_signatures(
         logger.warning("Creating new version signatures file")
         versions.touch()
         return
+
+    clean_legacy_versions_file(versions)
 
     path = lookup(config, Preferences.DEFAULT)
     steam_path = Path(path)
