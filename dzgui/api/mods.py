@@ -2,10 +2,10 @@ import hashlib
 import logging
 import re
 
-from concurrent.futures import wait
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, wait
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Any
 
 from dzgui.api.steam import get_app_path
 from dzgui.api.servers import get_rules, fqip_to_record
