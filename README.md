@@ -37,6 +37,8 @@ Users wishing to review the licenses to these components can inspect the `LICENS
 
 Steam and the Steam logo are trademarks and/or registered trademarks of Valve Corporation in the U.S. and/or other countries.
 
+DayZ is a trademark and brand of Bohemia Interactive a.s.
+
 ## Disclaimer
 
 DZGUI is beta-quality software and is provided as-is.
