@@ -60,9 +60,9 @@ class UpdateManager:
     def _on_update_success(self) -> None:
         msg = dialogs.update_success
         dialog = QuitDialog(self.controller, msg)
-        dialog.run()
+        dialog.run()  # type: ignore[no-untyped-call]
 
     def _on_update_failure(self, msg: str) -> None:
         dialog = ExceptionDialog(self.controller, msg)
         dialog.show_all()
-        dialog.run()
+        dialog.run()  # type: ignore[no-untyped-call]

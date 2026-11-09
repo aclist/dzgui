@@ -432,7 +432,7 @@ class ServerModelManager:
         if show_dialog:
             dialog = ExceptionDialog(self.controller, dialogs.load_error_lan)
             dialog.show_all()
-            dialog.run()
+            dialog.run()  # type: ignore[no-untyped-call]
 
     def _cleanup_on_failure(self, show_dialog: bool = True) -> None:
         # TODO: disable map, keyword, and filter widgets if model is None
@@ -451,14 +451,14 @@ class ServerModelManager:
             dialog = ExceptionDialog(self.controller, server_timeout)
             dialog.set_details_buffer(kb.DZG_006)
             dialog.show_all()
-            dialog.run()
+            dialog.run()  # type: ignore[no-untyped-call]
 
     def _push_data(self, data: list[Any]) -> None:
         self._get_proxy_man().push(data)
         self._sort_unique_maps(data)
         self.thread_man.set_cleanup_func(StoredFunc(self._cleanup_on_success))
 
-    def _sort_unique_maps(self, data: list) -> None:
+    def _sort_unique_maps(self, data: list[Any]) -> None:
         u_maps = set([row[1] for row in data])
         self._set_new_maps(sorted(u_maps))
 

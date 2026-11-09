@@ -42,7 +42,10 @@ class ButtonGrid(Gtk.Grid):
         self.checks: list[Gtk.CheckButton] = []
 
         flowbox = Gtk.FlowBox(
-            halign=Gtk.Align.CENTER, min_children_per_line=3, max_children_per_line=3, selection_mode=Gtk.SelectionMode.NONE
+            halign=Gtk.Align.CENTER,
+            min_children_per_line=3,
+            max_children_per_line=3,
+            selection_mode=Gtk.SelectionMode.NONE,
         )
 
         for check in defaults.keys():
@@ -305,6 +308,7 @@ class FilterPanel(Gtk.Box):
             Gdk.KEY_0: 9,
             Gdk.KEY_minus: 10,
             Gdk.KEY_backslash: 11,
+            Gdk.KEY_apostrophe: 12,
         }
         if keyval not in mappings:
             return False

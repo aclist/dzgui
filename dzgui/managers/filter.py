@@ -79,7 +79,7 @@ class FilterManager:
         """Deep copy of defaults"""
         return dict(self.default_filters)
 
-    def get_filters(self) -> dict:
+    def get_filters(self) -> dict[str, bool]:
         return self.enabled_filters
 
     def set_filter(self, label: str, state: bool) -> None:

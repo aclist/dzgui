@@ -231,7 +231,7 @@ class PreConnectionAssistant(Gtk.Box):
         args = self.controller.get_debug_args()
         d = DebugDialog(self.controller, args)
         d.show_all()
-        d.run()
+        d.run()  # type: ignore[no-untyped-call]
 
     def _on_ok_clicked(self, button: Gtk.Button) -> None:
         self.controller.update_and_connect()

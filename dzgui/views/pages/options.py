@@ -55,7 +55,7 @@ class SubmitField(Gtk.Box):
     ) -> None:
         super().__init__(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
 
-        self.callback: Callable
+        self.callback: Callable[[], None]
         self.controller = controller
         self.context = context
 
@@ -143,7 +143,7 @@ class SubmitField(Gtk.Box):
             return
         self.save_option()
 
-    def set_callback(self, callback: Callable) -> None:
+    def set_callback(self, callback: Callable[[], None]) -> None:
         self.callback = callback
 
     def save_option(self) -> None:
@@ -210,7 +210,7 @@ class NameSubmitField(SubmitField):
             Preferences.NAME,
             private=False,
         )
-        self.entry.set_width_chars(30)  # type: ignore
+        self.entry.set_width_chars(30)
         self.set_callback(self.save_player_name)
 
     def save_player_name(self) -> None:
@@ -439,7 +439,7 @@ class Options(ScrollableMixin, Gtk.ScrolledWindow):  # type: ignore
         if prefs.paths.config.is_file() is False:
             dialog = ExceptionDialog(self.controller, strings.config_not_found)
             dialog.show_all()
-            dialog.run()
+            dialog.run()  # type: ignore[no-untyped-call]
             raise OSError(f"Config file '{prefs.paths.config}' not found")
 
         config = query.get_config(prefs.paths.config)

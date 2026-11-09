@@ -406,7 +406,7 @@ class ServerTreeView(ContextMixin, TreeView):  # type: ignore
         path = model.get_path(it)
         row_index = path.get_indices()[0]
         try:
-            start, end = self.get_visible_range()
+            start, end = self.get_visible_range()  # type: ignore[no-untyped-call]
         except Exception:
             return
         if row_index >= start[0] <= end[0]:

@@ -22,8 +22,8 @@ logger = logging.getLogger(APP_NAME)
 
 def call_on_thread(
     dialog_str: str, show_dialog: bool = True, show_cancel: bool = False
-) -> Callable:
-    def decorator(func: Callable) -> Callable:
+) -> Callable[..., Any]:
+    def decorator(func: Callable[..., Any]) -> Callable[..., Any]:
         @wraps(func)
         def wrapper(*args: Any, **kwargs: Any) -> None:
             self = args[0]
@@ -42,7 +42,7 @@ def call_on_thread(
 
 
 class StoredFunc:
-    def __init__(self, func: Callable, *args: Any, **kwargs: Any) -> None:
+    def __init__(self, func: Callable[..., Any], *args: Any, **kwargs: Any) -> None:
         sig = inspect.signature(func)
         self.func = func
         self.bindings = sig.bind(*args, **kwargs)

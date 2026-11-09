@@ -298,22 +298,22 @@ class ConnectionManager:
 
     def _present_modlist_dialog(self, mods: list[list[str]]) -> None:
         dialog = ServerModDialog(self.controller, mods)
-        dialog.run()
+        dialog.run()  # type: ignore[no-untyped-call]
 
     def _present_details_dialog(self, details: Servers.Details) -> None:
         dialog = ServerDetailsDialog(self.controller, details)
-        dialog.run()
+        dialog.run()  # type: ignore[no-untyped-call]
 
     def _workshop_timeout(self, msg: str) -> None:
         dialog = ExceptionDialog(self.controller, msg)
         dialog.show_all()
-        dialog.run()
+        dialog.run()  # type: ignore[no-untyped-call]
 
     def _server_timeout(self) -> None:
         dialog = ExceptionDialog(self.controller, server_timeout)
         dialog.set_details_buffer(kb.DZG_006)
         dialog.show_all()
-        dialog.run()
+        dialog.run()  # type: ignore[no-untyped-call]
 
     def get_debug_args(self) -> str:
         addr = f"{self.record.ip}:{self.record.gameport}"
