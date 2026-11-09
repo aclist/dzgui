@@ -1,5 +1,6 @@
 import re
 
+from dataclasses import dataclass
 from typing import Any, TYPE_CHECKING, Union
 
 from dzgui.const.enum import FilterMode
@@ -14,6 +15,22 @@ if TYPE_CHECKING:
 
 DAY_REG = r"([0][6-9]|[1][0-7])"
 NIGHT_REG = r"([0][0-5]|[1][8-9]|[2][0-3])"
+
+
+@dataclass(slots=True, frozen=True)
+class ServerRow:
+    name: str
+    mapname: str
+    view: str
+    time: str
+    players: int
+    max_players: int
+    queue: int
+    ip: str
+    qport: int
+    ping: str
+    provider: str
+    modded: bool
 
 
 class ProxyModelManager:
