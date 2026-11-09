@@ -1,10 +1,11 @@
 import shutil
 import subprocess
-from pathlib import Path
 
-par = Path(__file__).parent.parent
-clog = par / "CHANGELOG.md"
-target = par / "dzgui/data/CHANGELOG.md"
+from shared import get_git_root
+
+root = get_git_root()
+clog = root.joinpath("CHANGELOG.md")
+target = root.joinpath("dzgui/data/CHANGELOG.md")
 
 shutil.copy(clog, target)
 

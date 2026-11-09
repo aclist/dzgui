@@ -6,11 +6,13 @@ import tarfile
 from pathlib import Path
 from urllib.parse import unquote
 
+from shared import get_git_root
+
 BUILD = "3.13.9"
 DATE = "20251014"
 CPYTHON_BUILD = f"cpython-{BUILD}"
 
-root = Path(__file__).resolve().parents[1]
+root = get_git_root()
 build_dir = root.joinpath("build")
 cpython_dir = build_dir.joinpath(CPYTHON_BUILD)
 
