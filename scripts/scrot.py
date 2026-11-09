@@ -1,16 +1,7 @@
-import subprocess
 from pathlib import Path
 
 from dzgui.app_init import build_gui
-
-
-def get_git_root() -> Path:
-    proc = subprocess.run(
-        ["git", "rev-parse", "--show-toplevel"], capture_output=True, text=True
-    )
-    if proc.returncode != 0:
-        raise OSError("Failed to parse git root")
-    return Path(proc.stdout.rstrip())
+from shared import get_git_root
 
 
 def get_image_path() -> Path:
