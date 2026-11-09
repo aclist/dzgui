@@ -77,4 +77,4 @@ class MenuTreeView(TreeView):
             raise ValueError("Trying to call a method on non-existent model")
         _iter = self.get_focused_row_iter()
         rowtype = model.get_value(_iter, 1)
-        return str(rowtype.dict["tooltip"])
+        return str(rowtype.tooltip)

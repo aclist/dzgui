@@ -7,7 +7,7 @@ from warnings import deprecated
 
 from dzgui.api.servers import ping, Record
 from dzgui.const.constants import APP_NAME
-from dzgui.const.enum import ContextMenu, ContextMenuGroup, ServerTab
+from dzgui.const.enum import ContextMenuItem, ContextMenuGroup, ServerTab
 from dzgui.managers.filter import FilterManager
 from dzgui.model.proxy_model import ProxyModelManager
 from dzgui.util import strings
@@ -250,9 +250,9 @@ class ServerTreeView(ContextMixin, TreeView):  # type: ignore
                     if self.enum is ServerTab.LAN:
                         self.emitter.emit("request_custom_port_focus")
                 case Gdk.KEY_c:
-                    self.controller.menu_action(ContextMenu.COPY_SERVER_IP, self)
+                    self.controller.menu_action(ContextMenuItem.COPY_SERVER_IP, self)
                 case Gdk.KEY_r:
-                    self.controller.menu_action(ContextMenu.REFRESH_PLAYERS, self)
+                    self.controller.menu_action(ContextMenuItem.REFRESH_PLAYERS, self)
         else:
             match event.keyval:
                 case Gdk.KEY_l | Gdk.KEY_Right:

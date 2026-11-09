@@ -51,9 +51,9 @@ class ButtonBox(Gtk.Box):
 
         for side_button in ButtonType:
             button = ContextualButton(
-                label=side_button.dict["label"],
-                opens=side_button.dict["opens"],
-                tooltip=side_button.dict["tooltip"],
+                label=side_button.label,
+                opens=side_button.opens,
+                tooltip=side_button.tooltip,
                 context=side_button,
             )
 

@@ -1,7 +1,7 @@
 import logging
 
 from dzgui.const.constants import APP_NAME
-from dzgui.const.enum import ContextMenu
+from dzgui.const.enum import ContextMenuItem
 from dzgui.util.keys import is_ctrl_mask, is_navkey
 from dzgui.util.strings import edit_note
 from dzgui.views.trees.tree_base import TreeView
@@ -15,9 +15,7 @@ logger = logging.getLogger(APP_NAME)
 
 
 class ContextMixin(TreeView):
-    def present_menu(
-        self, widget: Gtk.Widget, event: Gdk.Event
-    ) -> bool:
+    def present_menu(self, widget: Gtk.Widget, event: Gdk.Event) -> bool:
 
         if self.menu is None:
             return False
@@ -60,17 +58,17 @@ class ContextMixin(TreeView):
         self.context_menu.select_first(False)
         return True
 
-    def _process_dynamic_row(self, row: ContextMenu) -> Gtk.MenuItem:
-        if row == ContextMenu.ADD_SERVER and self.is_in_favs():  # type: ignore
-            row = ContextMenu.REMOVE_SERVER
+    def _process_dynamic_row(self, row: ContextMenuItem) -> Gtk.MenuItem:
+        if row == ContextMenuItem.ADD_SERVER and self.is_in_favs():  # type: ignore
+            row = ContextMenuItem.REMOVE_SERVER
 
-        item = Gtk.MenuItem(label=row.dict["label"])
+        item = Gtk.MenuItem(label=row.label)
         item.connect("activate", self._on_menu_click, row)
 
-        if row == ContextMenu.SHOW_MODS:
+        if row == ContextMenuItem.SHOW_MODS:
             item.set_sensitive(self.is_modded())  # type: ignore
 
-        if row == ContextMenu.ADD_NOTE:
+        if row == ContextMenuItem.ADD_NOTE:
             if self.controller.has_note():
                 item.set_label(edit_note)
 
@@ -94,7 +92,7 @@ class ContextMixin(TreeView):
         except AttributeError:
             return False
 
-    def _on_menu_click(self, widget: Gtk.MenuItem, enum: ContextMenu) -> None:
+    def _on_menu_click(self, widget: Gtk.MenuItem, enum: ContextMenuItem) -> None:
         self.controller.menu_action(enum, self)  # type: ignore
 
     def _on_key(self, menu: Gtk.Menu, event: Gdk.EventKey) -> bool | None:

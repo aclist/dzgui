@@ -20,8 +20,8 @@ class EnumeratedModButton(Gtk.Button):
         super().__init__(margin_start=10, margin_end=10, focus_on_click=False)
 
         self.enum = enum
-        self.set_label(enum.dict["label"])
-        self.set_tooltip_text(enum.dict["tooltip"])
+        self.set_label(enum.label)
+        self.set_tooltip_text(enum.tooltip)
 
 
 class ModPanelButton(EnumeratedModButton):
