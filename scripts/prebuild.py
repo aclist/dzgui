@@ -3,7 +3,6 @@ import requests
 import subprocess
 import tarfile
 
-from pathlib import Path
 from urllib.parse import unquote
 
 from shared import get_git_root

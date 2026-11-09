@@ -1,5 +1,3 @@
-from pathlib import Path
-
 from shared import get_git_root
 
 BOILERPLATE = """
