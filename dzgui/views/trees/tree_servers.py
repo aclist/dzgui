@@ -32,6 +32,7 @@ if TYPE_CHECKING:
     from dzgui.controllers.mc import Controller
     from dzgui.controllers.emitter import Emitter
     from dzgui.model.model_factory import FastInsertListStore
+    from dzgui.util.dist import Haversine
 
 QUEUE_CHECK_DELAY = 200
 
@@ -64,7 +65,7 @@ class ServerTreeView(ContextMixin, TreeView):  # type: ignore
 
         self.queue_id: int
         self.handler_id: int
-        self.queue: Queue = Queue()
+        self.queue: Queue[tuple[str, "Haversine" | None, ServerTab]] = Queue()
 
         self.seen_cache: list[Record] = []
 

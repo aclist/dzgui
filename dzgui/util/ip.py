@@ -31,7 +31,7 @@ class ReservedIPError(Exception):
     pass
 
 
-def ip2list(ip: str) -> list:
+def ip2list(ip: str) -> list[int]:
     return [int(digit) for digit in ip.split(".")]
 
 

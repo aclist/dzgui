@@ -274,7 +274,7 @@ class Controller(GObject.GObject):
         except Exception as e:
             dialog = ExceptionDialog(self, str(e))
             dialog.show_all()
-            dialog.run()
+            dialog.run()  # type: ignore[no-untyped-call]
 
     def select_colorized(self) -> None:
         mod_man = self.mediator.modtreeview.get_mod_man()
@@ -308,7 +308,7 @@ class Controller(GObject.GObject):
             except Exception as e:
                 dialog = ExceptionDialog(self, str(e))
                 dialog.show_all()
-                dialog.run()
+                dialog.run()  # type: ignore[no-untyped-call]
 
     def update_steam_api_key(self, text: str) -> None:
         self.config_man.update_steam_api_key(text)
@@ -365,7 +365,7 @@ class Controller(GObject.GObject):
         filter_man = self.get_filter_man()
         return filter_man.get_map_store()
 
-    def get_enabled_filters(self) -> dict:
+    def get_enabled_filters(self) -> dict[str, bool]:
         filter_man = self.get_filter_man()
         return filter_man.get_filters()
 

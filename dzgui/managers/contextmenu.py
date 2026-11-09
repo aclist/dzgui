@@ -44,7 +44,7 @@ class ContextMenuManager:
                 # UNTHREADED
                 case ContextMenu.ADD_NOTE:
                     dialog = NoteDialog(self.controller)
-                    dialog.run()
+                    dialog.run()  # type: ignore[no-untyped-call]
                 case ContextMenu.COPY_SERVER_IP:
                     self.copy_server_ip()
                 case ContextMenu.COPY_SERVER_NAME:
