@@ -5,7 +5,12 @@ import shutil
 
 from pathlib import Path
 from typing import Any
-from dzgui.const.constants import APP_NAME, LEGACY_CONFIG_PATH, LEGACY_COLS_PATH, LEGACY_IPS_PATH
+from dzgui.const.constants import (
+    APP_NAME,
+    LEGACY_CONFIG_PATH,
+    LEGACY_COLS_PATH,
+    LEGACY_IPS_PATH,
+)
 from dzgui.config.convert import rc2json
 from dzgui.util._json import read_json, write_json
 
@@ -84,5 +89,5 @@ def clean_legacy_versions_file(versions: Path) -> None:
         clean = [line for line in lines if re.match(pat, line)]
         concat = "\n".join(clean)
         versions.write_text(concat)
-    except Exception:
+    except Exception as e:
         logger.warning(e)
