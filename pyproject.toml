@@ -104,7 +104,7 @@ python-a2s = { path = "./dzgui/lib/a2s", editable = true }
 dayzquery = { path = "./dzgui/lib/dayzquery", editable = true }
 
 [tool.uv]
-config-settings-package = { pygobject-stubs = { config = "Gtk3,Gdk3,Soup2" } }
+config-settings-package = { pygobject-stubs = { config = "Gtk3,Gdk3" } }
 
 [tool.pytest.ini_options]
 markers = [
