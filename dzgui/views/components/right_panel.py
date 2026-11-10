@@ -6,10 +6,6 @@ from typing import Literal, TYPE_CHECKING
 
 from dzgui.const.constants import (
     APP_NAME,
-    NO_EXPAND,
-    NO_FILL,
-    FILL,
-    NO_PADDING,
 )
 from dzgui.const.enum import ServerTab
 from dzgui.managers.update import UpdateManager
@@ -73,9 +69,9 @@ class RightPanel(Gtk.Box):
         eb.connect("button-press-event", self._on_version_clicked)
 
         for el in self.button_vbox, self.keys, self.filters_vbox, self.refresh_button:
-            self.pack_start(el, NO_EXPAND, FILL, NO_PADDING)
+            self.pack_start(el, expand=False, fill=True, padding=0)
 
-        self.pack_start(self.sel_panel, NO_EXPAND, NO_FILL, NO_PADDING)
+        self.pack_start(self.sel_panel, expand=False, fill=False, padding=0)
 
         self.update_button = IconTextButton(
             "dialog-information-symbolic", label="Updates available"
@@ -96,7 +92,7 @@ class RightPanel(Gtk.Box):
                     "clicked", self._on_update_button_clicked, exe_path, update
                 )
         self.gutter_box.add(eb)
-        self.pack_start(self.gutter_box, NO_EXPAND, FILL, NO_PADDING)
+        self.pack_start(self.gutter_box, expand=False, fill=True, padding=0)
 
     def _on_update_button_clicked(
         self, button: Gtk.Button, exe_path: str, url: str
