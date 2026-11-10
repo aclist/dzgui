@@ -230,10 +230,19 @@ class ToggleField(Gtk.Box):
         self.pack_start(self.radio1, expand=False, fill=False, padding=0)
         self.pack_start(self.radio2, expand=False, fill=False, padding=0)
 
+        self.signal_id: int | None = None
+
+    def disconnect_signal(self) -> None:
+        if self.signal_id is not None:
+            self.radio1.disconnect(self.signal_id)
+
     def set_suboption_active(self, state: bool) -> None:
         # NOTE: defer connection of signal until after state is set
         self.radio2.set_active(state)
-        self.radio1.connect("toggled", self._on_radio_toggled, self.context)
+        self.disconnect_signal()
+        self.signal_id = self.radio1.connect(
+            "toggled", self._on_radio_toggled, self.context
+        )
 
     def _on_radio_toggled(self, button: Gtk.RadioButton, context: Preferences) -> None:
         self.controller.toggle_config(context)
