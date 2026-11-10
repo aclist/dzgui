@@ -1,4 +1,4 @@
-from typing import Callable, Literal, Self, TYPE_CHECKING, Union
+from typing import Callable, Literal, Self, TYPE_CHECKING
 
 from dzgui.util.clip import copy_clipboard
 from dzgui.strings import buttons
