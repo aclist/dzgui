@@ -77,7 +77,7 @@ class AppNavigation:
 
 class Controller(GObject.GObject):
     def __init__(self) -> None:
-        self.dist_cache: dict[str, "Haversine"] = {}
+        self.dist_cache: dict[str, "Haversine" | None] = {}
         self.mediator = AppNavigation()
 
         self.prefs: UserPrefs
@@ -274,7 +274,7 @@ class Controller(GObject.GObject):
         except Exception as e:
             dialog = ExceptionDialog(self, str(e))
             dialog.show_all()
-            dialog.run()
+            dialog.run()  # type: ignore[no-untyped-call]
 
     def select_colorized(self) -> None:
         mod_man = self.mediator.modtreeview.get_mod_man()
@@ -308,7 +308,7 @@ class Controller(GObject.GObject):
             except Exception as e:
                 dialog = ExceptionDialog(self, str(e))
                 dialog.show_all()
-                dialog.run()
+                dialog.run()  # type: ignore[no-untyped-call]
 
     def update_steam_api_key(self, text: str) -> None:
         self.config_man.update_steam_api_key(text)
@@ -355,17 +355,17 @@ class Controller(GObject.GObject):
             filter_man.set_filter(filt, state)
         self.mediator.filters.set_filters(filters)
 
-    def get_dist_cache(self) -> dict[str, "Haversine"]:
+    def get_dist_cache(self) -> dict[str, Union["Haversine", None]]:
         return self.dist_cache
 
-    def set_dist_cache(self, addr: str, haversine: "Haversine") -> None:
+    def set_dist_cache(self, addr: str, haversine: Union["Haversine", None]) -> None:
         self.dist_cache[addr] = haversine
 
     def get_map_store(self) -> Gtk.ListStore:
         filter_man = self.get_filter_man()
         return filter_man.get_map_store()
 
-    def get_enabled_filters(self) -> dict:
+    def get_enabled_filters(self) -> dict[str, bool]:
         filter_man = self.get_filter_man()
         return filter_man.get_filters()
 

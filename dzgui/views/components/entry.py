@@ -39,7 +39,7 @@ class ValidatedEntry(Gtk.Entry):
     def __init__(
         self,
         controller: "Controller",
-        func: Callable,
+        func: Callable[[str], bool],
         placeholder_text: str = "",
         tooltip_text: str = "",
     ) -> None:
@@ -47,7 +47,6 @@ class ValidatedEntry(Gtk.Entry):
             hexpand=True, placeholder_text=placeholder_text, tooltip_text=tooltip_text
         )
 
-        self.func: Callable
         self.set_validation_func(func)
         self.controller = controller
 
@@ -73,7 +72,7 @@ class ValidatedEntry(Gtk.Entry):
         self.emit("string_validated", False)
         remove_class(self, self.classname)
 
-    def set_validation_func(self, func: Callable) -> None:
+    def set_validation_func(self, func: Callable[[str], bool]) -> None:
         self.func = func
 
     def insert_icon(self) -> None:
@@ -142,7 +141,7 @@ class APIEntry(Gtk.Box):
     def __init__(self) -> None:
         super().__init__(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
 
-        self.func: Callable | None = None
+        self.func: Callable[[str], None] | None = None
 
         self.entry = Gtk.Entry(
             width_chars=60, hexpand=True, placeholder_text=api_placeholder
@@ -221,7 +220,7 @@ class APIEntry(Gtk.Box):
         res = self.func(text)
         return res
 
-    def set_validation_func(self, func: Callable | None) -> None:
+    def set_validation_func(self, func: Callable[[str], None] | None) -> None:
         self.func = func
 
     def disable_button(self) -> None:

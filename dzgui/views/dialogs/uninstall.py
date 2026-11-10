@@ -22,7 +22,7 @@ from gi.repository import Gtk, GLib, Pango
 
 
 class Assistant(Gtk.Assistant):
-    def __init__(self, is_deck: bool, paths: dict[str, str]):
+    def __init__(self, is_deck: bool, paths: dict[str, Path]):
         super().__init__()
         if is_deck:
             # NOTE: deemed to be "safe" dimensions that exclude taskbar size
@@ -63,7 +63,7 @@ class Assistant(Gtk.Assistant):
 
 
 class Window(Gtk.Window):
-    def __init__(self, is_deck: bool, paths: dict[str, str]) -> None:
+    def __init__(self, is_deck: bool, paths: dict[str, Path]) -> None:
         super().__init__(title=APP_NAME, icon_name=APP_NAME)
         self.assistant = Assistant(is_deck, paths)
 
@@ -121,7 +121,7 @@ class CheckboxWithPath(CheckboxWithLabel):
 
 
 class UninstallPage(ScrolledWizardPage):
-    def __init__(self, paths: dict[str, str], pyapp: str | None):
+    def __init__(self, paths: dict[str, Path], pyapp: str | None):
         super().__init__(heading=uninstall.pg1_heading, description=uninstall.pg1_blurb)
 
         self.pyapp = pyapp
@@ -219,7 +219,7 @@ class UninstallPage(ScrolledWizardPage):
 
 
 class UninstallWizard(ColorAwareApp, Gtk.Application):  # type: ignore
-    def __init__(self, is_deck: bool, paths: dict[str, str]) -> None:
+    def __init__(self, is_deck: bool, paths: dict[str, Path]) -> None:
         super().__init__()
         config = Path(paths["XDG_CONFIG_HOME"])
         if not config.is_dir() or not config.joinpath("config.json").is_file():

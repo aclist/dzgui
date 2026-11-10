@@ -46,7 +46,7 @@ class AbortDialog(ColorAwareApp, Gtk.MessageDialog):  # type: ignore
 
         self.connect("response", self._on_response)
 
-        self.run()
+        self.run()  # type: ignore[no-untyped-call]
         self.destroy()
 
     def _on_response(self, dialog: Self, response: Gtk.ResponseType) -> None:

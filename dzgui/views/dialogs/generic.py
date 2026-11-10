@@ -185,7 +185,7 @@ class TextBufferDialog(GenericDialog):
             secondary=secondary,
         )
         self.text = text
-        copy_button = ClipboardButton(controller, self.get_text)
+        copy_button = ClipboardButton(self.get_text)
         self.add_action_widget(copy_button, Gtk.ResponseType.NONE)
         self.add_button("OK", Gtk.ResponseType.OK)
         self.connect("response", self._on_response)

@@ -11,7 +11,7 @@ from gi.repository.Gtk import ListStore, TreeIter
 from gi.repository import GObject
 
 GTYPE_TO_PYTHON = {
-    GObject.type_from_name(GObject.type_name(ptype)): ptype
+    GObject.type_from_name(GObject.type_name(ptype)): ptype  # type: ignore[no-untyped-call]
     for ptype in (int, float, str, bool, object)
 }
 

@@ -1,10 +1,8 @@
-from typing import Callable, Literal, Self, TYPE_CHECKING, Union
+from typing import Callable, Literal, Self, TYPE_CHECKING
 
 from dzgui.util.clip import copy_clipboard
-from dzgui.util.format import pluralize
 from dzgui.strings import buttons
 from dzgui.util.strings import (
-    alert_button_tooltip,
     atomic_buttons,
 )
 from dzgui.const.icons import (
@@ -64,7 +62,7 @@ class IconButton(Gtk.Button):
         self.icon = Icon(icon, margin_start=margin_start, margin_end=margin_end)
         self.set_image(self.icon)
         self.set_image_position(position)
-        self.set_focus_on_click(False)
+        self.set_focus_on_click(False)  # type: ignore[no-untyped-call]
         self.set_always_show_image(True)
 
     def swap_icon(self, icon: str) -> None:
@@ -108,7 +106,7 @@ class ClipboardButton(IconTextButton):
 
         self.set_tooltip_text(buttons.clipboard_button)
 
-    def _on_button_clicked(self, button: Self, func: Callable) -> None:
+    def _on_button_clicked(self, button: Self, func: Callable[[], str]) -> None:
         def revert() -> Literal[False]:
             self.revert_icon()
             return False
@@ -119,10 +117,9 @@ class ClipboardButton(IconTextButton):
         GLib.timeout_add(600, revert)
 
 
-# TODO: determine when controller would be passed to this button or drop
 class CopyIpButton(ClipboardButton):
-    def __init__(self, controller: Union["Controller", None], func: Callable) -> None:
-        super().__init__(controller, func)
+    def __init__(self, func: Callable[[], str]) -> None:
+        super().__init__(func)
 
         self.set_tooltip_text(buttons.clipboard_ip_button)
 
@@ -247,30 +244,6 @@ class AddButton(IconTextButton):
     def __init__(self) -> None:
         super().__init__(icon=ICON_LIST_ADD, label=connect_panel.add_button)
         self.set_tooltip_text(connect_panel.add_tooltip)
-
-
-# TODO: drop
-class LoggerAlertsButton(IconTextButton):
-    def __init__(self, warnings: int, errors: int) -> None:
-        warnings_text = ""
-        errors_text = ""
-        separator = ""
-        if warnings > 0:
-            warnings_plural = pluralize("warnings", warnings)
-            warnings_text = f"{warnings} {warnings_plural}"
-        if errors > 0:
-            errors_plural = pluralize("errors", errors)
-            errors_text = f" {errors} {errors_plural}"
-        if warnings + errors > 1:
-            separator = ","
-        concat = warnings_text + separator + errors_text
-        super().__init__(
-            icon=ICON_WARNING,
-            label=f"Loaded with{concat}",
-        )
-        self.set_halign(Gtk.Align.END)
-        self.set_hexpand(True)
-        self.set_tooltip_text(alert_button_tooltip)
 
 
 class SpinnerButton(Gtk.Button):
