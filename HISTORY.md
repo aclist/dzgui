@@ -18,7 +18,7 @@ Due to user interest, features continued to be added. This early tool is archive
 ### 2022-05-09: addition of zenity GUI and project name change (DZGUI)
 With the introduction of the Steam Deck, more users wanted a graphical user interface
 to interact with DZTUI. Being that DZTUI was purely a Bash script, a method of
-drawing menus was needed, so the 'zenity' package was used to create prefabricated dialogs.
+drawing menus was needed, so the "zenity" package was used to create prefabricated dialogs.
 While this met the minimum requirement to show prompts and selectable options, no rich customization was possible.
 
 The introduction of zenity as a dependency marked the shift from "DZTUI" to "DZGUI".
@@ -101,8 +101,13 @@ The maintainers of those projects were advised to excise the offending segments 
 ### 2026-05-17: Switch to standalone releases
 The DZGUI 7 beta starts shipping standalone glibc builds with an integrated setup wizard and installer.
 
-# TODO: remarks on DZGUI 6 stable vs testing branch logic and "over the air" updates vs standalone builds
-# TODO: note archived branch names
+DZGUI 6 had relied on "over the air" updates delivered via either a "stable" or "testing" branch
+(archived respectively under the "dzgui" and "testing" branches). Effectively, the script would bootstrap itself and
+fetch raw files directly from the repository. This was prone to problems because updates were monolithic, not giving
+an easy escape hatch if the user needed to rollback in the event of a regression.
+
+This was changed to atomic, tagged releases. In addition to updating directly through DZGUI, these prebuilt releases can be
+downloaded manually as needed, and rollbacks are available for all prior versions under the DZGUI 7 specification.
 
 ### 2026-10-27: 500 tickets closed
 The milestone of 500 tickets/PRs being closed was reached.
