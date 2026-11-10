@@ -3,9 +3,9 @@ STEAM_PUBLISHED_FILES = (
     "https://api.steampowered.com/ISteamRemoteStorage/GetPublishedFileDetails/v1"
 )
 STEAM_SERVERS = "https://api.steampowered.com/IGameServersService/GetServerList/v1"
-SUB_ENDPOINT = "https://api.steampowered.com/IPublishedFileService/Subscribe/v1"
-UNSUB_ENDPOINT = "https://api.steampowered.com/IPublishedFileService/Unsubscribe/v1"
-APP_DETAILS = "https://store.steampowered.com/api/appdetails?"
+STEAM_SUB = "https://api.steampowered.com/IPublishedFileService/Subscribe/v1"
+STEAM_UNSUB = "https://api.steampowered.com/IPublishedFileService/Unsubscribe/v1"
+STEAM_APP_DETAILS = "https://store.steampowered.com/api/appdetails?"
 
 GITHUB = "https://github.com/aclist"
 GITHUB_RELEASES = "https://api.github.com/repos/aclist/dztui/releases/latest"
