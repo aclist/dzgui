@@ -1,4 +1,4 @@
-from typing import Callable, Literal, Self, TYPE_CHECKING
+from typing import Callable, Literal, Self, TYPE_CHECKING, Union
 
 from dzgui.util.clip import copy_clipboard
 from dzgui.strings import buttons
@@ -12,7 +12,6 @@ from dzgui.const.icons import (
     ICON_LIST_ADD,
     ICON_REFRESH,
     ICON_STEAM,
-    ICON_WARNING,
     ICON_WEB_BROWSER,
 )
 from dzgui.strings import connect_panel
