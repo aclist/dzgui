@@ -1,0 +1,5 @@
+dialog_title = "Add a short note/reminder"
+dialog_subtitle = "Limit 30 chars"
+delete_button = "Delete note"
+ok_button = "Update note"
+current_note = "Current note: '{0}'"

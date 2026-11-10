@@ -22,7 +22,6 @@ from dzgui.init.migrate import (
     copy_state_files,
     migrate_cols_file,
 )
-from dzgui.init.flock import lock_acquire
 from dzgui.init.prereqs import has_flatpak_client, has_steam_client
 from dzgui.strings import boot
 
@@ -122,8 +121,6 @@ def load_steam_icon() -> None:
 
 
 def build_gui(version: str, is_debug: bool) -> App | None:
-    lock = lock_acquire()  # noqa
-
     set_locale()
     # NOTE: consider aborting this check if steam deck
     xdg_paths = get_xdg_paths()
@@ -158,9 +155,6 @@ def build_gui(version: str, is_debug: bool) -> App | None:
         f.truncate(0)
 
     if _is_steam_deck is False:
-        # TODO: sudo escalation dialog
-        # count = get_map_count()
-        # TODO: move into module
         if FLATPAK_ROOT_PATH in lookup(XDG.config, Preferences.DEFAULT):
             has_client = has_flatpak_client()
         else:

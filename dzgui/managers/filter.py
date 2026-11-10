@@ -2,7 +2,7 @@ from typing import TYPE_CHECKING
 
 from dzgui.model.model_factory import ModelFactory
 from dzgui.util import strings
-from dzgui.util.strings import all_maps
+from dzgui.strings.filters import all_maps
 
 if TYPE_CHECKING:
     from dzgui.model.model_factory import FastInsertListStore
@@ -105,17 +105,11 @@ class FilterManager:
 
         self.reinit_map_store()
         maps.sort()
-        for m in maps:
-            # TODO: strings
-            if m == "All maps":
-                continue
+        clean = [m for m in maps if m != all_maps]
+        for m in clean:
             self.append_map([m])
 
-    # TODO: currently unused
-    def get_unique_maps(self) -> list[str]:
-        return [row[0] for row in self.map_store if row[0] != "All maps"]
-
-    def get_all_filters(self) -> tuple[str, ...]:
+    def get_all_filters(self) -> tuple:
         map_name = self.get_active_map_name()
         enabled = self.get_filters()
         kw = self.get_active_keyword()

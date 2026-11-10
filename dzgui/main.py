@@ -43,6 +43,9 @@ def main() -> None:
 
     # NOTE: only import ligbirepository modules after the above check
     from dzgui.app_init import build_gui
+    from dzgui.init.flock import lock_acquire
+
+    lock = lock_acquire()  # noqa
 
     app = build_gui(version, args.debug)
     if app is None:

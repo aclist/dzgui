@@ -5,21 +5,22 @@ from dzgui.strings import buttons
 from dzgui.util.strings import (
     atomic_buttons,
 )
-from dzgui.const.constants import (
-    CLIPBOARD,
-    CLOSE,
-    INPUT_KEYBOARD,
-    LIST_ADD,
-    REFRESH_ICON,
-    STEAM_ICON,
-    WEB_BROWSER,
+from dzgui.const.icons import (
+    ICON_CLIPBOARD,
+    ICON_CLOSE,
+    ICON_INPUT_KEYBOARD,
+    ICON_LIST_ADD,
+    ICON_REFRESH,
+    ICON_STEAM,
+    ICON_WARNING,
+    ICON_WEB_BROWSER,
 )
 from dzgui.strings import connect_panel
 
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, Gdk, GLib  # noqa E402
+from gi.repository import Gtk, GLib
 
 if TYPE_CHECKING:
     from gi.repository import GLib
@@ -98,12 +99,12 @@ class LargeIconTextButton(IconButton):
 
 
 class ClipboardButton(IconTextButton):
-    def __init__(self, func: Callable[[], str]) -> None:
-        super().__init__(CLIPBOARD, atomic_buttons.copy)
+    def __init__(self, controller: Union["Controller", None], func: Callable) -> None:
+        super().__init__(ICON_CLIPBOARD, atomic_buttons.copy)
+        self.controller = controller
         self.connect("clicked", self._on_button_clicked, func)
 
-        # TODO: strings
-        self.set_tooltip_text("Copy to clipboard")
+        self.set_tooltip_text(buttons.clipboard_button)
 
     def _on_button_clicked(self, button: Self, func: Callable[[], str]) -> None:
         def revert() -> Literal[False]:
@@ -120,28 +121,26 @@ class CopyIpButton(ClipboardButton):
     def __init__(self, func: Callable[[], str]) -> None:
         super().__init__(func)
 
-        # TODO: strings
-        self.set_tooltip_text("Copy IP to clipboard")
+        self.set_tooltip_text(buttons.clipboard_ip_button)
 
 
 class CloseButton(IconTextButton):
     def __init__(self, label: str) -> None:
-        super().__init__(icon=CLOSE, label=label)
+        super().__init__(icon=ICON_CLOSE, label=label)
 
-        # TODO: strings
-        self.set_tooltip_text("Unset this server as favorite")
+        self.set_tooltip_text(buttons.unset_button_tooltip)
 
 
 class WebButton(IconTextButton):
     def __init__(self, label: str) -> None:
-        super().__init__(icon=WEB_BROWSER, label=label)
+        super().__init__(icon=ICON_WEB_BROWSER, label=label)
         pass
 
 
 class RefreshButton(IconTextButton):
     def __init__(self, controller: "Controller") -> None:
         super().__init__(
-            icon=REFRESH_ICON,
+            icon=ICON_REFRESH,
             label=atomic_buttons.refresh,
         )
 
@@ -206,7 +205,7 @@ class RefreshButton(IconTextButton):
 
 class KeysButton(IconTextButton):
     def __init__(self, controller: "Controller") -> None:
-        super().__init__(icon=INPUT_KEYBOARD, label=atomic_buttons.keys)
+        super().__init__(icon=ICON_INPUT_KEYBOARD, label=atomic_buttons.keys)
 
         self.controller = controller
         self.set_margin_top(10)
@@ -223,7 +222,7 @@ class KeysButton(IconTextButton):
 
 class SteamConnectButton(LargeIconTextButton):
     def __init__(self) -> None:
-        super().__init__(icon=STEAM_ICON, label=connect_panel.connect_button)
+        super().__init__(icon=ICON_STEAM, label=connect_panel.connect_button)
         self.set_tooltip_text(connect_panel.connect_tooltip)
 
 
@@ -243,7 +242,7 @@ class SteamWorkshopButton(SteamTextButton):
 
 class AddButton(IconTextButton):
     def __init__(self) -> None:
-        super().__init__(icon=LIST_ADD, label=connect_panel.add_button)
+        super().__init__(icon=ICON_LIST_ADD, label=connect_panel.add_button)
         self.set_tooltip_text(connect_panel.add_tooltip)
 
 

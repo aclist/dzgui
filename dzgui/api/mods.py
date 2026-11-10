@@ -24,14 +24,6 @@ from typing import Any
 logger = logging.getLogger(APP_NAME)
 
 
-@dataclass
-class ModMeta:
-    protocol: str
-    published_id: str
-    name: str
-    timestamp: str
-
-
 def get_local_mod_ids(steam_path: Path) -> list[int]:
     workshop_path = get_local_mod_path(steam_path)
     mods = get_local_mods(workshop_path)

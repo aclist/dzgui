@@ -12,7 +12,7 @@ from dzgui.views.mixins.context_mixin import ContextMixin
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, GLib, Gdk, GObject, Pango  # noqa E402
+from gi.repository import Gtk, Gdk
 
 if TYPE_CHECKING:
     from pathlib import Path

@@ -5,7 +5,7 @@ from dzgui.util.keys import is_ctrl_mask
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, GLib, Gdk, GObject, Pango  # noqa E402
+from gi.repository import Gtk, Gdk
 
 
 class CursorMixin:

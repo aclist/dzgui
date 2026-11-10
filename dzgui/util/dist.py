@@ -7,11 +7,6 @@ from dzgui.const.constants import APP_NAME
 from dzgui.util.ip import get_coords
 from dzgui.util.localize import number
 
-import gi
-
-gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk  # noqa E402
-
 if TYPE_CHECKING:
     from queue import Queue
     from dzgui.const.enum import ServerTab
