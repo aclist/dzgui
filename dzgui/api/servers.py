@@ -13,6 +13,7 @@ from typing import Any, Optional, TYPE_CHECKING, Union
 
 from dzgui.const.constants import APP_NAME, REQUEST_TIMEOUT
 from dzgui.const.endpoints import STEAM_SERVERS
+from dzgui.model.proxy_model import ServerRow
 from dzgui.util.format import format_exception
 from dzgui.util import strings
 
@@ -111,7 +112,7 @@ def get_netmask() -> str:
 
 
 # TODO: rename
-def test_ip(suffix: int, port: int, event: threading.Event) -> dict | None:
+def test_ip(suffix: int, port: int, event: threading.Event) -> dict[str, Any] | None:
     if event.is_set():
         return None
     netmask = get_netmask()
@@ -139,7 +140,9 @@ def sanitize(name: str) -> str:
     return name
 
 
-def parse_json(json: list) -> list:
+def parse_json(
+    json: list[dict[str, Any]],
+) -> list[ServerRow]:
     """
     Server metadata is underspecified and server operators
     tend to insert random garbage in the headers. In case
@@ -224,7 +227,7 @@ def parse_json(json: list) -> list:
         mapname = row["map"].lower()
         players = row["players"]
         max_players = row["max_players"]
-        raw = (
+        raw = ServerRow(
             name,
             mapname,
             view,
@@ -507,14 +510,14 @@ def record_to_fqip(record: Record) -> str:
     return f"{record.ip}:{record.gameport}:{record.qport}"
 
 
-def response_to_fqip(res: dict) -> str:
+def response_to_fqip(res: dict[str, Any]) -> str:
     ip = res["addr"].split(":")[0]
     gameport = res["gameport"]
     qport = res["addr"].split(":")[1]
     return f"{ip}:{gameport}:{qport}"
 
 
-def response_to_record(res: dict) -> Record:
+def response_to_record(res: dict[str, Any]) -> Record:
     ip = res["addr"].split(":")[0]
     gameport = res["gameport"]
     qport = res["addr"].split(":")[1]

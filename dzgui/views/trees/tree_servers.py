@@ -7,7 +7,7 @@ from warnings import deprecated
 
 from dzgui.api.servers import ping, Record
 from dzgui.const.constants import APP_NAME
-from dzgui.const.enum import ContextMenu, ContextMenuGroup, ServerTab
+from dzgui.const.enum import ContextMenuItem, ContextMenuGroup, ServerTab
 from dzgui.managers.filter import FilterManager
 from dzgui.model.proxy_model import ProxyModelManager
 from dzgui.util import strings
@@ -32,6 +32,7 @@ if TYPE_CHECKING:
     from dzgui.controllers.mc import Controller
     from dzgui.controllers.emitter import Emitter
     from dzgui.model.model_factory import FastInsertListStore
+    from dzgui.util.dist import Haversine
 
 QUEUE_CHECK_DELAY = 200
 
@@ -64,7 +65,7 @@ class ServerTreeView(ContextMixin, TreeView):  # type: ignore
 
         self.queue_id: int
         self.handler_id: int
-        self.queue: Queue = Queue()
+        self.queue: Queue[tuple[str, "Haversine" | None, ServerTab]] = Queue()
 
         self.seen_cache: list[Record] = []
 
@@ -250,9 +251,9 @@ class ServerTreeView(ContextMixin, TreeView):  # type: ignore
                     if self.enum is ServerTab.LAN:
                         self.emitter.emit("request_custom_port_focus")
                 case Gdk.KEY_c:
-                    self.controller.menu_action(ContextMenu.COPY_SERVER_IP, self)
+                    self.controller.menu_action(ContextMenuItem.COPY_SERVER_IP, self)
                 case Gdk.KEY_r:
-                    self.controller.menu_action(ContextMenu.REFRESH_PLAYERS, self)
+                    self.controller.menu_action(ContextMenuItem.REFRESH_PLAYERS, self)
         else:
             match event.keyval:
                 case Gdk.KEY_l | Gdk.KEY_Right:
@@ -406,11 +407,15 @@ class ServerTreeView(ContextMixin, TreeView):  # type: ignore
         path = model.get_path(it)
         row_index = path.get_indices()[0]
         try:
-            start, end = self.get_visible_range()
+            start, end = self.get_visible_range()  # type: ignore[no-untyped-call]
         except Exception:
             return
         if row_index >= start[0] <= end[0]:
             # NOTE: fetch raw data rows
             real_model = self.proxy_man.get_control()
-            value = real_model[row_index][col_index]
+            from dataclasses import fields
+            from dzgui.model.proxy_model import ServerRow
+            key = fields(ServerRow)[col_index].name
+
+            value = getattr(real_model[row_index], key)
             cell.set_property("text", str(value))

@@ -1,6 +1,8 @@
 import gi
+
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gdk  # noqa E402
+from gi.repository import Gdk
+
 
 def is_navkey(key: int) -> bool:
     nav_keys = [
@@ -17,6 +19,7 @@ def is_navkey(key: int) -> bool:
     if key in nav_keys:
         return True
     return False
+
 
 def is_ctrl_mask(event: Gdk.EventKey) -> bool:
     if event.state is Gdk.ModifierType.CONTROL_MASK:

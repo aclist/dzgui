@@ -31,10 +31,10 @@ from dzgui.const.constants import (
     VDF_PATH,
 )
 from dzgui.const.endpoints import (
-    APP_DETAILS,
-    SUB_ENDPOINT,
+    STEAM_APP_DETAILS,
     STEAM_PUBLISHED_FILES,
-    UNSUB_ENDPOINT,
+    STEAM_SUB,
+    STEAM_UNSUB,
 )
 from dzgui.strings import wizard
 from dzgui.strings.errors import api_validation_error, workshop_endpoint_error
@@ -310,11 +310,11 @@ def update_workshop(key: str, mod: int, endpoint: str) -> None:
 
 
 def subscribe(key: str, mod: int) -> None:
-    update_workshop(key, mod, SUB_ENDPOINT)
+    update_workshop(key, mod, STEAM_SUB)
 
 
 def unsubscribe(key: str, mod: int) -> None:
-    update_workshop(key, mod, UNSUB_ENDPOINT)
+    update_workshop(key, mod, STEAM_UNSUB)
 
 
 def validate_mod(client: str, mod: str) -> None:
@@ -512,7 +512,7 @@ def get_app_path(folders_path: Path, appid: int) -> Path:
 
 def get_app_name(appid: int) -> str | None:
     payload = {"appids": [appid]}
-    res = requests.get(APP_DETAILS, params=payload)
+    res = requests.get(STEAM_APP_DETAILS, params=payload)
     if res.status_code != 200:
         return None
     try:

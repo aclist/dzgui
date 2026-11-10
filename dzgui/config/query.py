@@ -5,6 +5,7 @@ from dzgui.util._json import read_json
 
 from dzgui.const.enum import Preferences
 
+
 class ConfigFileError(Exception):
     pass
 
@@ -39,4 +40,4 @@ def get_favorites(path: Path) -> list[str]:
 
 
 def enum_to_key(enum: Preferences) -> str:
-    return str(enum.dict["key"])
+    return str(enum.key)

@@ -7,11 +7,6 @@ from dzgui.const.constants import APP_NAME
 from dzgui.util.ip import get_coords
 from dzgui.util.localize import number
 
-import gi
-
-gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk  # noqa E402
-
 if TYPE_CHECKING:
     from queue import Queue
     from dzgui.const.enum import ServerTab
@@ -59,7 +54,7 @@ class CalcDist:
         self,
         addr: str,
         enum: "ServerTab",
-        result_queue: "Queue",
+        result_queue: "Queue[tuple[str, Haversine | None, ServerTab]]",
         controller: "Controller",
         cache: dict[str, Haversine],
     ) -> None:
@@ -72,7 +67,7 @@ class CalcDist:
         self.ip = self.addr
 
         dist = self.compare(self.ip)
-        self.result_queue.put([self.addr, dist, self.enum])
+        self.result_queue.put((self.addr, dist, self.enum))
 
     def compare(self, remote_ip: str) -> Haversine | None:
         prefs = self.controller.get_prefs()

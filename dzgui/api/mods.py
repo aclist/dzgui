@@ -23,14 +23,6 @@ from dzgui.init.migrate import clean_legacy_versions_file
 logger = logging.getLogger(APP_NAME)
 
 
-@dataclass
-class ModMeta:
-    protocol: str
-    published_id: str
-    name: str
-    timestamp: str
-
-
 def get_local_mod_ids(steam_path: Path) -> list[int]:
     workshop_path = get_local_mod_path(steam_path)
     mods = get_local_mods(workshop_path)
@@ -113,10 +105,6 @@ def get_delimited_mods(steam_path: Path) -> list[Any]:
     return parse_mods(mods)
 
 
-def get_missing_mods(local: list, remote: list) -> list:
-    return [mod for mod in remote if mod not in local]
-
-
 def _hash(uid: str, use_custom: bool = False) -> str:
     md5 = hashlib.md5()
     md5.update(uid.encode("ascii"))
@@ -153,7 +141,7 @@ def remove_stale_signatures(
 
 
 def find_stale_mods(config: Path) -> list[int]:
-    def push_record(rec: str) -> list:
+    def push_record(rec: str) -> list[int]:
         record = fqip_to_record(rec)
         if record is None:
             return []

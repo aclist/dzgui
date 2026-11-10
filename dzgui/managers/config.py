@@ -46,6 +46,15 @@ class ConfigManager:
         ips.append(record)
         self.update_config(Preferences.IP_LIST, ips)
 
+    def remove_from_history_file(self, fqip: str) -> None:
+        try:
+            history = self.prefs.paths.history
+            ips = [line.rstrip() for line in history.read_text().splitlines()]
+            ips.remove(fqip)
+            history.write_text("\n".join(ips))
+        except Exception as e:
+            logger.critical(e)
+
     def update_history_file(self, fqip: str) -> None:
         try:
             with open(self.prefs.paths.history, "r") as f:
@@ -124,7 +133,7 @@ class ConfigManager:
         return False
 
     def enum_to_key(self, enum: Preferences) -> str:
-        return str(enum.dict["key"])
+        return str(enum.key)
 
     def toggle_config(self, key: Preferences) -> None:
         try:
@@ -162,7 +171,7 @@ class ConfigManager:
             trace = traceback.format_exc()
             dialog = ExceptionDialog(self.controller, trace)
             dialog.show_all()
-            dialog.run()
+            dialog.run()  # type: ignore[no-untyped-call]
 
     def save_res_and_quit(self, tv: "ServerTreeView", window: "OuterWindow") -> None:
         columns = tv.get_columns()

@@ -8,7 +8,7 @@ import dzgui.util._json as JSON  # noqa
 
 from dzgui.const.enum import (
     ButtonType,
-    ContextMenu,
+    ContextMenuItem,
     FilterMode,
     NotebookPage,
     Preferences,
@@ -32,7 +32,7 @@ from dzgui.views.dialogs.generic import ExceptionDialog
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, Gdk, GLib, GObject  # noqa E402
+from gi.repository import Gtk, Gdk, GLib, GObject
 
 logger = logging.getLogger(APP_NAME)
 
@@ -77,7 +77,7 @@ class AppNavigation:
 
 class Controller(GObject.GObject):
     def __init__(self) -> None:
-        self.dist_cache: dict[str, "Haversine"] = {}
+        self.dist_cache: dict[str, "Haversine" | None] = {}
         self.mediator = AppNavigation()
 
         self.prefs: UserPrefs
@@ -196,7 +196,9 @@ class Controller(GObject.GObject):
     def show_developers_page(self) -> None:
         self.open_page(NotebookPage.DEVELOPERS)
 
-    def open_page(self, page: NotebookPage) -> None:
+    def open_page(self, page: NotebookPage | None) -> None:
+        if page is None:
+            return
         self.mediator.grid.notebook.set_page_by_enum(page)
 
     def open_page_by_button(self, button: "ContextualButton") -> None:
@@ -262,7 +264,7 @@ class Controller(GObject.GObject):
             logger.critical(e)
             return
 
-    def menu_action(self, action: ContextMenu, tree: "ServerTreeView") -> None:
+    def menu_action(self, action: ContextMenuItem, tree: "ServerTreeView") -> None:
         context_man = ContextMenuManager(tree, self)
         context_man.process(action)
 
@@ -274,7 +276,7 @@ class Controller(GObject.GObject):
         except Exception as e:
             dialog = ExceptionDialog(self, str(e))
             dialog.show_all()
-            dialog.run()
+            dialog.run()  # type: ignore[no-untyped-call]
 
     def select_colorized(self) -> None:
         mod_man = self.mediator.modtreeview.get_mod_man()
@@ -308,7 +310,7 @@ class Controller(GObject.GObject):
             except Exception as e:
                 dialog = ExceptionDialog(self, str(e))
                 dialog.show_all()
-                dialog.run()
+                dialog.run()  # type: ignore[no-untyped-call]
 
     def update_steam_api_key(self, text: str) -> None:
         self.config_man.update_steam_api_key(text)
@@ -355,22 +357,21 @@ class Controller(GObject.GObject):
             filter_man.set_filter(filt, state)
         self.mediator.filters.set_filters(filters)
 
-    def get_dist_cache(self) -> dict[str, "Haversine"]:
+    def get_dist_cache(self) -> dict[str, Union["Haversine", None]]:
         return self.dist_cache
 
-    def set_dist_cache(self, addr: str, haversine: "Haversine") -> None:
+    def set_dist_cache(self, addr: str, haversine: Union["Haversine", None]) -> None:
         self.dist_cache[addr] = haversine
 
     def get_map_store(self) -> Gtk.ListStore:
         filter_man = self.get_filter_man()
         return filter_man.get_map_store()
 
-    def get_enabled_filters(self) -> dict:
+    def get_enabled_filters(self) -> dict[str, bool]:
         filter_man = self.get_filter_man()
         return filter_man.get_filters()
 
     # FIXME: wipe maps store when changing tabs if model is none
-
     def has_server_model(self) -> bool:
         treeview = self.get_active_treeview()
         proxy_man = treeview.get_proxy_man()

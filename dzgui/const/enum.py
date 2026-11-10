@@ -1,7 +1,9 @@
+from __future__ import annotations
+from dataclasses import dataclass
 from enum import Enum
-from typing import Any, Self
 
 from dzgui.util import strings
+from dzgui.strings import rows
 
 
 class Port(Enum):
@@ -46,125 +48,61 @@ class FilterMode(Enum):
     TOGGLE_ON = 3
 
 
-class EnumWithAttrs(Enum):
-    def __new__(cls, *args: Any, **kwargs: Any) -> Self:
-        value = len(cls.__members__) + 1
-        obj = object.__new__(cls)
-        obj._value_ = value
-        return obj
-
-    def __init__(self, d: dict):
-        self.dict = d
+@dataclass(slots=True, frozen=True)
+class ModButtonMeta:
+    label: str
+    tooltip: str
 
 
-class Preferences(EnumWithAttrs):
-    STEAM = {
-        "key": "steam_api",
-    }
-    CLIENT = {
-        "key": "client",
-    }
-    WINDOW = {
-        "key": "fullscreen",
-    }
-    DIST = {
-        "key": "use_miles",
-    }
-    NAME = {
-        "key": "name",
-    }
-    DEFAULT = {
-        "key": "default_steam_path",
-    }
-    FAV_LBL = {
-        "key": "fav_label",
-    }
-    FAV_SRV = {
-        "key": "fav_server",
-    }
-    IP_LIST = {
-        "key": "ip_list",
-    }
-    START_TAB = {
-        "key": "start_tab",
-    }
+@dataclass(slots=True, frozen=True)
+class ButtonTypeMeta:
+    label: str
+    tooltip: str
+    opens: NotebookPage | None
 
 
-class NotebookPage(EnumWithAttrs):
-    OFFLINE = {"crumbs": strings.crumbs.offline, "statusbar": True}
-    CHANGELOG = {"crumbs": strings.crumbs.changelog, "statusbar": True}
-    DEVELOPERS = {"crumbs": strings.crumbs.developers, "statusbar": False}
-    HELP = {"crumbs": strings.crumbs._help, "statusbar": True}
-    KEYS = {"crumbs": strings.crumbs.keys, "statusbar": True}
-    LOG = {"crumbs": strings.crumbs.log, "statusbar": True}
-    MODS = {"crumbs": strings.crumbs.mods, "statusbar": True}
-    OPTIONS = {"crumbs": strings.crumbs.options, "statusbar": False}
-    SERVERS = {"crumbs": strings.crumbs.servers, "statusbar": True}
-    THANKS = {"crumbs": strings.crumbs.thanks, "statusbar": True}
-    CONNECTION = {"crumbs": "Connect", "statusbar": True}
+@dataclass(slots=True, frozen=True)
+class ConfigKey:
+    key: str
 
 
-class RowType(EnumWithAttrs):
-    # TODO: strings
-    CHANGELOG = {
-        "label": "View changelog",
-        "tooltip": "Opens the DZGUI changelog",
-    }
-    SHOW_LOG = {
-        "label": "Show debug log",
-        "tooltip": "Read the DZGUI log generated since startup",
-    }
-    SEPARATOR = {
-        "label": "SEPARATOR",
-        "tooltip": "",
-    }
-    DUMP_LOG = {
-        "label": "Output system info to log file",
-        "tooltip": "Dump diagnostic data for troubleshooting",
-    }
-    DOCS = {
-        "label": "Documentation/help files (GitHub) ⧉",
-        "tooltip": "Open the DZGUI documentation in a browser",
-    }
-    DOCS_FALLBACK = {
-        "label": "Documentation/help files (Codeberg mirror) ⧉",
-        "tooltip": "Open the DZGUI documentation in a browser",
-    }
-    BUGS = {
-        "label": "Report a bug (GitHub) ⧉",
-        "tooltip": "Open the DZGUI issue tracker in a browser",
-    }
-    FORUM = {
-        "label": "DZGUI Subreddit ⧉",
-        "tooltip": "Open the DZGUI discussion forum in a browser",
-    }
-    SPONSOR = {
-        "label": "Sponsor (GitHub) ⧉",
-        "tooltip": "Sponsor development of the DZGUI project",
-    }
-    THANKS = {
-        "label": "Special thanks",
-        "tooltip": "A list of contributors, testers, and sponsors",
-    }
+@dataclass(slots=True, frozen=True)
+class NotebookMeta:
+    crumbs: str
+    has_statusbar: bool
 
 
-# TODO: rename to ContextMenuItem
-class ContextMenu(EnumWithAttrs):
-    ADD_NOTE = {"label": strings.add_note}
-    ADD_SERVER = {"label": strings.add}
-    CONNECT = {"label": strings.connect}
-    COPY_LOG_CLIPBOARD = {"label": strings.copy_log}
-    COPY_SERVER_IP = {"label": strings.copy_ip}
-    COPY_SERVER_NAME = {"label": strings.copy_name}
-    UNSUB_MOD = {"label": strings.unsub_mod}
-    VALIDATE_MOD = {"label": strings.validate_mod}
-    OPEN_WORKSHOP = {"label": strings.open_workshop}
-    REFRESH_PLAYERS = {"label": strings.refresh_players}
-    REMOVE_HISTORY = {"label": strings.remove_history}
-    REMOVE_SERVER = {"label": strings.remove}
-    SET_FAV = {"label": strings.add_fav}
-    SHOW_DETAILS = {"label": strings.show_details}
-    SHOW_MODS = {"label": strings.show_mods}
+@dataclass(slots=True, frozen=True)
+class RowMeta:
+    label: str
+    tooltip: str
+
+
+@dataclass(slots=True, frozen=True)
+class ContextMenuMeta:
+    label: str
+
+
+class ContextMenuItem(Enum):
+    ADD_NOTE = ContextMenuMeta(strings.add_note)
+    ADD_SERVER = ContextMenuMeta(strings.add)
+    CONNECT = ContextMenuMeta(strings.connect)
+    COPY_LOG_CLIPBOARD = ContextMenuMeta(strings.copy_log)
+    COPY_SERVER_IP = ContextMenuMeta(strings.copy_ip)
+    COPY_SERVER_NAME = ContextMenuMeta(strings.copy_name)
+    UNSUB_MOD = ContextMenuMeta(strings.unsub_mod)
+    VALIDATE_MOD = ContextMenuMeta(strings.validate_mod)
+    OPEN_WORKSHOP = ContextMenuMeta(strings.open_workshop)
+    REFRESH_PLAYERS = ContextMenuMeta(strings.refresh_players)
+    REMOVE_HISTORY = ContextMenuMeta(strings.remove_history)
+    REMOVE_SERVER = ContextMenuMeta(strings.remove)
+    SET_FAV = ContextMenuMeta(strings.add_fav)
+    SHOW_DETAILS = ContextMenuMeta(strings.show_details)
+    SHOW_MODS = ContextMenuMeta(strings.show_mods)
+
+    @property
+    def label(self) -> str:
+        return self.value.label
 
 
 class ContextMenuGroup(Enum):
@@ -172,113 +110,193 @@ class ContextMenuGroup(Enum):
     Groupings of context menu items
     """
 
-    SERVER_MOD = (ContextMenu.OPEN_WORKSHOP,)
-    MOD = (ContextMenu.OPEN_WORKSHOP, ContextMenu.UNSUB_MOD, ContextMenu.VALIDATE_MOD)
+    SERVER_MOD = (ContextMenuItem.OPEN_WORKSHOP,)
+    MOD = (
+        ContextMenuItem.OPEN_WORKSHOP,
+        ContextMenuItem.UNSUB_MOD,
+        ContextMenuItem.VALIDATE_MOD,
+    )
     MOD_OFFLINE = (None,)
-    LOG = (ContextMenu.COPY_LOG_CLIPBOARD,)
+    LOG = (ContextMenuItem.COPY_LOG_CLIPBOARD,)
     SERVER_BROWSER = (
-        ContextMenu.CONNECT,
-        ContextMenu.ADD_SERVER,
-        ContextMenu.SET_FAV,
-        ContextMenu.COPY_SERVER_NAME,
-        ContextMenu.COPY_SERVER_IP,
-        ContextMenu.ADD_NOTE,
-        ContextMenu.SHOW_MODS,
-        ContextMenu.SHOW_DETAILS,
-        ContextMenu.REFRESH_PLAYERS,
+        ContextMenuItem.CONNECT,
+        ContextMenuItem.ADD_SERVER,
+        ContextMenuItem.SET_FAV,
+        ContextMenuItem.COPY_SERVER_NAME,
+        ContextMenuItem.COPY_SERVER_IP,
+        ContextMenuItem.ADD_NOTE,
+        ContextMenuItem.SHOW_MODS,
+        ContextMenuItem.SHOW_DETAILS,
+        ContextMenuItem.REFRESH_PLAYERS,
     )
     SCAN_LAN = (
-        ContextMenu.CONNECT,
-        ContextMenu.SET_FAV,
-        ContextMenu.COPY_SERVER_NAME,
-        ContextMenu.COPY_SERVER_IP,
-        ContextMenu.ADD_NOTE,
-        ContextMenu.SHOW_MODS,
-        ContextMenu.SHOW_DETAILS,
-        ContextMenu.REFRESH_PLAYERS,
+        ContextMenuItem.CONNECT,
+        ContextMenuItem.SET_FAV,
+        ContextMenuItem.COPY_SERVER_NAME,
+        ContextMenuItem.COPY_SERVER_IP,
+        ContextMenuItem.ADD_NOTE,
+        ContextMenuItem.SHOW_MODS,
+        ContextMenuItem.SHOW_DETAILS,
+        ContextMenuItem.REFRESH_PLAYERS,
     )
     SAVED = (
-        ContextMenu.CONNECT,
-        ContextMenu.SET_FAV,
-        ContextMenu.REMOVE_SERVER,
-        ContextMenu.COPY_SERVER_NAME,
-        ContextMenu.COPY_SERVER_IP,
-        ContextMenu.ADD_NOTE,
-        ContextMenu.SHOW_MODS,
-        ContextMenu.SHOW_DETAILS,
-        ContextMenu.REFRESH_PLAYERS,
+        ContextMenuItem.CONNECT,
+        ContextMenuItem.SET_FAV,
+        ContextMenuItem.REMOVE_SERVER,
+        ContextMenuItem.COPY_SERVER_NAME,
+        ContextMenuItem.COPY_SERVER_IP,
+        ContextMenuItem.ADD_NOTE,
+        ContextMenuItem.SHOW_MODS,
+        ContextMenuItem.SHOW_DETAILS,
+        ContextMenuItem.REFRESH_PLAYERS,
     )
     RECENT = (
-        ContextMenu.CONNECT,
-        ContextMenu.ADD_SERVER,
-        ContextMenu.SET_FAV,
-        ContextMenu.REMOVE_HISTORY,
-        ContextMenu.COPY_SERVER_NAME,
-        ContextMenu.COPY_SERVER_IP,
-        ContextMenu.ADD_NOTE,
-        ContextMenu.SHOW_MODS,
-        ContextMenu.SHOW_DETAILS,
-        ContextMenu.REFRESH_PLAYERS,
+        ContextMenuItem.CONNECT,
+        ContextMenuItem.ADD_SERVER,
+        ContextMenuItem.SET_FAV,
+        ContextMenuItem.REMOVE_HISTORY,
+        ContextMenuItem.COPY_SERVER_NAME,
+        ContextMenuItem.COPY_SERVER_IP,
+        ContextMenuItem.ADD_NOTE,
+        ContextMenuItem.SHOW_MODS,
+        ContextMenuItem.SHOW_DETAILS,
+        ContextMenuItem.REFRESH_PLAYERS,
     )
 
 
-class ModButton(EnumWithAttrs):
-    SELECT_ALL = {
-        "label": strings.mod_panel.select_all,
-        "tooltip": strings.mod_panel.select_all_tooltip,
-    }
-    UNSELECT_ALL = {
-        "label": strings.mod_panel.unselect_all,
-        "tooltip": strings.mod_panel.unselect_all_tooltip,
-    }
-    HIGHLIGHT_STALE = {
-        "label": strings.mod_panel.highlight_stale,
-        "tooltip": strings.mod_panel.highlight_stale_tooltip,
-    }
-    UNHIGHLIGHT_STALE = {
-        "label": strings.mod_panel.unhighlight_stale,
-        "tooltip": strings.mod_panel.unhighlight_stale_tooltip,
-    }
-    UNSUB_SELECTED = {
-        "label": strings.mod_panel.unsub_selected,
-        "tooltip": strings.mod_panel.unsub_selected_tooltip,
-    }
-    SELECT_STALE = {
-        "label": strings.mod_panel.select_stale,
-        "tooltip": strings.mod_panel.select_stale_tooltip,
-    }
-    VALIDATE = {
-        "label": strings.mod_panel.validate,
-        "tooltip": strings.mod_panel.validate_tooltip,
-    }
+class Preferences(Enum):
+    STEAM = ConfigKey("steam_api")
+    CLIENT = ConfigKey("client")
+    WINDOW = ConfigKey("fullscreen")
+    DIST = ConfigKey("use_miles")
+    NAME = ConfigKey("name")
+    DEFAULT = ConfigKey("default_steam_path")
+    FAV_LBL = ConfigKey("fav_label")
+    FAV_SRV = ConfigKey("fav_server")
+    IP_LIST = ConfigKey("ip_list")
+    START_TAB = ConfigKey("start_tab")
+
+    @property
+    def key(self) -> str:
+        return self.value.key
 
 
-class ButtonType(EnumWithAttrs):
-    SERVERS = {
-        "label": strings.buttons.servers_label,
-        "tooltip": strings.buttons.servers_tooltip,
-        "opens": NotebookPage.SERVERS,
-    }
-    MODS = {
-        "label": strings.buttons.mods_label,
-        "tooltip": strings.buttons.mods_tooltip,
-        "opens": NotebookPage.MODS,
-    }
-    OPTIONS = {
-        "label": strings.buttons.options_label,
-        "tooltip": strings.buttons.options_tooltip,
-        "opens": NotebookPage.OPTIONS,
-    }
-    HELP = {
-        "label": strings.buttons.help_label,
-        "tooltip": strings.buttons.help_tooltip,
-        "opens": NotebookPage.HELP,
-    }
-    EXIT = {
-        "label": strings.buttons.exit_label,
-        "tooltip": strings.buttons.exit_tooltip,
-        "opens": None,
-    }
+class NotebookPage(Enum):
+    OFFLINE = NotebookMeta(strings.crumbs.offline, True)
+    CHANGELOG = NotebookMeta(strings.crumbs.changelog, True)
+    DEVELOPERS = NotebookMeta(strings.crumbs.developers, False)
+    HELP = NotebookMeta(strings.crumbs._help, True)
+    KEYS = NotebookMeta(strings.crumbs.keys, True)
+    LOG = NotebookMeta(strings.crumbs.log, True)
+    MODS = NotebookMeta(strings.crumbs.mods, True)
+    OPTIONS = NotebookMeta(strings.crumbs.options, False)
+    SERVERS = NotebookMeta(strings.crumbs.servers, True)
+    THANKS = NotebookMeta(strings.crumbs.thanks, True)
+    CONNECTION = NotebookMeta(strings.crumbs.connect, True)
+
+    @property
+    def crumbs(self) -> str:
+        return self.value.crumbs
+
+    @property
+    def has_statusbar(self) -> bool:
+        return self.value.has_statusbar
+
+
+class RowType(Enum):
+    CHANGELOG = RowMeta(rows.changelog_label, rows.changelog_status)
+    SHOW_LOG = RowMeta(rows.log_label, rows.log_status)
+    SEPARATOR = RowMeta(rows.separator_label, rows.separator_status)
+    DUMP_LOG = RowMeta(rows.system_log_label, rows.system_log_status)
+    DOCS = RowMeta(rows.docs_label, rows.docs_status)
+    DOCS_FALLBACK = RowMeta(rows.docs_fallback_label, rows.docs_fallback_status)
+    BUGS = RowMeta(rows.bugs_label, rows.bugs_status)
+    FORUM = RowMeta(rows.forum_label, rows.forum_status)
+    SPONSOR = RowMeta(rows.sponsor_label, rows.sponsor_status)
+    THANKS = RowMeta(rows.thanks_label, rows.thanks_status)
+
+    @property
+    def label(self) -> str:
+        return self.value.label
+
+    @property
+    def tooltip(self) -> str:
+        return self.value.tooltip
+
+
+class ModButton(Enum):
+    SELECT_ALL = ModButtonMeta(
+        strings.mod_panel.select_all, strings.mod_panel.select_all_tooltip
+    )
+    UNSELECT_ALL = ModButtonMeta(
+        strings.mod_panel.unselect_all, strings.mod_panel.unselect_all_tooltip
+    )
+    HIGHLIGHT_STALE = ModButtonMeta(
+        strings.mod_panel.highlight_stale, strings.mod_panel.highlight_stale_tooltip
+    )
+    UNHIGHLIGHT_STALE = ModButtonMeta(
+        strings.mod_panel.unhighlight_stale, strings.mod_panel.unhighlight_stale_tooltip
+    )
+    UNSUB_SELECTED = ModButtonMeta(
+        strings.mod_panel.unsub_selected,
+        strings.mod_panel.unsub_selected_tooltip,
+    )
+    SELECT_STALE = ModButtonMeta(
+        strings.mod_panel.select_stale,
+        strings.mod_panel.select_stale_tooltip,
+    )
+    VALIDATE = ModButtonMeta(
+        strings.mod_panel.validate,
+        strings.mod_panel.validate_tooltip,
+    )
+
+    @property
+    def label(self) -> str:
+        return self.value.label
+
+    @property
+    def tooltip(self) -> str:
+        return self.value.tooltip
+
+
+class ButtonType(Enum):
+    SERVERS = ButtonTypeMeta(
+        strings.buttons.servers_label,
+        strings.buttons.servers_tooltip,
+        NotebookPage.SERVERS,
+    )
+    MODS = ButtonTypeMeta(
+        strings.buttons.mods_label,
+        strings.buttons.mods_tooltip,
+        NotebookPage.MODS,
+    )
+    OPTIONS = ButtonTypeMeta(
+        strings.buttons.options_label,
+        strings.buttons.options_tooltip,
+        NotebookPage.OPTIONS,
+    )
+    HELP = ButtonTypeMeta(
+        strings.buttons.help_label,
+        strings.buttons.help_tooltip,
+        NotebookPage.HELP,
+    )
+    EXIT = ButtonTypeMeta(
+        strings.buttons.exit_label,
+        strings.buttons.exit_tooltip,
+        None,
+    )
+
+    @property
+    def label(self) -> str:
+        return self.value.label
+
+    @property
+    def tooltip(self) -> str:
+        return self.value.tooltip
+
+    @property
+    def opens(self) -> NotebookPage | None:
+        return self.value.opens
 
 
 HELP_MENU_ROWS = (

@@ -2,7 +2,7 @@ import logging
 from typing import TYPE_CHECKING
 
 from dzgui.const.constants import APP_NAME
-from dzgui.const.enum import ContextMenu, Preferences
+from dzgui.const.enum import ContextMenuItem, Preferences
 from dzgui.util.clip import copy_clipboard
 from dzgui.util.open_links import open_workshop_page
 
@@ -34,7 +34,7 @@ class ContextMenuManager:
         self.controller = controller
         self.treeview = treeview
 
-    def process(self, action: ContextMenu) -> None:
+    def process(self, action: ContextMenuItem) -> None:
         if isinstance(self.treeview, ServerTreeView):
             record = self.treeview.get_record()
             if record is None:
@@ -42,14 +42,14 @@ class ContextMenuManager:
 
             match action:
                 # UNTHREADED
-                case ContextMenu.ADD_NOTE:
+                case ContextMenuItem.ADD_NOTE:
                     dialog = NoteDialog(self.controller)
-                    dialog.run()
-                case ContextMenu.COPY_SERVER_IP:
+                    dialog.run()  # type: ignore[no-untyped-call]
+                case ContextMenuItem.COPY_SERVER_IP:
                     self.copy_server_ip()
-                case ContextMenu.COPY_SERVER_NAME:
+                case ContextMenuItem.COPY_SERVER_NAME:
                     self.copy_server_name()
-                case ContextMenu.SET_FAV:
+                case ContextMenuItem.SET_FAV:
                     name = self.treeview.get_value_at_index(0)
                     # NOTE: fully qualified ip
                     fqip = self.treeview.get_record_string()
@@ -58,40 +58,40 @@ class ContextMenuManager:
                     self.controller.set_fav(name, fqip, simple)
 
                 # THREADED
-                case ContextMenu.ADD_SERVER:
+                case ContextMenuItem.ADD_SERVER:
                     self.controller.add_by_record(record)
-                case ContextMenu.CONNECT:
+                case ContextMenuItem.CONNECT:
                     self.controller.connect_by_record(record)
-                case ContextMenu.REFRESH_PLAYERS:
+                case ContextMenuItem.REFRESH_PLAYERS:
                     self.controller.refresh_players(record)
-                case ContextMenu.REMOVE_HISTORY:
+                case ContextMenuItem.REMOVE_HISTORY:
                     self.controller.remove_from_history(record)
-                case ContextMenu.REMOVE_SERVER:
+                case ContextMenuItem.REMOVE_SERVER:
                     self.controller.remove_by_record(record)
-                case ContextMenu.SHOW_DETAILS:
+                case ContextMenuItem.SHOW_DETAILS:
                     self.controller.get_details(record)
-                case ContextMenu.SHOW_MODS:
+                case ContextMenuItem.SHOW_MODS:
                     self.controller.get_modlist(record)
 
         if isinstance(self.treeview, (ModTreeView, OfflineModTreeView)):
             match action:
-                case ContextMenu.OPEN_WORKSHOP:
+                case ContextMenuItem.OPEN_WORKSHOP:
                     self.open_mod_page()
-                case ContextMenu.UNSUB_MOD:
+                case ContextMenuItem.UNSUB_MOD:
                     self.controller.unsub_mods(self.treeview)
-                case ContextMenu.VALIDATE_MOD:
+                case ContextMenuItem.VALIDATE_MOD:
                     self.controller.validate_mods(self.treeview)
                 case _:
                     pass
 
         if isinstance(self.treeview, LogTreeView):
             match action:
-                case ContextMenu.COPY_LOG_CLIPBOARD:
+                case ContextMenuItem.COPY_LOG_CLIPBOARD:
                     self.copy_log()
 
         if isinstance(self.treeview, ServerModTreeView):
             match action:
-                case ContextMenu.OPEN_WORKSHOP:
+                case ContextMenuItem.OPEN_WORKSHOP:
                     self.open_mod_page()
 
     def copy_server_ip(self) -> None:

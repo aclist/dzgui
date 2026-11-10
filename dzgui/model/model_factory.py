@@ -7,11 +7,11 @@ from dzgui.util.strings import delimiter
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository.Gtk import ListStore, TreeIter  # noqa E402
-from gi.repository import GObject  # noqa E402
+from gi.repository.Gtk import ListStore, TreeIter
+from gi.repository import GObject
 
 GTYPE_TO_PYTHON = {
-    GObject.type_from_name(GObject.type_name(ptype)): ptype
+    GObject.type_from_name(GObject.type_name(ptype)): ptype  # type: ignore[no-untyped-call]
     for ptype in (int, float, str, bool, object)
 }
 
@@ -147,7 +147,7 @@ class ModelFactory:
 
     def make_help_store(self) -> FastInsertListStore:
         store = self.new_model_from_class(MenuCols)
-        rows = [[row.dict["label"], row] for row in HELP_MENU_ROWS]
+        rows = [[row.label, row] for row in HELP_MENU_ROWS]
         store.extend(rows)
         return store
 

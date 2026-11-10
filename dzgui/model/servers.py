@@ -21,12 +21,12 @@ from dzgui.views.dialogs.generic import ExceptionDialog
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, GLib  # noqa E402
+from gi.repository import Gtk, GLib
 
 if TYPE_CHECKING:
     from dzgui.api.servers import A2SInfo, Record
     from dzgui.controllers.mc import Controller
-    from dzgui.model.proxy_model import ProxyModelManager
+    from dzgui.model.proxy_model import ProxyModelManager, ServerRow
     from dzgui.views.trees.tree_servers import ServerTreeView
 
 logger = logging.getLogger(APP_NAME)
@@ -241,10 +241,7 @@ class ServerModelManager:
 
     def update_history(
         self,
-        rows: (
-            list[tuple[str, str, str, str, int, int, int, str, int, int, str, bool]]
-            | None
-        ) = None,
+        rows: list["ServerRow"] | None = None,
     ) -> None:
         proxy_man = self._get_proxy_man()
         if rows is not None:
@@ -267,7 +264,6 @@ class ServerModelManager:
         self.first_iteration = False
         self.emitter.emit("load_maps", store)
 
-    # TODO: dataclass for record rows; check for other dict annotations
     def add_to_history(self, data: tuple[dict[str, Any], "Record"]) -> None:
         row, record = data
         proxy_man = self._get_proxy_man()
@@ -285,6 +281,10 @@ class ServerModelManager:
     def remove_from_history(self, record: Servers.Record) -> None:
         proxy_man = self._get_proxy_man()
         proxy_man.remove_row_from_control(record)
+
+        fqip = Servers.record_to_fqip(record)
+        config_man = self.controller.get_config_man()
+        config_man.remove_from_history_file(fqip)
         self.update_history()
 
     @call_on_thread(dialog.querying)
@@ -432,7 +432,7 @@ class ServerModelManager:
         if show_dialog:
             dialog = ExceptionDialog(self.controller, dialogs.load_error_lan)
             dialog.show_all()
-            dialog.run()
+            dialog.run()  # type: ignore[no-untyped-call]
 
     def _cleanup_on_failure(self, show_dialog: bool = True) -> None:
         # TODO: disable map, keyword, and filter widgets if model is None
@@ -451,15 +451,15 @@ class ServerModelManager:
             dialog = ExceptionDialog(self.controller, server_timeout)
             dialog.set_details_buffer(kb.DZG_006)
             dialog.show_all()
-            dialog.run()
+            dialog.run()  # type: ignore[no-untyped-call]
 
-    def _push_data(self, data: list[Any]) -> None:
+    def _push_data(self, data: list["ServerRow"]) -> None:
         self._get_proxy_man().push(data)
         self._sort_unique_maps(data)
         self.thread_man.set_cleanup_func(StoredFunc(self._cleanup_on_success))
 
-    def _sort_unique_maps(self, data: list) -> None:
-        u_maps = set([row[1] for row in data])
+    def _sort_unique_maps(self, data: list[Any]) -> None:
+        u_maps = set([row.mapname for row in data])
         self._set_new_maps(sorted(u_maps))
 
     def _set_new_maps(self, maps: list[str]) -> None:
@@ -473,7 +473,6 @@ class ServerModelManager:
 
     @call_on_thread(dialog.filtering)
     def refilter(self, mode: FilterMode) -> None:
-        # FIXME: causes two wait dialogs when map selection change signal emits after loading servers
         self.first_iteration = False
         proxy_man = self._get_proxy_man()
         proxy_man.filter(mode)

@@ -5,12 +5,13 @@ from typing import Self, TYPE_CHECKING
 from dzgui.const.constants import APP_NAME
 from dzgui.const.enum import ContextMenuGroup, ServerTab
 from dzgui.views.trees.tree_servers import ServerTreeView
+from dzgui.strings.generic import tab_changed_label
 from dzgui.util.strings import server_labels
 
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, Gdk, GLib  # noqa E402
+from gi.repository import Gtk, Gdk
 
 logger = logging.getLogger(APP_NAME)
 
@@ -147,8 +148,7 @@ class ServerNotebook(Gtk.ScrolledWindow):
 
         label = self.notebook.get_tab_label_text(child)
         if label is not None:
-            # TODO: strings
-            text = label.strip("*")
+            text = label.strip(tab_changed_label)
             self.notebook.set_tab_label_text(child, text)
 
         tree = child.get_tree()

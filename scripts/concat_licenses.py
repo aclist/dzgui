@@ -1,4 +1,4 @@
-from pathlib import Path
+from shared import get_git_root
 
 BOILERPLATE = """
 This file includes the combined licenses to the following components:
@@ -40,7 +40,7 @@ class CombinedLicense:
 
 def concat_license() -> str:
     combined = CombinedLicense()
-    root = Path(__file__).resolve().parents[1]
+    root = get_git_root()
     licenses = root.joinpath("docs/licenses")
 
     main_license = root.joinpath(LICENSE_FILE)
