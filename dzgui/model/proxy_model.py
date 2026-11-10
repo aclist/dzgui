@@ -14,6 +14,9 @@ if TYPE_CHECKING:
     from dzgui.api.servers import Record
     from dzgui.model.servers import NewPlayerCount
 
+DAY_REG = r"([0][6-9]|[1][0-7])"
+NIGHT_REG = r"([0][0-5]|[1][8-9]|[2][0-3])"
+
 
 @dataclass(slots=True, frozen=True)
 class ServerRow:
@@ -58,8 +61,6 @@ class ServerRow:
 
 class FiltrationManager:
     def __init__(self) -> None:
-        self.DAY_REG = r"([0][6-9]|[1][0-7])"
-        self.NIGHT_REG = r"([0][0-5]|[1][8-9]|[2][0-3])"
 
         self.filter_map = {
             strings.filter_3pp: self.filter_3pp,
@@ -106,10 +107,10 @@ class FiltrationManager:
         return rows
 
     def filter_day(self, rows: list[ServerRow]) -> list[ServerRow]:
-        return [row for row in rows if not re.match(self.DAY_REG, row.time)]
+        return [row for row in rows if not re.match(DAY_REG, row.time)]
 
     def filter_night(self, rows: list[ServerRow]) -> list[ServerRow]:
-        return [row for row in rows if not re.match(self.NIGHT_REG, row.time)]
+        return [row for row in rows if not re.match(NIGHT_REG, row.time)]
 
     def filter_nonascii(self, rows: list[ServerRow]) -> list[ServerRow]:
         return [row for row in rows if row.name.isascii()]
