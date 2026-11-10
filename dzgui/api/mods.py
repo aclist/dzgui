@@ -128,7 +128,7 @@ def remove_stale_signatures(
     config: Path, versions: Path, ids: list[int] | None = None
 ) -> None:
     if versions.is_file() is False:
-        logger.warning("Creating new version signatures file")
+        logger.debug("Creating new version signatures file")
         versions.touch()
         return
 
