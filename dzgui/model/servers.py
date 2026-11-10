@@ -281,6 +281,10 @@ class ServerModelManager:
     def remove_from_history(self, record: Servers.Record) -> None:
         proxy_man = self._get_proxy_man()
         proxy_man.remove_row_from_control(record)
+
+        fqip = Servers.record_to_fqip(record)
+        config_man = self.controller.get_config_man()
+        config_man.remove_from_history_file(fqip)
         self.update_history()
 
     @call_on_thread(dialog.querying)
