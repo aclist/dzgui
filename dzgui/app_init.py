@@ -158,9 +158,6 @@ def build_gui(version: str, is_debug: bool) -> App | None:
         f.truncate(0)
 
     if _is_steam_deck is False:
-        # TODO: sudo escalation dialog
-        # count = get_map_count()
-        # TODO: move into module
         if FLATPAK_ROOT_PATH in lookup(XDG.config, Preferences.DEFAULT):
             has_client = has_flatpak_client()
         else:

@@ -9,6 +9,7 @@ from dzgui.const.constants import (
 )
 from dzgui.const.enum import ServerTab
 from dzgui.managers.update import UpdateManager
+from dzgui.strings.buttons import update_button, version_notifier, version_tooltip
 from dzgui.util.clip import copy_clipboard
 from dzgui.util.file import is_writeable
 from dzgui.views.components.buttonbox import ButtonBox
@@ -61,8 +62,7 @@ class RightPanel(Gtk.Box):
             vexpand=True,
             halign=Gtk.Align.END,
             valign=Gtk.Align.END,
-            # TODO: strings
-            tooltip_text="Click to copy to clipboard",
+            tooltip_text=version_tooltip,
         )
         eb = Gtk.EventBox(halign=Gtk.Align.END, valign=Gtk.Align.END)
         eb.add(self.version_label)
@@ -74,7 +74,7 @@ class RightPanel(Gtk.Box):
         self.pack_start(self.sel_panel, expand=False, fill=False, padding=0)
 
         self.update_button = IconTextButton(
-            "dialog-information-symbolic", label="Updates available"
+            "dialog-information-symbolic", label=update_button
         )
 
         self.gutter_box = Gtk.Box(
@@ -127,7 +127,6 @@ class RightPanel(Gtk.Box):
             return
         self.copying = True
         version = self.version_label.get_text()
-        # TODO: strings
-        self.version_label.set_text("Copied!")
+        self.version_label.set_text(version_notifier)
         copy_clipboard(version)
         GLib.timeout_add_seconds(1, revert)

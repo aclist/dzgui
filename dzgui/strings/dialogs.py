@@ -29,3 +29,5 @@ toggle_calc = "Toggle calculator"
 
 server_details = "Server details"
 server_message = "Server message"
+
+caught_cancel_signal = "Caught cancel signal, cleaning up"

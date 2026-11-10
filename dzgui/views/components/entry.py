@@ -4,6 +4,7 @@ from dzgui.api.servers import validate_ip
 from dzgui.const.icons import ICON_VIEW_CONCEAL, ICON_VIEW_REVEAL
 from dzgui.util.css import add_class, remove_class
 from dzgui.strings import connect_panel
+from dzgui.strings.options import api_placeholder, api_validate
 from dzgui.strings.errors import api_popover
 
 import gi
@@ -143,9 +144,8 @@ class APIEntry(Gtk.Box):
 
         self.func: Callable | None = None
 
-        # TODO: strings
         self.entry = Gtk.Entry(
-            width_chars=60, hexpand=True, placeholder_text="Enter API key"
+            width_chars=60, hexpand=True, placeholder_text=api_placeholder
         )
         self.entry.set_icon_from_icon_name(Gtk.EntryIconPosition.SECONDARY, ICON_VIEW_REVEAL)
         self.entry.set_icon_activatable(Gtk.EntryIconPosition.SECONDARY, True)
@@ -154,8 +154,7 @@ class APIEntry(Gtk.Box):
         self.entry.connect("icon-release", self._on_icon_release)
         self.entry.connect("activate", self._on_field_activated)
 
-        # TODO: strings
-        self.submit = Gtk.Button(label="Validate")
+        self.submit = Gtk.Button(label=api_validate)
         self.submit.set_sensitive(False)
         self.submit.connect("clicked", self._on_submit)
 
