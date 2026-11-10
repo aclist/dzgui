@@ -9,6 +9,7 @@ from pathlib import Path
 from concat_licenses import concat_license
 from parse_toml import get_entrypoint
 from prebuild import get_pyapp, rebuild_cpython
+from shared import get_git_root
 
 
 def update_uname(info: tarfile.TarInfo) -> tarfile.TarInfo:
@@ -17,7 +18,7 @@ def update_uname(info: tarfile.TarInfo) -> tarfile.TarInfo:
     return info
 
 
-root = Path(__file__).resolve().parents[1]
+root = get_git_root()
 dist_dir = root.joinpath("dist")
 build_dir = root.joinpath("build")
 

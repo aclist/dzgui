@@ -7,15 +7,15 @@ from dzgui.util.strings import (
     alert_button_tooltip,
     atomic_buttons,
 )
-from dzgui.const.constants import (
-    CLIPBOARD,
-    CLOSE,
-    INPUT_KEYBOARD,
-    LIST_ADD,
-    REFRESH_ICON,
-    STEAM_ICON,
-    WARNING,
-    WEB_BROWSER,
+from dzgui.const.icons import (
+    ICON_CLIPBOARD,
+    ICON_CLOSE,
+    ICON_INPUT_KEYBOARD,
+    ICON_LIST_ADD,
+    ICON_REFRESH,
+    ICON_STEAM,
+    ICON_WARNING,
+    ICON_WEB_BROWSER,
 )
 from dzgui.strings import connect_panel
 
@@ -102,7 +102,7 @@ class LargeIconTextButton(IconButton):
 
 class ClipboardButton(IconTextButton):
     def __init__(self, controller: Union["Controller", None], func: Callable) -> None:
-        super().__init__(CLIPBOARD, atomic_buttons.copy)
+        super().__init__(ICON_CLIPBOARD, atomic_buttons.copy)
         self.controller = controller
         self.connect("clicked", self._on_button_clicked, func)
 
@@ -131,7 +131,7 @@ class CopyIpButton(ClipboardButton):
 
 class CloseButton(IconTextButton):
     def __init__(self, label: str) -> None:
-        super().__init__(icon=CLOSE, label=label)
+        super().__init__(icon=ICON_CLOSE, label=label)
 
         # TODO: strings
         self.set_tooltip_text("Unset this server as favorite")
@@ -139,14 +139,14 @@ class CloseButton(IconTextButton):
 
 class WebButton(IconTextButton):
     def __init__(self, label: str) -> None:
-        super().__init__(icon=WEB_BROWSER, label=label)
+        super().__init__(icon=ICON_WEB_BROWSER, label=label)
         pass
 
 
 class RefreshButton(IconTextButton):
     def __init__(self, controller: "Controller") -> None:
         super().__init__(
-            icon=REFRESH_ICON,
+            icon=ICON_REFRESH,
             label=atomic_buttons.refresh,
         )
 
@@ -211,7 +211,7 @@ class RefreshButton(IconTextButton):
 
 class KeysButton(IconTextButton):
     def __init__(self, controller: "Controller") -> None:
-        super().__init__(icon=INPUT_KEYBOARD, label=atomic_buttons.keys)
+        super().__init__(icon=ICON_INPUT_KEYBOARD, label=atomic_buttons.keys)
 
         self.controller = controller
         self.set_margin_top(10)
@@ -228,7 +228,7 @@ class KeysButton(IconTextButton):
 
 class SteamConnectButton(LargeIconTextButton):
     def __init__(self) -> None:
-        super().__init__(icon=STEAM_ICON, label=connect_panel.connect_button)
+        super().__init__(icon=ICON_STEAM, label=connect_panel.connect_button)
         self.set_tooltip_text(connect_panel.connect_tooltip)
 
 
@@ -248,7 +248,7 @@ class SteamWorkshopButton(SteamTextButton):
 
 class AddButton(IconTextButton):
     def __init__(self) -> None:
-        super().__init__(icon=LIST_ADD, label=connect_panel.add_button)
+        super().__init__(icon=ICON_LIST_ADD, label=connect_panel.add_button)
         self.set_tooltip_text(connect_panel.add_tooltip)
 
 
@@ -267,7 +267,7 @@ class LoggerAlertsButton(IconTextButton):
             separator = ","
         concat = warnings_text + separator + errors_text
         super().__init__(
-            icon=WARNING,
+            icon=ICON_WARNING,
             label=f"Loaded with{concat}",
         )
         self.set_halign(Gtk.Align.END)

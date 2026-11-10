@@ -5,6 +5,7 @@ from dzgui.const.constants import (
     APP_NAME,
     SEARCH_ICON,
 )
+from dzgui.const.icons import ICON_SEARCH
 from dzgui.util.format import format_exception
 from dzgui.util.strings import all_maps
 from dzgui.views.components.maps_combo import MapsCombo
@@ -108,7 +109,7 @@ class KeywordEntry(Gtk.Entry):
         self.connect("key-press-event", self._on_keypress)
         self.connect("icon-release", lambda *args: self.activate())
 
-        self.set_icon_from_icon_name(Gtk.EntryIconPosition.SECONDARY, SEARCH_ICON)
+        self.set_icon_from_icon_name(Gtk.EntryIconPosition.SECONDARY, ICON_SEARCH)
         self.set_icon_activatable(Gtk.EntryIconPosition.SECONDARY, True)
 
         self.emitter.connect("load_maps", self._on_maps_loaded)

@@ -3,14 +3,12 @@ from enum import Enum
 from typing import Self, TYPE_CHECKING, Union
 
 from dzgui.util import css
+from dzgui.const.icons import ICON_EDIT_DELETE, ICON_FOLDER, ICON_WARNING
 from dzgui.const.constants import (
     APPID_DAYZ,
     APPID_DAYZ_EXP,
     APPNAME_DAYZ,
     APPNAME_DAYZ_EXP_HUMAN,
-    EDIT_DELETE,
-    FOLDER,
-    WARNING,
 )
 from dzgui.const.enum import ContextMenuGroup, NotebookPage
 from dzgui.managers.offline import OfflineManager
@@ -87,7 +85,7 @@ class FolderHBox(HBox):
         self.emitter = controller.get_emitter()
 
         self.eb = InfoEventBox(eb_text, controller)
-        self.button = IconTextButton(FOLDER, btn_label, Gtk.PositionType.LEFT)
+        self.button = IconTextButton(ICON_FOLDER, btn_label, Gtk.PositionType.LEFT)
         self.button.set_halign(Gtk.Align.START)
         self.button.set_image_position(Gtk.PositionType.LEFT)
 
@@ -99,7 +97,7 @@ class FolderHBox(HBox):
         self.label = Gtk.Label()
         self.scrolled_label.add(self.label)
 
-        self.unset_button = IconTextButton(EDIT_DELETE, offline.unset_button)
+        self.unset_button = IconTextButton(ICON_EDIT_DELETE, offline.unset_button)
         self.unset_button.connect("clicked", self._on_unset_clicked)
 
         self.spinner = Gtk.Spinner()
@@ -195,7 +193,7 @@ class ModFrame(HeadingFrame):
         self.tree_vbox.extend([self.scrolled, self.status])
 
         self.no_mods = HBox(spacing=10)
-        no_mods_icon = Icon(WARNING, margin_start=10)
+        no_mods_icon = Icon(ICON_WARNING, margin_start=10)
         no_mods_label = Gtk.Label(label=offline.no_local_mods, halign=Gtk.Align.START)
         self.no_mods.extend([no_mods_icon, no_mods_label])
 
