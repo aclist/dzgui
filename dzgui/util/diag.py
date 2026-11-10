@@ -11,6 +11,7 @@ from dzgui.const.enum import Preferences
 from dzgui.config.query import lookup
 from dzgui.init.prefix import get_version
 from dzgui.util.redact import redact_home
+from dzgui.util.strings import unknown
 
 logger = logging.getLogger(APP_NAME)
 
@@ -27,28 +28,22 @@ def get_cpu_model() -> str:
 
 
 def print_servers(servers: list[str]) -> str:
-    s = ""
-    for server in servers:
-        s += server + "\n"
-    return s
+    return "\n".join(servers)
 
 
 def print_mods(mods: list[int]) -> str:
-    s = ""
-    for mod in mods:
-        s += str(mod) + "\n"
-    return s
+    return "\n".join(map(str, mods))
 
 
 def write_diagnostic(config: Path, outfile: Path) -> None:
     date = datetime.now().isoformat()
 
     try:
-        # FIXME: ID_LIKE not available on CachyOS
+        # NOTE: ID_LIKE not available on CachyOS
         distro = platform.freedesktop_os_release()["ID_LIKE"]
     except Exception as e:
         logger.warn(e)
-        distro = "Unknown"
+        distro = unknown
 
     kernel = os.uname().release
     cpu = get_cpu_model()
@@ -68,7 +63,6 @@ def write_diagnostic(config: Path, outfile: Path) -> None:
     servers = lookup(config, Preferences.IP_LIST)
     servers_pretty = print_servers(servers)
 
-    # FIXME: extraneous newlines in lists of mods
     template = f"""\
     {APP_NAME} version {version}
     Date: {date}
@@ -82,6 +76,7 @@ def write_diagnostic(config: Path, outfile: Path) -> None:
 
     Mods:
     {mods_pretty}
+
     Servers:
     {servers_pretty}
     """
