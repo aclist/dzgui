@@ -48,7 +48,7 @@ class ServerRow:
 
     # TODO: tests for marshalled row insertion
     @classmethod
-    def marshall_rows(
+    def marshal_rows(
         cls, rows: list["ServerRow"]
     ) -> list[tuple[str, str, str, str, int, int, int, str, int, str, str, bool]]:
         """Marshals data before passing into FastInsertListStore's extend() method"""
@@ -242,7 +242,7 @@ class ProxyModelManager:
         if skip_cache is False:
             if filters in self.filter_cache:
                 cached_rows = self.filter_cache[filters]
-                marshalled_rows = ServerRow.marshall_rows(cached_rows)
+                marshalled_rows = ServerRow.marshal_rows(cached_rows)
                 clone = ModelFactory().make_server_store()
                 clone.extend(marshalled_rows)
                 self.set_proxy_model(clone)
@@ -263,7 +263,7 @@ class ProxyModelManager:
         clone = ModelFactory().make_server_store()
         if len(rows) > 0:
             rows = self.sort_rows(rows)
-            marshalled_rows = ServerRow.marshall_rows(rows)
+            marshalled_rows = ServerRow.marshal_rows(rows)
             clone.extend(marshalled_rows)
 
         self.set_cache(filters, rows)
