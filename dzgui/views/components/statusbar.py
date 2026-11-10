@@ -7,7 +7,7 @@ from dzgui.views.components.buttons import LoggerAlertsButton
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk  # noqa E402
+from gi.repository import Gtk
 
 if TYPE_CHECKING:
     from dzgui.const.enum import ServerTab

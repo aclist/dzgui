@@ -13,7 +13,7 @@ from dzgui.views.components.labels import BoldLabel
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, Gdk, Pango, GLib  # noqa E402
+from gi.repository import Gtk, Gdk, Pango, GLib
 
 logger = logging.getLogger(APP_NAME)
 

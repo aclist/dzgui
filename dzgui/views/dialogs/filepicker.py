@@ -2,10 +2,10 @@ from pathlib import Path
 
 from dzgui.util.strings import picker
 
-import gi  # noqa E402
+import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk  # noqa E402
+from gi.repository import Gtk
 
 
 class FilePicker(Gtk.FileChooserDialog):

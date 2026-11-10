@@ -7,10 +7,10 @@ from dzgui.util.strings import developers
 from dzgui.views.components.labels import BoldLabel
 from dzgui.views.trees.tree_base import TreeView
 
-import gi  # noqa E402
+import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk  # noqa E402
+from gi.repository import Gtk
 
 if TYPE_CHECKING:
     from dzgui.controllers.mc import Controller

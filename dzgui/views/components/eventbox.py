@@ -6,7 +6,7 @@ from dzgui.const.icons import ICON_HELP_BUBBLE
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, Gdk  # noqa E402
+from gi.repository import Gtk, Gdk
 
 if TYPE_CHECKING:
     from dzgui.controllers.mc import Controller

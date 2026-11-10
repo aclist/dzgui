@@ -21,7 +21,7 @@ from dzgui.views.dialogs.generic import ExceptionDialog
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, GLib  # noqa E402
+from gi.repository import Gtk, GLib
 
 if TYPE_CHECKING:
     from dzgui.api.servers import A2SInfo, Record

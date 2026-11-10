@@ -10,7 +10,7 @@ from dzgui.views.components.labels import BoldLabel
 from dzgui.views.components.box import VBox, HBox
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, GLib, GObject  # type: ignore  # noqa E402
+from gi.repository import Gtk, GLib, GObject
 
 DAY_START_TIME = time(hour=6, minute=0, second=0)
 DAY_END_TIME = time(hour=18, minute=0, second=0)

@@ -55,11 +55,6 @@ from dzgui.util.symlink import rebuild_symlinks
 from dzgui.views.dialogs.generic import ExceptionDialog
 from dzgui.views.dialogs.servers import ServerDetailsDialog, ServerModDialog
 
-import gi
-
-gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, GLib  # noqa E402
-
 if TYPE_CHECKING:
     from dzgui.api.servers import A2SInfo, Record
     from dzgui.controllers.mc import Controller
