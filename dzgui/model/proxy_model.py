@@ -2,7 +2,7 @@ import re
 
 from dataclasses import dataclass, fields
 from operator import attrgetter
-from typing import TYPE_CHECKING, Union
+from typing import TYPE_CHECKING
 
 from dzgui.const.enum import FilterMode
 from dzgui.model.model_factory import ModelFactory
@@ -216,14 +216,14 @@ class ProxyModelManager:
     def clear_proxy_model(self) -> None:
         self.proxy_model.clear()
 
-    def get_proxy_model(self) -> Union["FastInsertListStore", None]:
+    def get_proxy_model(self) -> "FastInsertListStore | None":
         if hasattr(self, "proxy_model"):
             return self.proxy_model
         return None
 
     def filter(
         self, mode: FilterMode, skip_cache: bool = False
-    ) -> Union["FastInsertListStore", None]:
+    ) -> "FastInsertListStore | None":
         """
         Native Gtk.TreeView.refilter() method was not performant enough
         when running in the main loop with 40k+ records
