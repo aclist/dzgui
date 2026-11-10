@@ -1,11 +1,11 @@
+import gi
 import logging
 import threading
 
 from typing import Any, TYPE_CHECKING, Union
 
-import dzgui.util._json as JSON  # noqa
-
-
+from dzgui.config.userprefs import UserPrefs
+from dzgui.const.constants import APP_NAME
 from dzgui.const.enum import (
     ButtonType,
     ContextMenuItem,
@@ -14,9 +14,6 @@ from dzgui.const.enum import (
     Preferences,
     ServerTab,
 )
-
-from dzgui.config.userprefs import UserPrefs
-from dzgui.const.constants import APP_NAME
 from dzgui.controllers.emitter import Emitter
 from dzgui.managers.config import ConfigManager
 from dzgui.managers.connection import ConnectionManager
@@ -28,8 +25,6 @@ from dzgui.util.format import format_exception, format_player_count
 from dzgui.util.open_links import open_user_workshop, open_workshop_page
 from dzgui.views.dialogs.filepicker import FilePicker
 from dzgui.views.dialogs.generic import ExceptionDialog
-
-import gi
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Gdk, GLib, GObject

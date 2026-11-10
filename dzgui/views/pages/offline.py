@@ -1,9 +1,10 @@
 from __future__ import annotations
+
+import gi
+
 from enum import Enum
 from typing import Self, TYPE_CHECKING, Union
 
-from dzgui.util import css
-from dzgui.const.icons import ICON_EDIT_DELETE, ICON_FOLDER, ICON_WARNING
 from dzgui.const.constants import (
     APPID_DAYZ,
     APPID_DAYZ_EXP,
@@ -11,8 +12,10 @@ from dzgui.const.constants import (
     APPNAME_DAYZ_EXP_HUMAN,
 )
 from dzgui.const.enum import ContextMenuGroup, NotebookPage
+from dzgui.const.icons import ICON_EDIT_DELETE, ICON_FOLDER, ICON_WARNING
 from dzgui.managers.offline import OfflineManager
 from dzgui.strings import generic, offline
+from dzgui.util import css
 from dzgui.views.components.box import HBox, VBox
 from dzgui.views.components.buttons import Icon, IconTextButton
 from dzgui.views.components.eventbox import InfoEventBox
@@ -21,11 +24,8 @@ from dzgui.views.components.scrollable import NoOverlayScrolledWindow
 from dzgui.views.components.misc import ErrorPopover
 from dzgui.views.trees.tree_mods import OfflineModTreeView
 
-
-import gi
-
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, Gdk, GObject  # noqa
+from gi.repository import Gtk, Gdk
 
 if TYPE_CHECKING:
     from dzgui.controllers.mc import Controller

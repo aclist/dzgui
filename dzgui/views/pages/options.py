@@ -1,9 +1,10 @@
+import gi
+
 from pathlib import Path
 from typing import Any, Callable, TYPE_CHECKING
 
 from dzgui.api import pefile as PeFile
 from dzgui.api.steam import get_last_updated
-
 from dzgui.config import query
 from dzgui.const.constants import (
     APPID_DAYZ,
@@ -14,12 +15,11 @@ from dzgui.const.constants import (
     FLATPAK_SANDBOX,
     FLATPAK_STEAM_PATH,
 )
-from dzgui.const.icons import ICON_VIEW_CONCEAL, ICON_VIEW_REVEAL
 from dzgui.const.endpoints import STEAM_API_SETUP
 from dzgui.const.enum import Preferences, ServerTab
+from dzgui.const.icons import ICON_VIEW_CONCEAL, ICON_VIEW_REVEAL
 from dzgui.strings import options
 from dzgui.util import strings, css, open_links
-
 from dzgui.views.components.box import ShortHBox, VBox
 from dzgui.views.components.eventbox import InfoEventBox
 from dzgui.views.components.labels import LeftLabel
@@ -29,11 +29,8 @@ from dzgui.views.components.misc import ErrorPopover
 from dzgui.views.dialogs.generic import ExceptionDialog
 from dzgui.views.mixins.scrollable_mixin import ScrollableMixin
 
-
-import gi
-
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, Gdk  # noqa
+from gi.repository import Gtk, Gdk
 
 if TYPE_CHECKING:
     from dzgui.controllers.mc import Controller

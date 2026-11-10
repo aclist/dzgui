@@ -1,8 +1,9 @@
+import gi
 import logging
 import threading
 
 from queue import Queue
-from typing import Any, Self, Union
+from typing import Any, Literal, Self, TYPE_CHECKING, Union
 from warnings import deprecated
 
 from dzgui.api.servers import ping, Record
@@ -14,17 +15,11 @@ from dzgui.util import strings
 from dzgui.util.dist import CalcDist
 from dzgui.util.keys import is_ctrl_mask
 from dzgui.views.mixins.context_mixin import ContextMixin
-from typing import Literal, TYPE_CHECKING
-
-
 from dzgui.views.trees.tree_base import TreeView
 import dzgui.util._json as JSON  # noqa
 
-import gi
-
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, GLib, Gdk, GObject, Pango  # noqa
-
+from gi.repository import Gtk, GLib, Gdk, GObject
 
 logger = logging.getLogger(APP_NAME)
 
@@ -415,6 +410,7 @@ class ServerTreeView(ContextMixin, TreeView):  # type: ignore
             real_model = self.proxy_man.get_control()
             from dataclasses import fields
             from dzgui.model.proxy_model import ServerRow
+
             key = fields(ServerRow)[col_index].name
 
             value = getattr(real_model[row_index], key)

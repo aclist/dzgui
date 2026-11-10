@@ -1,3 +1,4 @@
+import gi
 import logging
 
 from typing import Any, Optional, TYPE_CHECKING
@@ -6,10 +7,8 @@ from dzgui.const.constants import APP_NAME, SEPARATOR
 from dzgui.util.keys import is_ctrl_mask, is_navkey
 from dzgui.views.mixins.cursor_mixin import CursorMixin
 
-import gi
-
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, GLib, Gdk, GObject, Pango  # noqa
+from gi.repository import Gtk, Gdk, GObject
 
 logger = logging.getLogger(APP_NAME)
 

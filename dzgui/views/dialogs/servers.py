@@ -15,7 +15,7 @@ from dzgui.views.dialogs.generic import GenericDialog
 from dzgui.views.trees.tree_base import TreeView
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, Gdk, Pango  # noqa
+from gi.repository import Gtk, Gdk, Pango
 
 if TYPE_CHECKING:
     from dzgui.api.servers import Details
