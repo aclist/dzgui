@@ -469,7 +469,6 @@ class ServerModelManager:
 
     @call_on_thread(dialog.filtering)
     def refilter(self, mode: FilterMode) -> None:
-        # FIXME: causes two wait dialogs when map selection change signal emits after loading servers
         self.first_iteration = False
         proxy_man = self._get_proxy_man()
         proxy_man.filter(mode)
