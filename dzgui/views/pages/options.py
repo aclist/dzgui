@@ -16,9 +16,8 @@ from dzgui.const.constants import (
     NO_EXPAND,
     NO_FILL,
     NO_PADDING,
-    VIEW_CONCEAL,
-    VIEW_REVEAL,
 )
+from dzgui.const.icons import ICON_VIEW_CONCEAL, ICON_VIEW_REVEAL
 from dzgui.const.endpoints import STEAM_API_SETUP
 from dzgui.const.enum import Preferences, ServerTab
 from dzgui.strings import options
@@ -67,7 +66,7 @@ class SubmitField(Gtk.Box):
         # TODO: audit for all applicable callbacks
         if private:
             self.entry.set_icon_from_icon_name(
-                Gtk.EntryIconPosition.SECONDARY, VIEW_REVEAL
+                Gtk.EntryIconPosition.SECONDARY, ICON_VIEW_REVEAL
             )
             self.entry.set_icon_activatable(Gtk.EntryIconPosition.SECONDARY, True)
             self.entry.connect("icon-release", self._on_icon_release)
@@ -131,9 +130,9 @@ class SubmitField(Gtk.Box):
     ) -> None:
         visible = widget.get_visibility()
         if visible:
-            icon, state = VIEW_REVEAL, False
+            icon, state = ICON_VIEW_REVEAL, False
         else:
-            icon, state = VIEW_CONCEAL, True
+            icon, state = ICON_VIEW_CONCEAL, True
         widget.set_icon_from_icon_name(Gtk.EntryIconPosition.SECONDARY, icon)
         widget.set_visibility(state)
 

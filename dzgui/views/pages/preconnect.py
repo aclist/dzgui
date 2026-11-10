@@ -1,9 +1,9 @@
 from dataclasses import dataclass
 from typing import Self, Sequence, TYPE_CHECKING
 
-from dzgui.const.constants import (
-    ERROR,
-    WARNING,
+from dzgui.const.icons import (
+    ICON_ERROR,
+    ICON_WARNING,
 )
 from dzgui.const.enum import NotebookPage
 from dzgui.util.css import add_class
@@ -166,7 +166,7 @@ class PreConnectionAssistant(Gtk.Box):
 
         # TODO: abstract into components
         self.warning_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        self.warning_tree = MaskedTree(WARNING)
+        self.warning_tree = MaskedTree(ICON_WARNING)
         self.warning_placeholder = Placeholder(preconnect.placeholder_no_warnings)
         self.warning_box.add(self.warning_tree)
         self.warning_box.add(self.warning_placeholder)
@@ -175,7 +175,7 @@ class PreConnectionAssistant(Gtk.Box):
         )
 
         self.error_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        self.error_tree = MaskedTree(ERROR)
+        self.error_tree = MaskedTree(ICON_ERROR)
         self.error_placeholder = Placeholder(preconnect.no_errors)
         self.error_box.add(self.error_tree)
         self.error_box.add(self.error_placeholder)
