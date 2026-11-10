@@ -34,7 +34,7 @@ LAN_TIMEOUT = 0.5
 API_TIMEOUT = 3
 
 
-@dataclass
+@dataclass(slots=True, frozen=True)
 class NewPlayerCount:
     treeiter: Gtk.TreeIter
     players: int
