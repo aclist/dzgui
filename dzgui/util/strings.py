@@ -118,6 +118,7 @@ servers = {
     "0": "toggle filter 10",
     "Minus": "toggle filter 11",
     "Backslash": "toggle filter 12",
+    "Apostrophe": "toggle filter 13",
 }
 vim = {
     "j": "Move down a row/scroll up",
