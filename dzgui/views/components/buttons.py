@@ -98,7 +98,7 @@ class LargeIconTextButton(IconButton):
 
 
 class ClipboardButton(IconTextButton):
-    def __init__(self, func: Callable) -> None:
+    def __init__(self, func: Callable[[], str]) -> None:
         super().__init__(ICON_CLIPBOARD, atomic_buttons.copy)
         self.connect("clicked", self._on_button_clicked, func)
 
