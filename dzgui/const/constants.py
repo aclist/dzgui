@@ -37,36 +37,7 @@ HEX_GREEN = "#32CD32"
 HEX_RED = "#FF0000"
 HEX_ORANGE = "#FFAC1C"
 
-# TODO: normalize icon names
-CALCULATOR = "accessories-calculator-symbolic"
-CARET_DOWN = "go-down-symbolic"
-CARET_UP = "go-up-symbolic"
-CLIPBOARD = "edit-copy-symbolic"
-CLOSE = "window-close-symbolic"
-FOLDER = "folder-symbolic"
-EDIT_DELETE = "edit-delete-symbolic"
-ERROR = "dialog-error-symbolic"
-HELP_BUBBLE = "help-about-symbolic"
-INPUT_KEYBOARD = "input-keyboard-symbolic"
-LIST_ADD = "list-add-symbolic"
-REFRESH_ICON = "view-refresh-symbolic"
-SEARCH_ICON = "system-search-symbolic"
-STEAM_ICON = "steam-tray-symbolic"
-VIEW_CONCEAL = "view-conceal-symbolic"
-VIEW_REVEAL = "view-reveal-symbolic"
-WARNING = "dialog-warning-symbolic"
-WEB_BROWSER = "web-browser-symbolic"
-DAY_ICON = "weather-clear-symbolic"
-NIGHT_ICON = "weather-clear-night-symbolic"
-
 SEPARATOR = "SEPARATOR"
-
-# TODO: drop
-NO_PADDING = 0
-NO_EXPAND = False
-NO_FILL = False
-EXPAND = True
-FILL = True
 
 SCROLL_INCREMENT = 50
 WINDOW_DEFAULT_X = 1400

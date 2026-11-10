@@ -15,11 +15,6 @@ from dzgui.strings import dialogs
 from dzgui.managers.threading import call_on_thread, StoredFunc, ThreadingManager
 from dzgui.views.dialogs.generic import ExceptionDialog, QuitDialog
 
-import gi
-
-gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, GLib  # noqa E402
-
 if TYPE_CHECKING:
     from dzgui.controllers.mc import Controller
 
@@ -60,9 +55,9 @@ class UpdateManager:
     def _on_update_success(self) -> None:
         msg = dialogs.update_success
         dialog = QuitDialog(self.controller, msg)
-        dialog.run()
+        dialog.run()  # type: ignore[no-untyped-call]
 
     def _on_update_failure(self, msg: str) -> None:
         dialog = ExceptionDialog(self.controller, msg)
         dialog.show_all()
-        dialog.run()
+        dialog.run()  # type: ignore[no-untyped-call]

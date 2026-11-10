@@ -2,7 +2,7 @@ from typing import TYPE_CHECKING
 
 from dzgui.model.model_factory import ModelFactory
 from dzgui.util import strings
-from dzgui.util.strings import all_maps
+from dzgui.strings.filters import all_maps
 
 if TYPE_CHECKING:
     from dzgui.model.model_factory import FastInsertListStore
@@ -51,7 +51,6 @@ class FilterManager:
         self.active_map = (0, all_maps)
         self.prior_map = all_maps
 
-        self.filters: list
         self.enabled_filters = dict(self.default_filters)
 
     def get_tooltips(self) -> dict[str, str]:
@@ -75,11 +74,11 @@ class FilterManager:
     def set_active_keyword(self, word: str) -> None:
         self.active_keyword = word
 
-    def get_default_filters(self) -> dict:
+    def get_default_filters(self) -> dict[str, bool]:
         """Deep copy of defaults"""
         return dict(self.default_filters)
 
-    def get_filters(self) -> dict:
+    def get_filters(self) -> dict[str, bool]:
         return self.enabled_filters
 
     def set_filter(self, label: str, state: bool) -> None:
@@ -106,17 +105,11 @@ class FilterManager:
 
         self.reinit_map_store()
         maps.sort()
-        for m in maps:
-            # TODO: strings
-            if m == "All maps":
-                continue
+        clean = [m for m in maps if m != all_maps]
+        for m in clean:
             self.append_map([m])
 
-    # TODO: currently unused
-    def get_unique_maps(self) -> list[str]:
-        return [row[0] for row in self.map_store if row[0] != "All maps"]
-
-    def get_all_filters(self) -> tuple:
+    def get_all_filters(self) -> tuple[str, ...]:
         map_name = self.get_active_map_name()
         enabled = self.get_filters()
         kw = self.get_active_keyword()

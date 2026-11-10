@@ -15,7 +15,7 @@ from dzgui.views.mixins.scrollable_mixin import ScrollableMixin
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk  # noqa E402
+from gi.repository import Gtk
 
 logger = logging.getLogger(APP_NAME)
 

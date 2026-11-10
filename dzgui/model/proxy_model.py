@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING, Union
 from dzgui.const.enum import FilterMode
 from dzgui.model.model_factory import ModelFactory
 from dzgui.util import strings
+from dzgui.strings import filters as str_filters
 
 if TYPE_CHECKING:
     from dzgui.managers.filter import FilterManager
@@ -177,7 +178,6 @@ class ProxyModelManager:
         self.proxy_model[treeiter][index_players] = playercount.players
         self.proxy_model[treeiter][index_queue] = playercount.queue
 
-    # TODO: use dataclass for record rows
     def append_row_to_history(
         self,
         history: ServerRow,
@@ -291,7 +291,7 @@ class ProxyModelManager:
         rows = self.filtered
         sel_map = self.filter_man.get_active_map_name()
 
-        if sel_map == strings.all_maps:
+        if sel_map == str_filters.all_maps:
             return rows
 
         rows = [row for row in rows if row.mapname == sel_map]

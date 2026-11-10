@@ -1,15 +1,16 @@
 from typing import Any, Callable, TYPE_CHECKING
 
 from dzgui.api.servers import validate_ip
-from dzgui.const.constants import VIEW_CONCEAL, VIEW_REVEAL
+from dzgui.const.icons import ICON_VIEW_CONCEAL, ICON_VIEW_REVEAL
 from dzgui.util.css import add_class, remove_class
 from dzgui.strings import connect_panel
+from dzgui.strings.options import api_placeholder, api_validate
 from dzgui.strings.errors import api_popover
 
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, Gdk, GObject  # noqa E402
+from gi.repository import Gtk, Gdk, GObject
 
 if TYPE_CHECKING:
     from dzgui.controllers.mc import Controller
@@ -38,7 +39,7 @@ class ValidatedEntry(Gtk.Entry):
     def __init__(
         self,
         controller: "Controller",
-        func: Callable,
+        func: Callable[[str], bool],
         placeholder_text: str = "",
         tooltip_text: str = "",
     ) -> None:
@@ -46,7 +47,6 @@ class ValidatedEntry(Gtk.Entry):
             hexpand=True, placeholder_text=placeholder_text, tooltip_text=tooltip_text
         )
 
-        self.func: Callable
         self.set_validation_func(func)
         self.controller = controller
 
@@ -72,7 +72,7 @@ class ValidatedEntry(Gtk.Entry):
         self.emit("string_validated", False)
         remove_class(self, self.classname)
 
-    def set_validation_func(self, func: Callable) -> None:
+    def set_validation_func(self, func: Callable[[str], bool]) -> None:
         self.func = func
 
     def insert_icon(self) -> None:
@@ -141,21 +141,19 @@ class APIEntry(Gtk.Box):
     def __init__(self) -> None:
         super().__init__(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
 
-        self.func: Callable | None = None
+        self.func: Callable[[str], None] | None = None
 
-        # TODO: strings
         self.entry = Gtk.Entry(
-            width_chars=60, hexpand=True, placeholder_text="Enter API key"
+            width_chars=60, hexpand=True, placeholder_text=api_placeholder
         )
-        self.entry.set_icon_from_icon_name(Gtk.EntryIconPosition.SECONDARY, VIEW_REVEAL)
+        self.entry.set_icon_from_icon_name(Gtk.EntryIconPosition.SECONDARY, ICON_VIEW_REVEAL)
         self.entry.set_icon_activatable(Gtk.EntryIconPosition.SECONDARY, True)
         self.entry.set_visibility(False)
         self.entry.connect("changed", self._on_text_changed)
         self.entry.connect("icon-release", self._on_icon_release)
         self.entry.connect("activate", self._on_field_activated)
 
-        # TODO: strings
-        self.submit = Gtk.Button(label="Validate")
+        self.submit = Gtk.Button(label=api_validate)
         self.submit.set_sensitive(False)
         self.submit.connect("clicked", self._on_submit)
 
@@ -206,9 +204,9 @@ class APIEntry(Gtk.Box):
     ) -> None:
         visible = widget.get_visibility()
         if visible:
-            icon, state = VIEW_REVEAL, False
+            icon, state = ICON_VIEW_REVEAL, False
         else:
-            icon, state = VIEW_CONCEAL, True
+            icon, state = ICON_VIEW_CONCEAL, True
         widget.set_icon_from_icon_name(Gtk.EntryIconPosition.SECONDARY, icon)
         widget.set_visibility(state)
 
@@ -222,7 +220,7 @@ class APIEntry(Gtk.Box):
         res = self.func(text)
         return res
 
-    def set_validation_func(self, func: Callable | None) -> None:
+    def set_validation_func(self, func: Callable[[str], None] | None) -> None:
         self.func = func
 
     def disable_button(self) -> None:

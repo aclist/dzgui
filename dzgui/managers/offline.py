@@ -52,7 +52,7 @@ class OfflineManager:
         is_valid = is_mission(folder)
         self.emitter.emit("custom_mission_loaded", str(folder), is_valid)
 
-    def find_custom_mods(self, callback: Callable) -> None:
+    def find_custom_mods(self, callback: Callable[[], None]) -> None:
         folder = self.open_folderpicker(dialogs.custom_mod_dialog)
         window = self.controller.get_window()
         window.set_sensitive(False)

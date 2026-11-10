@@ -21,7 +21,7 @@ from dzgui.views.dialogs.generic import ExceptionDialog
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, GLib  # noqa E402
+from gi.repository import Gtk, GLib
 
 if TYPE_CHECKING:
     from dzgui.api.servers import A2SInfo, Record
@@ -428,7 +428,7 @@ class ServerModelManager:
         if show_dialog:
             dialog = ExceptionDialog(self.controller, dialogs.load_error_lan)
             dialog.show_all()
-            dialog.run()
+            dialog.run()  # type: ignore[no-untyped-call]
 
     def _cleanup_on_failure(self, show_dialog: bool = True) -> None:
         # TODO: disable map, keyword, and filter widgets if model is None
@@ -447,7 +447,7 @@ class ServerModelManager:
             dialog = ExceptionDialog(self.controller, server_timeout)
             dialog.set_details_buffer(kb.DZG_006)
             dialog.show_all()
-            dialog.run()
+            dialog.run()  # type: ignore[no-untyped-call]
 
     def _push_data(self, data: list["ServerRow"]) -> None:
         self._get_proxy_man().push(data)

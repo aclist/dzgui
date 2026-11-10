@@ -118,6 +118,7 @@ servers = {
     "0": "toggle filter 10",
     "Minus": "toggle filter 11",
     "Backslash": "toggle filter 12",
+    "Apostrophe": "toggle filter 13",
 }
 vim = {
     "j": "Move down a row/scroll up",
@@ -158,9 +159,6 @@ filter_official = "Official"
 filter_unofficial = "Unofficial"
 filter_modded = "Modded"
 filter_unmodded = "Unmodded"
-
-# maps
-all_maps = "All maps"
 
 # state
 unknown = "Unknown"
@@ -252,6 +250,7 @@ class Crumbs:
     developers: str
     default: str
     offline: str
+    connect: str
 
 
 @dataclass(slots=True, frozen=True)
@@ -439,6 +438,7 @@ crumbs = Crumbs(
     developers="Options > Developers",
     default="Servers > ",
     offline="Mods > Play offline",
+    connect="Connect",
 )
 
 no_mods = "No local mods found."

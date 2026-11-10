@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Callable, TYPE_CHECKING
+from typing import Any, Callable, TYPE_CHECKING
 
 from dzgui.api import pefile as PeFile
 from dzgui.api.steam import get_last_updated
@@ -13,12 +13,8 @@ from dzgui.const.constants import (
     FLATPAK_RUN_CMD,
     FLATPAK_SANDBOX,
     FLATPAK_STEAM_PATH,
-    NO_EXPAND,
-    NO_FILL,
-    NO_PADDING,
-    VIEW_CONCEAL,
-    VIEW_REVEAL,
 )
+from dzgui.const.icons import ICON_VIEW_CONCEAL, ICON_VIEW_REVEAL
 from dzgui.const.endpoints import STEAM_API_SETUP
 from dzgui.const.enum import Preferences, ServerTab
 from dzgui.strings import options
@@ -55,7 +51,7 @@ class SubmitField(Gtk.Box):
     ) -> None:
         super().__init__(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
 
-        self.callback: Callable
+        self.callback: Callable[[], None]
         self.controller = controller
         self.context = context
 
@@ -67,7 +63,7 @@ class SubmitField(Gtk.Box):
         # TODO: audit for all applicable callbacks
         if private:
             self.entry.set_icon_from_icon_name(
-                Gtk.EntryIconPosition.SECONDARY, VIEW_REVEAL
+                Gtk.EntryIconPosition.SECONDARY, ICON_VIEW_REVEAL
             )
             self.entry.set_icon_activatable(Gtk.EntryIconPosition.SECONDARY, True)
             self.entry.connect("icon-release", self._on_icon_release)
@@ -131,9 +127,9 @@ class SubmitField(Gtk.Box):
     ) -> None:
         visible = widget.get_visibility()
         if visible:
-            icon, state = VIEW_REVEAL, False
+            icon, state = ICON_VIEW_REVEAL, False
         else:
-            icon, state = VIEW_CONCEAL, True
+            icon, state = ICON_VIEW_CONCEAL, True
         widget.set_icon_from_icon_name(Gtk.EntryIconPosition.SECONDARY, icon)
         widget.set_visibility(state)
 
@@ -143,7 +139,7 @@ class SubmitField(Gtk.Box):
             return
         self.save_option()
 
-    def set_callback(self, callback: Callable) -> None:
+    def set_callback(self, callback: Callable[[], None]) -> None:
         self.callback = callback
 
     def save_option(self) -> None:
@@ -210,7 +206,7 @@ class NameSubmitField(SubmitField):
             Preferences.NAME,
             private=False,
         )
-        self.entry.set_width_chars(30)  # type: ignore
+        self.entry.set_width_chars(30)
         self.set_callback(self.save_player_name)
 
     def save_player_name(self) -> None:
@@ -234,8 +230,8 @@ class ToggleField(Gtk.Box):
         self.radio1 = Gtk.RadioButton.new_with_label(None, first_option)
         self.radio2 = Gtk.RadioButton.new_from_widget(self.radio1)
         self.radio2.set_label(second_option)
-        self.pack_start(self.radio1, NO_EXPAND, NO_FILL, NO_PADDING)
-        self.pack_start(self.radio2, NO_EXPAND, NO_FILL, NO_PADDING)
+        self.pack_start(self.radio1, expand=False, fill=False, padding=0)
+        self.pack_start(self.radio2, expand=False, fill=False, padding=0)
 
     def set_suboption_active(self, state: bool) -> None:
         # NOTE: defer connection of signal until after state is set
@@ -406,7 +402,8 @@ class Options(ScrollableMixin, Gtk.ScrolledWindow):  # type: ignore
     def _on_link_button_clicked(self, button: Gtk.Button, url: str) -> None:
         open_links.open_link_by_url(url)
 
-    def _make_grid(self, rows: list) -> Gtk.Grid:
+    # TODO: use FlowBox
+    def _make_grid(self, rows: list[list[Any]]) -> Gtk.Grid:
         grid = Gtk.Grid(
             orientation=Gtk.Orientation.VERTICAL,
             column_spacing=10,
@@ -439,7 +436,7 @@ class Options(ScrollableMixin, Gtk.ScrolledWindow):  # type: ignore
         if prefs.paths.config.is_file() is False:
             dialog = ExceptionDialog(self.controller, strings.config_not_found)
             dialog.show_all()
-            dialog.run()
+            dialog.run()  # type: ignore[no-untyped-call]
             raise OSError(f"Config file '{prefs.paths.config}' not found")
 
         config = query.get_config(prefs.paths.config)

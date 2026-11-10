@@ -111,7 +111,8 @@ class WorkshopACF(ACF):
     def __init__(self, file: Path) -> None:
         super().__init__(file)
 
-    def unpack(self, d: dict, lines: list[Any] = []) -> str:
+    def unpack(self, d: dict[str, Any], lines: list[Any] = []) -> str:
+        self.indent: int
         t1 = "AppWorkshop"
         t2 = ("WorkshopItemsInstalled", "WorkshopItemDetails")
         for k, v in d.items():

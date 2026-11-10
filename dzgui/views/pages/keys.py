@@ -7,12 +7,13 @@ from dzgui.util.css import add_class
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk  # noqa E402
+from gi.repository import Gtk
 
 if TYPE_CHECKING:
     from dzgui.controllers.mc import Controller
 
 
+# TODO: refactor into autopopulated ListStores
 class Keybindings(ScrollableMixin, Gtk.ScrolledWindow):  # type: ignore
     """
     Notebook page holding a prearranged grid
@@ -35,7 +36,7 @@ class Keybindings(ScrollableMixin, Gtk.ScrolledWindow):  # type: ignore
 
         self.connect("key-press-event", self._on_keypress)
 
-    def build_keys(self, items: list) -> Gtk.Grid:
+    def build_keys(self, items: list[dict[str, str]]) -> Gtk.Grid:
         grid = Gtk.Grid(row_spacing=10, column_homogeneous=True)
         grid.set_halign(Gtk.Align.START)
         row, col = 1, 0
@@ -72,7 +73,7 @@ class Keybindings(ScrollableMixin, Gtk.ScrolledWindow):  # type: ignore
             row += 1
         return grid
 
-    def build_sidebar(self, categories: list) -> Gtk.Grid:
+    def build_sidebar(self, categories: list[str]) -> Gtk.Grid:
         row, col = 0, 0
         w, h = 1, 1
         sidebar = Gtk.Grid(row_homogeneous=True, orientation=Gtk.Orientation.VERTICAL)
@@ -83,7 +84,7 @@ class Keybindings(ScrollableMixin, Gtk.ScrolledWindow):  # type: ignore
             sidebar.attach(label, col, row, w, h)
         return sidebar
 
-    def build_grid(self, items: list) -> Gtk.Grid:
+    def build_grid(self, items: list[dict[str, str]]) -> Gtk.Grid:
         grid = Gtk.Grid(
             row_spacing=20,
             halign=Gtk.Align.CENTER,

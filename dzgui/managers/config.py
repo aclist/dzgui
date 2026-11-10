@@ -124,7 +124,7 @@ class ConfigManager:
         return False
 
     def enum_to_key(self, enum: Preferences) -> str:
-        return str(enum.dict["key"])
+        return str(enum.key)
 
     def toggle_config(self, key: Preferences) -> None:
         try:
@@ -162,7 +162,7 @@ class ConfigManager:
             trace = traceback.format_exc()
             dialog = ExceptionDialog(self.controller, trace)
             dialog.show_all()
-            dialog.run()
+            dialog.run()  # type: ignore[no-untyped-call]
 
     def save_res_and_quit(self, tv: "ServerTreeView", window: "OuterWindow") -> None:
         columns = tv.get_columns()

@@ -14,7 +14,6 @@ from dzgui.const.constants import HEX_GREEN, HEX_RED
 from dzgui.init.coords import get_local_coords
 from dzgui.init.dayz import is_dayz_installed
 from dzgui.init.update import check_updates
-from dzgui.const.constants import EXPAND, FILL
 from dzgui.managers.threading import call_on_thread, StoredFunc, ThreadingManager
 from dzgui.strings import preboot, dialogs
 from dzgui.util.format import format_exception
@@ -105,7 +104,7 @@ class BootDialog(ColorAwareApp, Gtk.Dialog):  # type: ignore
         self.error_label = Gtk.Label(margin_start=15, margin_end=15)
 
         # TODO: abstract class
-        self.copy_button = ClipboardButton(None, lambda: self.error_label.get_text())
+        self.copy_button = ClipboardButton(self.error_label.get_text)
         self.button_hbox = Gtk.Box(
             orientation=Gtk.Orientation.HORIZONTAL, halign=Gtk.Align.CENTER, spacing=10
         )
@@ -118,8 +117,8 @@ class BootDialog(ColorAwareApp, Gtk.Dialog):  # type: ignore
         self.error_box.add(self.button_hbox)
 
         self.content = self.get_content_area()
-        self.content.pack_start(self.scrollable_tree, EXPAND, FILL, 0)
-        self.content.pack_start(self.error_box, EXPAND, FILL, 0)
+        self.content.pack_start(self.scrollable_tree, expand=True, fill=True, padding=0)
+        self.content.pack_start(self.error_box, expand=True, fill=True, padding=0)
         self.show_all()
 
         self.error_box.hide()
