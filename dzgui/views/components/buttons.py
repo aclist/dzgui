@@ -1,4 +1,4 @@
-from typing import Callable, Literal, Self, TYPE_CHECKING
+from typing import Callable, Literal, Self, TYPE_CHECKING, Union
 
 from dzgui.util.clip import copy_clipboard
 from dzgui.strings import buttons
@@ -12,7 +12,6 @@ from dzgui.const.icons import (
     ICON_LIST_ADD,
     ICON_REFRESH,
     ICON_STEAM,
-    ICON_WARNING,
     ICON_WEB_BROWSER,
 )
 from dzgui.strings import connect_panel
@@ -99,9 +98,8 @@ class LargeIconTextButton(IconButton):
 
 
 class ClipboardButton(IconTextButton):
-    def __init__(self, controller: Union["Controller", None], func: Callable) -> None:
+    def __init__(self, func: Callable[[], str]) -> None:
         super().__init__(ICON_CLIPBOARD, atomic_buttons.copy)
-        self.controller = controller
         self.connect("clicked", self._on_button_clicked, func)
 
         self.set_tooltip_text(buttons.clipboard_button)
