@@ -1,11 +1,20 @@
 import json
+import logging
+import re
 import shutil
 
 from pathlib import Path
 from typing import Any
-from dzgui.const.constants import LEGACY_CONFIG_PATH, LEGACY_COLS_PATH, LEGACY_IPS_PATH
+from dzgui.const.constants import (
+    APP_NAME,
+    LEGACY_CONFIG_PATH,
+    LEGACY_COLS_PATH,
+    LEGACY_IPS_PATH,
+)
 from dzgui.config.convert import rc2json
 from dzgui.util._json import read_json, write_json
+
+logger = logging.getLogger(APP_NAME)
 
 
 def migrate_legacy_conf(config: Path) -> Any:
@@ -70,3 +79,15 @@ def copy_ipdb(ips_path: Path) -> None:
         return
     # TODO: ensure that month file is copied
     shutil.copy(legacy, ips_path)
+
+
+def clean_legacy_versions_file(versions: Path) -> None:
+    # NOTE: handling for #523
+    try:
+        pat = r"^(\d+),(\d+)$"
+        lines = versions.read_text().splitlines()
+        clean = [line for line in lines if re.match(pat, line)]
+        concat = "\n".join(clean)
+        versions.write_text(concat)
+    except Exception as e:
+        logger.warning(e)

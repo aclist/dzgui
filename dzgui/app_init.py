@@ -18,8 +18,8 @@ from dzgui.config.query import lookup
 from dzgui.config.userprefs import UserPrefs
 from dzgui.config.xdg import get_xdg_paths, parse_filepaths
 from dzgui.init.migrate import (
-    has_new_config,
     copy_state_files,
+    has_new_config,
     migrate_cols_file,
 )
 from dzgui.init.prereqs import has_flatpak_client, has_steam_client

@@ -2,9 +2,10 @@ import hashlib
 import logging
 import re
 
-from concurrent.futures import wait
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, wait
+from dataclasses import dataclass
 from pathlib import Path
+from typing import Any
 
 from dzgui.api.steam import get_app_path
 from dzgui.api.servers import get_rules, fqip_to_record
@@ -17,8 +18,7 @@ from dzgui.const.constants import (
 
 from dzgui.config.query import lookup
 from dzgui.const.enum import Preferences
-
-from typing import Any
+from dzgui.init.migrate import clean_legacy_versions_file
 
 logger = logging.getLogger(APP_NAME)
 
@@ -116,9 +116,11 @@ def remove_stale_signatures(
     config: Path, versions: Path, ids: list[int] | None = None
 ) -> None:
     if versions.is_file() is False:
-        logger.warning("Creating new version signatures file")
+        logger.debug("Creating new version signatures file")
         versions.touch()
         return
+
+    clean_legacy_versions_file(versions)
 
     path = lookup(config, Preferences.DEFAULT)
     steam_path = Path(path)

@@ -6,7 +6,8 @@ if TYPE_CHECKING:
     from dzgui.util.ip import Coords
 
 
-# NOTE: mutable dataclass, 'use_miles' key changes on demand
+# NOTE: mutable dataclass: 'use_miles' key changes on demand
+# 'frozen' cannot be True
 @dataclass(slots=True)
 class UserPrefs:
     is_steam_deck: bool
