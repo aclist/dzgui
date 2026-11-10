@@ -43,7 +43,7 @@ class Breadcrumbs(Gtk.Label):
             label = page.get_current_tab_text()
             self.set_server_crumbs(label)
         else:
-            crumbs = enum.dict["crumbs"]
+            crumbs = enum.crumbs
             self.set_crumbs(crumbs)
 
     def set_server_crumbs(self, suffix: str) -> None:

@@ -56,7 +56,7 @@ class Statusbar(Gtk.Grid):
             return
 
         enum = notebook.get_page_by_enum()
-        show_statusbar = enum.dict["statusbar"]
+        show_statusbar = enum.has_statusbar
 
         if show_statusbar is False:
             self.set_by_context(enum, "")
@@ -148,5 +148,5 @@ class Statusbar(Gtk.Grid):
         row = tree.get_value_at_index(1)
         if self.controller.loaded is False:
             return
-        tooltip = row.dict["tooltip"]
+        tooltip = row.tooltip
         self.set_by_context(NotebookPage.HELP, tooltip)

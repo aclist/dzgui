@@ -147,7 +147,7 @@ class ModelFactory:
 
     def make_help_store(self) -> FastInsertListStore:
         store = self.new_model_from_class(MenuCols)
-        rows = [[row.dict["label"], row] for row in HELP_MENU_ROWS]
+        rows = [[row.label, row] for row in HELP_MENU_ROWS]
         store.extend(rows)
         return store
 

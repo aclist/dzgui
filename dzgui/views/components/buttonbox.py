@@ -19,7 +19,11 @@ if TYPE_CHECKING:
 
 class ContextualButton(Gtk.Button):
     def __init__(
-        self, label: str, opens: "NotebookPage", tooltip: str, context: ButtonType
+        self,
+        label: str,
+        opens: "NotebookPage | None",
+        tooltip: str,
+        context: ButtonType,
     ) -> None:
         super().__init__(
             label=label,
@@ -51,9 +55,9 @@ class ButtonBox(Gtk.Box):
 
         for side_button in ButtonType:
             button = ContextualButton(
-                label=side_button.dict["label"],
-                opens=side_button.dict["opens"],
-                tooltip=side_button.dict["tooltip"],
+                label=side_button.label,
+                opens=side_button.opens,
+                tooltip=side_button.tooltip,
                 context=side_button,
             )
 

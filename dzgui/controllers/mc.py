@@ -8,7 +8,7 @@ import dzgui.util._json as JSON  # noqa
 
 from dzgui.const.enum import (
     ButtonType,
-    ContextMenu,
+    ContextMenuItem,
     FilterMode,
     NotebookPage,
     Preferences,
@@ -196,7 +196,9 @@ class Controller(GObject.GObject):
     def show_developers_page(self) -> None:
         self.open_page(NotebookPage.DEVELOPERS)
 
-    def open_page(self, page: NotebookPage) -> None:
+    def open_page(self, page: NotebookPage | None) -> None:
+        if page is None:
+            return
         self.mediator.grid.notebook.set_page_by_enum(page)
 
     def open_page_by_button(self, button: "ContextualButton") -> None:
@@ -262,7 +264,7 @@ class Controller(GObject.GObject):
             logger.critical(e)
             return
 
-    def menu_action(self, action: ContextMenu, tree: "ServerTreeView") -> None:
+    def menu_action(self, action: ContextMenuItem, tree: "ServerTreeView") -> None:
         context_man = ContextMenuManager(tree, self)
         context_man.process(action)
 
@@ -370,7 +372,6 @@ class Controller(GObject.GObject):
         return filter_man.get_filters()
 
     # FIXME: wipe maps store when changing tabs if model is none
-
     def has_server_model(self) -> bool:
         treeview = self.get_active_treeview()
         proxy_man = treeview.get_proxy_man()

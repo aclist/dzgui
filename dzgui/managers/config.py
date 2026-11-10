@@ -124,7 +124,7 @@ class ConfigManager:
         return False
 
     def enum_to_key(self, enum: Preferences) -> str:
-        return str(enum.dict["key"])
+        return str(enum.key)
 
     def toggle_config(self, key: Preferences) -> None:
         try:
