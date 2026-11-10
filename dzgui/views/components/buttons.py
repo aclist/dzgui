@@ -98,9 +98,8 @@ class LargeIconTextButton(IconButton):
 
 
 class ClipboardButton(IconTextButton):
-    def __init__(self, controller: Union["Controller", None], func: Callable) -> None:
+    def __init__(self, func: Callable) -> None:
         super().__init__(ICON_CLIPBOARD, atomic_buttons.copy)
-        self.controller = controller
         self.connect("clicked", self._on_button_clicked, func)
 
         self.set_tooltip_text(buttons.clipboard_button)
