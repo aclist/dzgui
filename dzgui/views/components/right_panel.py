@@ -71,7 +71,7 @@ class RightPanel(Gtk.Box):
         for el in self.button_vbox, self.keys, self.filters_vbox, self.refresh_button:
             self.pack_start(el, expand=False, fill=True, padding=0)
 
-        self.pack_start(self.sel_panel, expand=False, fill=True, padding=0)
+        self.pack_start(self.sel_panel, expand=False, fill=False, padding=0)
 
         self.update_button = IconTextButton(
             "dialog-information-symbolic", label="Updates available"
