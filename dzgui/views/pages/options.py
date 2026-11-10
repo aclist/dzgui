@@ -492,14 +492,5 @@ class Options(ScrollableMixin, Gtk.ScrolledWindow):  # type: ignore
         start_tab = self.controller.query_config(Preferences.START_TAB)
         self.start_tab_combo.set_active(start_tab)
 
-    def _suppress_toggles(self, state: bool) -> None:
-        for toggle in [
-            self.fullscreen_toggle,
-            self.distance_toggle,
-        ]:
-            self.controller.suppress_signal(
-                self, toggle.get_children()[0], "_on_radio_toggled", state
-            )
-
     def grab_content_area(self) -> None:
         self.grab_focus()
