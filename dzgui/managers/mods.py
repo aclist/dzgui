@@ -30,7 +30,7 @@ import dzgui.api.pefile as PeFile
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk  # noqa E402
+from gi.repository import Gtk
 
 if TYPE_CHECKING:
     from dzgui.controllers.mc import Controller
@@ -221,7 +221,7 @@ class ModManager:
             total_size += mod[3]
         return total_mods, total_size
 
-    def _on_stale_mods_found(self, stale_mods: list) -> None:
+    def _on_stale_mods_found(self, stale_mods: list[int]) -> None:
         """Manipulates attached ListStore in the main event loop"""
         model = self.treeview.get_model()
         if model is None:

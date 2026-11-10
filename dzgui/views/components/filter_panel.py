@@ -3,21 +3,22 @@ from typing import Literal, TYPE_CHECKING
 
 from dzgui.const.constants import (
     APP_NAME,
-    EXPAND,
-    NO_EXPAND,
-    NO_FILL,
-    NO_PADDING,
-    SEARCH_ICON,
 )
+from dzgui.const.icons import ICON_SEARCH
 from dzgui.util.format import format_exception
-from dzgui.util.strings import all_maps
+from dzgui.strings.filters import (
+    all_maps,
+    filters_heading,
+    keyword_placeholder,
+    map_placeholder,
+)
 from dzgui.views.components.maps_combo import MapsCombo
 from dzgui.views.components.labels import BoldLabel
 
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, Gdk, Pango, GLib  # noqa E402
+from gi.repository import Gtk, Gdk, Pango, GLib
 
 logger = logging.getLogger(APP_NAME)
 
@@ -30,7 +31,7 @@ class ButtonGrid(Gtk.Grid):
     def __init__(
         self,
         controller: "Controller",
-        defaults: dict[str, str],
+        defaults: dict[str, bool],
         tooltips: dict[str, str],
     ) -> None:
         super().__init__(
@@ -42,7 +43,10 @@ class ButtonGrid(Gtk.Grid):
         self.checks: list[Gtk.CheckButton] = []
 
         flowbox = Gtk.FlowBox(
-            halign=Gtk.Align.CENTER, min_children_per_line=3, max_children_per_line=3, selection_mode=Gtk.SelectionMode.NONE
+            halign=Gtk.Align.CENTER,
+            min_children_per_line=3,
+            max_children_per_line=3,
+            selection_mode=Gtk.SelectionMode.NONE,
         )
 
         for check in defaults.keys():
@@ -93,14 +97,13 @@ class ButtonGrid(Gtk.Grid):
         logger.info(f"User toggled button '{label}' to {state}")
         self.emitter.emit("check_toggled", label, state)
 
-    def get_checkboxes(self) -> list:
+    def get_checkboxes(self) -> list[Gtk.CheckButton]:
         return self.checks
 
 
 class KeywordEntry(Gtk.Entry):
     def __init__(self, controller: "Controller") -> None:
-        # TODO :strings
-        super().__init__(placeholder_text="Filter by keyword")
+        super().__init__(placeholder_text=keyword_placeholder)
 
         self.keyword = ""
         self.controller = controller
@@ -109,7 +112,7 @@ class KeywordEntry(Gtk.Entry):
         self.connect("key-press-event", self._on_keypress)
         self.connect("icon-release", lambda *args: self.activate())
 
-        self.set_icon_from_icon_name(Gtk.EntryIconPosition.SECONDARY, SEARCH_ICON)
+        self.set_icon_from_icon_name(Gtk.EntryIconPosition.SECONDARY, ICON_SEARCH)
         self.set_icon_activatable(Gtk.EntryIconPosition.SECONDARY, True)
 
         self.emitter.connect("load_maps", self._on_maps_loaded)
@@ -174,8 +177,7 @@ class FilterPanel(Gtk.Box):
         self.keyword_entry = KeywordEntry(self.controller)
         self.button_grid = ButtonGrid(self.controller, defaults, tooltips)
 
-        # TODO: strings
-        self.filters_label = BoldLabel("Filters")
+        self.filters_label = BoldLabel(filters_heading)
 
         self.emitter.connect(
             "request_keyword_focus", lambda _: self.keyword_entry.grab_focus()
@@ -195,13 +197,12 @@ class FilterPanel(Gtk.Box):
 
         self.maps_entry: Gtk.Entry = self.maps_combo.get_child()  # type: ignore
         self.maps_entry.set_completion(completion)
-        # TODO: strings
-        self.maps_entry.set_placeholder_text("Filter by map")
+        self.maps_entry.set_placeholder_text(map_placeholder)
         self.maps_entry.connect("changed", self._on_map_completion, True)
         self.maps_entry.connect("key-press-event", self._on_map_entry_keypress)
         self.maps_entry.connect("activate", self._on_maps_activated)
 
-        self.maps_combo.pack_start(renderer_text, EXPAND)
+        self.maps_combo.pack_start(renderer_text, expand=True)
         self.maps_combo.connect("changed", self._on_map_changed)
         self.maps_combo.connect("key-press-event", self._on_combo_keypress)
 
@@ -211,7 +212,7 @@ class FilterPanel(Gtk.Box):
             self.maps_combo,
             self.button_grid,
         ):
-            self.pack_start(el, NO_EXPAND, NO_FILL, NO_PADDING)
+            self.pack_start(el, expand=False, fill=False, padding=0)
 
     def _on_maps_activated(self, entry: Gtk.Entry) -> None:
         text = entry.get_text()
@@ -305,6 +306,7 @@ class FilterPanel(Gtk.Box):
             Gdk.KEY_0: 9,
             Gdk.KEY_minus: 10,
             Gdk.KEY_backslash: 11,
+            Gdk.KEY_apostrophe: 12,
         }
         if keyval not in mappings:
             return False

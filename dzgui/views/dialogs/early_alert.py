@@ -8,7 +8,7 @@ from dzgui.views.mixins.colorscheme import ColorAwareApp
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk  # noqa E402
+from gi.repository import Gtk
 
 
 class AbortDialog(ColorAwareApp, Gtk.MessageDialog):  # type: ignore
@@ -46,7 +46,7 @@ class AbortDialog(ColorAwareApp, Gtk.MessageDialog):  # type: ignore
 
         self.connect("response", self._on_response)
 
-        self.run()
+        self.run()  # type: ignore[no-untyped-call]
         self.destroy()
 
     def _on_response(self, dialog: Self, response: Gtk.ResponseType) -> None:

@@ -2,7 +2,7 @@ import gi
 import html
 from typing import Self, TYPE_CHECKING
 
-from dzgui.const.constants import CALCULATOR
+from dzgui.const.icons import ICON_CALCULATOR
 from dzgui.const.enum import ContextMenuGroup
 from dzgui.model.model_factory import ModelFactory
 from dzgui.util import css
@@ -110,7 +110,7 @@ class ServerDetailsDialog(ServerDialog):
         text = format_hyperlinks(text)
         self.description.set_markup(html.escape(text))
 
-        calc_button = IconTextButton(CALCULATOR, dialogs.toggle_calc)
+        calc_button = IconTextButton(ICON_CALCULATOR, dialogs.toggle_calc)
         calc_button.connect("clicked", self._on_calc_pressed)
         calc_button.set_halign(Gtk.Align.END)
         calc_button.set_valign(Gtk.Align.START)

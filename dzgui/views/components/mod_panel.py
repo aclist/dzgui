@@ -1,14 +1,13 @@
 from typing import Self, TYPE_CHECKING
 
 from dzgui.const.enum import ModButton
-from dzgui.const.constants import NO_EXPAND, FILL, NO_PADDING
 from dzgui.util.strings import mod_panel
 from dzgui.views.components.labels import BoldLabel
 
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk  # noqa E402
+from gi.repository import Gtk
 
 if TYPE_CHECKING:
     from dzgui.controllers.mc import Controller
@@ -55,7 +54,7 @@ class ModSelectionPanel(Gtk.Box):
         for button in buttons:
             b = EnumeratedModButton(button)
             b.connect("clicked", self._on_button_clicked)
-            self.main_panel.pack_start(b, NO_EXPAND, FILL, NO_PADDING)
+            self.main_panel.pack_start(b, expand=False, fill=True, padding=0)
 
         self.stale_panel = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
         self.highlight_stale_button = ModPanelButton(ModButton.HIGHLIGHT_STALE)
@@ -67,11 +66,11 @@ class ModSelectionPanel(Gtk.Box):
             self.unhighlight_stale_button,
             self.select_stale_button,
         ):
-            self.stale_panel.pack_start(b, NO_EXPAND, FILL, NO_PADDING)
+            self.stale_panel.pack_start(b, expand=False, fill=True, padding=0)
             b.connect("clicked", self._on_button_clicked)
 
         for el in header, self.main_panel, self.stale_panel:
-            self.pack_start(el, NO_EXPAND, FILL, NO_PADDING)
+            self.pack_start(el, expand=False, fill=True, padding=0)
 
         self.connect("map", self._reinit_button)
 

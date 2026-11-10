@@ -1,13 +1,13 @@
 import logging
 from typing import TYPE_CHECKING
 
-from dzgui.const.constants import APP_NAME, NO_EXPAND, NO_FILL, NO_PADDING
+from dzgui.const.constants import APP_NAME
 from dzgui.const.enum import ButtonType
 
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, Gdk  # noqa E402
+from gi.repository import Gtk, Gdk
 
 logger = logging.getLogger(APP_NAME)
 
@@ -63,7 +63,7 @@ class ButtonBox(Gtk.Box):
 
             self.buttons.append(button)
             button.connect("clicked", self._on_selection_button_clicked)
-            self.pack_start(button, NO_EXPAND, NO_FILL, NO_PADDING)
+            self.pack_start(button, expand=False, fill=False, padding=0)
 
     def _focus_first_button(self, emitter: "Emitter") -> None:
         self.buttons[0].grab_focus()

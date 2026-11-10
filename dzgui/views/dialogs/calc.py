@@ -3,14 +3,14 @@ from dataclasses import dataclass
 from datetime import datetime, time, timedelta
 from typing import Literal
 
-from dzgui.const.constants import DAY_ICON, NIGHT_ICON
+from dzgui.const.icons import ICON_DAY, ICON_NIGHT
 from dzgui.strings import calc
 from dzgui.views.components.icon import Icon
 from dzgui.views.components.labels import BoldLabel
 from dzgui.views.components.box import VBox, HBox
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, GLib, GObject  # type: ignore  # noqa E402
+from gi.repository import Gtk, GLib, GObject
 
 DAY_START_TIME = time(hour=6, minute=0, second=0)
 DAY_END_TIME = time(hour=18, minute=0, second=0)
@@ -385,7 +385,7 @@ class TimePickerFrame(Gtk.Frame):
         h1 = BoldLabel(calc.heading_server_time)
         h2 = BoldLabel(calc.heading_target_time)
 
-        self.icon_indicator = Icon(DAY_ICON)
+        self.icon_indicator = Icon(ICON_DAY)
         self.update_server_icon()
 
         server_time_box = HBox(10)
@@ -411,7 +411,7 @@ class TimePickerFrame(Gtk.Frame):
         self.add(flowbox)
 
     def update_server_icon(self) -> None:
-        icon = DAY_ICON if self.server_time.is_day() else NIGHT_ICON
+        icon = ICON_DAY if self.server_time.is_day() else ICON_NIGHT
         self.icon_indicator.set_icon_name(icon)
 
     def _on_server_clock_increment(self, emitter: Emitter, time_now: datetime) -> None:

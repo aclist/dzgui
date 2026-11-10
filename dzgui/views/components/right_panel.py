@@ -6,13 +6,10 @@ from typing import Literal, TYPE_CHECKING
 
 from dzgui.const.constants import (
     APP_NAME,
-    NO_EXPAND,
-    NO_FILL,
-    FILL,
-    NO_PADDING,
 )
 from dzgui.const.enum import ServerTab
 from dzgui.managers.update import UpdateManager
+from dzgui.strings.buttons import update_button, version_notifier, version_tooltip
 from dzgui.util.clip import copy_clipboard
 from dzgui.util.file import is_writeable
 from dzgui.views.components.buttonbox import ButtonBox
@@ -23,7 +20,7 @@ from dzgui.views.components.buttons import IconTextButton, RefreshButton, KeysBu
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, Gdk, GLib  # noqa E402
+from gi.repository import Gtk, Gdk, GLib
 
 if TYPE_CHECKING:
     from dzgui.controllers.mc import Controller
@@ -65,20 +62,19 @@ class RightPanel(Gtk.Box):
             vexpand=True,
             halign=Gtk.Align.END,
             valign=Gtk.Align.END,
-            # TODO: strings
-            tooltip_text="Click to copy to clipboard",
+            tooltip_text=version_tooltip,
         )
         eb = Gtk.EventBox(halign=Gtk.Align.END, valign=Gtk.Align.END)
         eb.add(self.version_label)
         eb.connect("button-press-event", self._on_version_clicked)
 
         for el in self.button_vbox, self.keys, self.filters_vbox, self.refresh_button:
-            self.pack_start(el, NO_EXPAND, FILL, NO_PADDING)
+            self.pack_start(el, expand=False, fill=True, padding=0)
 
-        self.pack_start(self.sel_panel, NO_EXPAND, NO_FILL, NO_PADDING)
+        self.pack_start(self.sel_panel, expand=False, fill=False, padding=0)
 
         self.update_button = IconTextButton(
-            "dialog-information-symbolic", label="Updates available"
+            "dialog-information-symbolic", label=update_button
         )
 
         self.gutter_box = Gtk.Box(
@@ -96,7 +92,7 @@ class RightPanel(Gtk.Box):
                     "clicked", self._on_update_button_clicked, exe_path, update
                 )
         self.gutter_box.add(eb)
-        self.pack_start(self.gutter_box, NO_EXPAND, FILL, NO_PADDING)
+        self.pack_start(self.gutter_box, expand=False, fill=True, padding=0)
 
     def _on_update_button_clicked(
         self, button: Gtk.Button, exe_path: str, url: str
@@ -131,7 +127,6 @@ class RightPanel(Gtk.Box):
             return
         self.copying = True
         version = self.version_label.get_text()
-        # TODO: strings
-        self.version_label.set_text("Copied!")
+        self.version_label.set_text(version_notifier)
         copy_clipboard(version)
         GLib.timeout_add_seconds(1, revert)

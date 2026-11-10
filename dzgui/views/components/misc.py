@@ -1,7 +1,8 @@
 from typing import Self
 from warnings import deprecated
 
-from dzgui.const.constants import ERROR, FLATPAK_RUN_CMD, FLATPAK_SANDBOX, STEAM_CMD
+from dzgui.const.constants import FLATPAK_RUN_CMD, FLATPAK_SANDBOX, STEAM_CMD
+from dzgui.const.icons import ICON_ERROR
 from dzgui.init.prereqs import has_steam_client, has_flatpak_client
 from dzgui.strings import options
 from dzgui.views.components.box import HBox
@@ -73,7 +74,7 @@ class ErrorPopover(Gtk.Popover):
 
         self.hbox = HBox()
         self.label = Gtk.Label(label="", margin_start=10, margin_end=10)
-        error_icon = Icon(ERROR, margin_start=10)
+        error_icon = Icon(ICON_ERROR, margin_start=10)
         self.hbox.extend([error_icon, self.label])
         self.add(self.hbox)
         self.show_all()

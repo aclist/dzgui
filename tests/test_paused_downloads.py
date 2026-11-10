@@ -16,7 +16,7 @@ from dzgui.api.steam import is_dayz_downloading
         (["state_221100_1111"], False),
     ],
 )
-def test_dayz_patch_pending(monkeypatch, file_list, expect) -> None:
+def test_dayz_patch_pending(monkeypatch, file_list: list[str], expect: bool) -> None:
     def mock_get_pending_downloads(steam_path: Path, appid: int) -> None:
         files = [Path(file) for file in file_list]
         return files

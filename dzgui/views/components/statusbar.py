@@ -2,12 +2,11 @@ from typing import Self, Union, TYPE_CHECKING
 
 from dzgui.const.enum import NotebookPage, ServerTab
 from dzgui.util.strings import esc_to_return, question_to_return
-from dzgui.views.components.buttons import LoggerAlertsButton
 
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk  # noqa E402
+from gi.repository import Gtk
 
 if TYPE_CHECKING:
     from dzgui.const.enum import ServerTab
@@ -46,9 +45,6 @@ class Statusbar(Gtk.Grid):
         self.emitter.connect("distcalc_ended", self._on_distcalc_ended)
         self.emitter.connect("servers_loaded", self._on_servers_loaded)
         self.emitter.connect("mods_updated", self._on_mods_updated)
-
-    def _on_alerts_clicked(self, button: LoggerAlertsButton) -> None:
-        self.controller.populate_log()
 
     def _on_mods_updated(self, emitter: "Emitter", msg: str, mods: int) -> None:
         self.set_by_context(NotebookPage.MODS, msg)

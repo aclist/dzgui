@@ -9,7 +9,7 @@ from dzgui.views.trees.tree_base import TreeView
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, GLib, Gdk, GObject, Pango  # noqa E402
+from gi.repository import Gtk, Gdk
 
 logger = logging.getLogger(APP_NAME)
 
@@ -24,7 +24,7 @@ class ContextMixin(TreeView):
 
         match event.type:
             case Gdk.EventType.BUTTON_PRESS:
-                if event.button != 3:
+                if event.button != Gdk.BUTTON_SECONDARY:  # type: ignore[comparison-overlap]
                     return False
                 self._process_button_event(event)  # type: ignore
             case Gdk.EventType.KEY_PRESS:

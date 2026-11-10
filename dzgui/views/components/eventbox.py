@@ -1,12 +1,12 @@
 from typing import TYPE_CHECKING
 
 from dzgui.const.enum import NotebookPage
-from dzgui.const.constants import HELP_BUBBLE
+from dzgui.const.icons import ICON_HELP_BUBBLE
 
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, Gdk  # noqa E402
+from gi.repository import Gtk, Gdk
 
 if TYPE_CHECKING:
     from dzgui.controllers.mc import Controller
@@ -20,7 +20,7 @@ class InfoEventBox(Gtk.EventBox):
         self.text = text
 
         self.icon = Gtk.Image.new_from_icon_name(
-            HELP_BUBBLE, Gtk.IconSize.LARGE_TOOLBAR
+            ICON_HELP_BUBBLE, Gtk.IconSize.LARGE_TOOLBAR
         )
         self.icon.set_opacity(0.8)
         box = Gtk.Box()

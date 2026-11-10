@@ -1,4 +1,5 @@
 import re
+from typing import Any
 
 from dzgui.util.localize import number
 from dzgui.strings.generic import selectable_tree
@@ -7,7 +8,7 @@ from dzgui.util.strings import no_mods, no_servers, workshop
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk  # noqa E402
+from gi.repository import Gtk
 
 
 def format_pango(text: str) -> str:
@@ -60,7 +61,7 @@ def format_server_mods(mods: int) -> str:
     return f"Found {mods:n} {plural}. {workshop}"
 
 
-def format_player_count(model: Gtk.TreeModel | None, control: list) -> str:
+def format_player_count(model: Gtk.TreeModel | None, control: list[Any]) -> str:
     players = 0
     hits: int
     status: str
