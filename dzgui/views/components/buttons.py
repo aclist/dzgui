@@ -104,8 +104,7 @@ class ClipboardButton(IconTextButton):
         self.controller = controller
         self.connect("clicked", self._on_button_clicked, func)
 
-        # TODO: strings
-        self.set_tooltip_text("Copy to clipboard")
+        self.set_tooltip_text(buttons.clipboard_button)
 
     def _on_button_clicked(self, button: Self, func: Callable[[], str]) -> None:
         def revert() -> Literal[False]:
@@ -122,16 +121,14 @@ class CopyIpButton(ClipboardButton):
     def __init__(self, func: Callable[[], str]) -> None:
         super().__init__(func)
 
-        # TODO: strings
-        self.set_tooltip_text("Copy IP to clipboard")
+        self.set_tooltip_text(buttons.clipboard_ip_button)
 
 
 class CloseButton(IconTextButton):
     def __init__(self, label: str) -> None:
         super().__init__(icon=ICON_CLOSE, label=label)
 
-        # TODO: strings
-        self.set_tooltip_text("Unset this server as favorite")
+        self.set_tooltip_text(buttons.unset_button_tooltip)
 
 
 class WebButton(IconTextButton):

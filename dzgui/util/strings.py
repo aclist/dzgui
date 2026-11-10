@@ -159,9 +159,6 @@ filter_unofficial = "Unofficial"
 filter_modded = "Modded"
 filter_unmodded = "Unmodded"
 
-# maps
-all_maps = "All maps"
-
 # state
 unknown = "Unknown"
 none_provided = "None provided"

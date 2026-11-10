@@ -16,7 +16,9 @@ lan_combo = "LAN"
 fullscreen_eventbox = "This option is not available on Steam Deck."
 save_button = "Save"
 
+api_placeholder = "Enter API key"
 api_failed = "API validation failed"
+api_validate = "Validate"
 
 flatpak_label = "Flatpak client"
 flatpak_standard = "Standard"

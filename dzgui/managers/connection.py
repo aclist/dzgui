@@ -48,7 +48,7 @@ from dzgui.strings.dialogs import (
     waiting_for_directories,
 )
 from dzgui.strings import kb
-from dzgui.strings.server_mods import checkmark, resync
+from dzgui.strings.server_mods import checkmark, resync, invalid_mod
 from dzgui.util.format import format_exception, format_mib
 from dzgui.util.strings import dialog, server_timeout
 from dzgui.util.symlink import rebuild_symlinks
@@ -192,9 +192,8 @@ class ConnectionManager:
 
         is_last = self.is_last_server()
 
-        # TODO: strings
         invalid_mods = [
-            (mod[0], mod[1]) for mod in remote_mods if mod[2] == "Invalid mod"
+            (mod[0], mod[1]) for mod in remote_mods if mod[2] == invalid_mod
         ]
 
         prereqs = Prerequisites(
@@ -272,8 +271,7 @@ class ConnectionManager:
         for mod in alpha_mods:
             # NOTE: if the mod is neither synched or out of date, it is a malformed mod
             if mod[2] == "":
-                # TODO: strings
-                mod[2] = "Invalid mod"
+                mod[2] = invalid_mod
 
         return alpha_mods, missing_mods
 
