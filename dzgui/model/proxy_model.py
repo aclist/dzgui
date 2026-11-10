@@ -50,7 +50,6 @@ class ServerRow:
         "modded",
     )
 
-    # TODO: tests for marshalled row insertion
     @classmethod
     def marshal_rows(
         cls, rows: list["ServerRow"]
