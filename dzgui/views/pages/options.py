@@ -13,8 +13,6 @@ from dzgui.const.constants import (
     FLATPAK_RUN_CMD,
     FLATPAK_SANDBOX,
     FLATPAK_STEAM_PATH,
-    VIEW_CONCEAL,
-    VIEW_REVEAL,
 )
 from dzgui.const.icons import ICON_VIEW_CONCEAL, ICON_VIEW_REVEAL
 from dzgui.const.endpoints import STEAM_API_SETUP

@@ -3,7 +3,6 @@ from typing import Literal, TYPE_CHECKING
 
 from dzgui.const.constants import (
     APP_NAME,
-    SEARCH_ICON,
 )
 from dzgui.const.icons import ICON_SEARCH
 from dzgui.util.format import format_exception
