@@ -8,7 +8,7 @@ from dzgui.util.strings import no_mods, no_servers, workshop
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk  # noqa E402
+from gi.repository import Gtk
 
 
 def format_pango(text: str) -> str:

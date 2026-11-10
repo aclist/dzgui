@@ -3,10 +3,10 @@ from typing import Self, TYPE_CHECKING
 from dzgui.views.components.entry import ValidatedEntry
 from dzgui.views.dialogs.generic import GenericDialog
 
-import gi  # noqa E402
+import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gdk, Gtk  # noqa E402
+from gi.repository import Gtk
 
 if TYPE_CHECKING:
     from dzgui.controllers.mc import Controller

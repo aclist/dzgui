@@ -78,6 +78,7 @@ line-length = 88
 indent-width = 4
 extend-exclude = ["*lib/a2s"]
 lint.unfixable = ["F401", "I001"]
+lint.ignore = ["E402"]
 
 [tool.ruff.format]
 quote-style = "double"

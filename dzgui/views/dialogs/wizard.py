@@ -35,7 +35,7 @@ from dzgui.views.trees.tree_simple import SimpleTree
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gdk, Gtk, GLib, GObject, GdkPixbuf  # noqa E402
+from gi.repository import Gtk, GLib, GObject, GdkPixbuf
 
 if TYPE_CHECKING:
     from dzgui.config.xdg import Xdg

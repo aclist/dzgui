@@ -10,7 +10,7 @@ from dzgui.util.strings import server_labels
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, Gdk, GLib  # noqa E402
+from gi.repository import Gtk, Gdk
 
 logger = logging.getLogger(APP_NAME)
 

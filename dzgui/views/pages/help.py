@@ -4,7 +4,7 @@ from dzgui.views.trees.tree_menu import MenuTreeView
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk  # noqa E402
+from gi.repository import Gtk
 
 if TYPE_CHECKING:
     from dzgui.controllers.mc import Controller

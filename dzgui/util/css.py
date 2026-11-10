@@ -5,7 +5,7 @@ from dzgui.const.constants import APP_NAME_LOWER, CSS_PATH
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, Gdk  # noqa E402
+from gi.repository import Gtk, Gdk
 
 
 def add_class(widget: Gtk.Widget, label: str) -> None:

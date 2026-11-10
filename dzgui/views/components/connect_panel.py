@@ -1,6 +1,7 @@
 from typing import Self, TYPE_CHECKING
 
-from dzgui.const.constants import CARET_DOWN, CARET_UP, UDP_PORT
+from dzgui.const.icons import ICON_CARET_DOWN, ICON_CARET_UP
+from dzgui.const.constants import UDP_PORT
 from dzgui.model.servers import ServerModelManager
 from dzgui.strings import connect_panel
 from dzgui.util.keys import is_ctrl_mask
@@ -18,7 +19,7 @@ from dzgui.views.components.labels import BoldLabel
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, Gdk  # noqa E402
+from gi.repository import Gtk, Gdk
 
 if TYPE_CHECKING:
     from dzgui.controllers.mc import Controller
@@ -30,7 +31,7 @@ ROWS = 1
 
 class DockButton(IconButton):
     def __init__(self, child: Gtk.Widget) -> None:
-        super().__init__(CARET_DOWN)
+        super().__init__(ICON_CARET_DOWN)
 
         self.expanded = True
         self.child = child
@@ -43,12 +44,12 @@ class DockButton(IconButton):
         self.set_tooltip_text(self.collapse_text)
 
     def collapse(self) -> None:
-        self.set_image(Icon(CARET_UP))
+        self.set_image(Icon(ICON_CARET_UP))
         self.child.hide()
         self.set_tooltip_text(self.expand_text)
 
     def expand(self) -> None:
-        self.set_image(Icon(CARET_DOWN))
+        self.set_image(Icon(ICON_CARET_DOWN))
         self.child.show()
         self.set_tooltip_text(self.collapse_text)
 
