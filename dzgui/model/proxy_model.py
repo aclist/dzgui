@@ -161,9 +161,6 @@ class ProxyModelManager:
             return False
         return True
 
-    def append_row(self, row: list) -> None:
-        self.proxy_model.append(row)
-
     def append_row_to_control(self, row: ServerRow) -> None:
         if self.control_model is None:
             raise AttributeError("Trying to add rows to a non-existent model")
