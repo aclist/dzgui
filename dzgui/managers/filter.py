@@ -109,7 +109,7 @@ class FilterManager:
         for m in clean:
             self.append_map([m])
 
-    def get_all_filters(self) -> tuple:
+    def get_all_filters(self) -> tuple[str, ...]:
         map_name = self.get_active_map_name()
         enabled = self.get_filters()
         kw = self.get_active_keyword()
