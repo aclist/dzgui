@@ -47,7 +47,7 @@ class ProxyModelManager:
 
     def __init__(self, filter_man: "FilterManager") -> None:
         self.filter_cache: dict[
-            tuple[str],
+            tuple[str, ...],
             list[tuple[str, str, str, str, int, int, int, str, int, int, str, bool]],
         ] = {}
 
@@ -68,9 +68,6 @@ class ProxyModelManager:
             return False
         return True
 
-    def append_row(self, row: list) -> None:
-        self.proxy_model.append(row)
-
     def append_row_to_control(
         self, row: tuple[str, str, str, str, int, int, int, str, int, int, str, bool]
     ) -> None:
@@ -84,7 +81,6 @@ class ProxyModelManager:
         self.proxy_model[treeiter][4] = playercount.players
         self.proxy_model[treeiter][6] = playercount.queue
 
-    # TODO: use dataclass for record rows
     def append_row_to_history(
         self,
         history: tuple[str, str, str, str, int, int, int, str, int, int, str, bool],
@@ -264,7 +260,7 @@ class ProxyModelManager:
                 rows = [row for row in rows if row[11]]
         return rows
 
-    def filter_toggle_on(self, filters: tuple[str]) -> list:
+    def filter_toggle_on(self, filters: tuple[str, ...]) -> list:
         """Effectively applies all filters"""
         self.set_filtered(self.control_model)
         self.set_filtered(self.filter_map(filters))
@@ -275,7 +271,7 @@ class ProxyModelManager:
             self.set_filtered(self.filter_toggle_off(filters, f))
         return self.filtered
 
-    def set_cache(self, filters: tuple[str], filtered_rows: list[tuple]) -> None:
+    def set_cache(self, filters: tuple[str, ...], filtered_rows: list[tuple]) -> None:
         self.filter_cache[filters] = filtered_rows
 
     def set_filtered(self, rows: list | None) -> None:

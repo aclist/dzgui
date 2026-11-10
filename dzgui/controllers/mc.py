@@ -77,7 +77,7 @@ class AppNavigation:
 
 class Controller(GObject.GObject):
     def __init__(self) -> None:
-        self.dist_cache: dict[str, "Haversine"] = {}
+        self.dist_cache: dict[str, "Haversine" | None] = {}
         self.mediator = AppNavigation()
 
         self.prefs: UserPrefs
@@ -355,10 +355,10 @@ class Controller(GObject.GObject):
             filter_man.set_filter(filt, state)
         self.mediator.filters.set_filters(filters)
 
-    def get_dist_cache(self) -> dict[str, "Haversine"]:
+    def get_dist_cache(self) -> dict[str, Union["Haversine", None]]:
         return self.dist_cache
 
-    def set_dist_cache(self, addr: str, haversine: "Haversine") -> None:
+    def set_dist_cache(self, addr: str, haversine: Union["Haversine", None]) -> None:
         self.dist_cache[addr] = haversine
 
     def get_map_store(self) -> Gtk.ListStore:

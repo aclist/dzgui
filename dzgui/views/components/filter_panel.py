@@ -30,7 +30,7 @@ class ButtonGrid(Gtk.Grid):
     def __init__(
         self,
         controller: "Controller",
-        defaults: dict[str, str],
+        defaults: dict[str, bool],
         tooltips: dict[str, str],
     ) -> None:
         super().__init__(
@@ -96,7 +96,7 @@ class ButtonGrid(Gtk.Grid):
         logger.info(f"User toggled button '{label}' to {state}")
         self.emitter.emit("check_toggled", label, state)
 
-    def get_checkboxes(self) -> list:
+    def get_checkboxes(self) -> list[Gtk.CheckButton]:
         return self.checks
 
 

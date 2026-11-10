@@ -1,4 +1,5 @@
 import re
+from typing import Any
 
 from dzgui.util.localize import number
 from dzgui.strings.generic import selectable_tree
@@ -60,7 +61,7 @@ def format_server_mods(mods: int) -> str:
     return f"Found {mods:n} {plural}. {workshop}"
 
 
-def format_player_count(model: Gtk.TreeModel | None, control: list) -> str:
+def format_player_count(model: Gtk.TreeModel | None, control: list[Any]) -> str:
     players = 0
     hits: int
     status: str

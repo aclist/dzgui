@@ -105,7 +105,7 @@ class BootDialog(ColorAwareApp, Gtk.Dialog):  # type: ignore
         self.error_label = Gtk.Label(margin_start=15, margin_end=15)
 
         # TODO: abstract class
-        self.copy_button = ClipboardButton(None, lambda: self.error_label.get_text())
+        self.copy_button = ClipboardButton(self.error_label.get_text)
         self.button_hbox = Gtk.Box(
             orientation=Gtk.Orientation.HORIZONTAL, halign=Gtk.Align.CENTER, spacing=10
         )

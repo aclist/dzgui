@@ -51,7 +51,6 @@ class FilterManager:
         self.active_map = (0, all_maps)
         self.prior_map = all_maps
 
-        self.filters: list
         self.enabled_filters = dict(self.default_filters)
 
     def get_tooltips(self) -> dict[str, str]:
@@ -75,7 +74,7 @@ class FilterManager:
     def set_active_keyword(self, word: str) -> None:
         self.active_keyword = word
 
-    def get_default_filters(self) -> dict:
+    def get_default_filters(self) -> dict[str, bool]:
         """Deep copy of defaults"""
         return dict(self.default_filters)
 
@@ -116,7 +115,7 @@ class FilterManager:
     def get_unique_maps(self) -> list[str]:
         return [row[0] for row in self.map_store if row[0] != "All maps"]
 
-    def get_all_filters(self) -> tuple:
+    def get_all_filters(self) -> tuple[str, ...]:
         map_name = self.get_active_map_name()
         enabled = self.get_filters()
         kw = self.get_active_keyword()

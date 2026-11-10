@@ -1,10 +1,8 @@
 from typing import Callable, Literal, Self, TYPE_CHECKING, Union
 
 from dzgui.util.clip import copy_clipboard
-from dzgui.util.format import pluralize
 from dzgui.strings import buttons
 from dzgui.util.strings import (
-    alert_button_tooltip,
     atomic_buttons,
 )
 from dzgui.const.constants import (
@@ -14,7 +12,6 @@ from dzgui.const.constants import (
     LIST_ADD,
     REFRESH_ICON,
     STEAM_ICON,
-    WARNING,
     WEB_BROWSER,
 )
 from dzgui.strings import connect_panel
@@ -101,15 +98,14 @@ class LargeIconTextButton(IconButton):
 
 
 class ClipboardButton(IconTextButton):
-    def __init__(self, controller: Union["Controller", None], func: Callable) -> None:
+    def __init__(self, func: Callable[[], str]) -> None:
         super().__init__(CLIPBOARD, atomic_buttons.copy)
-        self.controller = controller
         self.connect("clicked", self._on_button_clicked, func)
 
         # TODO: strings
         self.set_tooltip_text("Copy to clipboard")
 
-    def _on_button_clicked(self, button: Self, func: Callable) -> None:
+    def _on_button_clicked(self, button: Self, func: Callable[[], str]) -> None:
         def revert() -> Literal[False]:
             self.revert_icon()
             return False
@@ -120,10 +116,9 @@ class ClipboardButton(IconTextButton):
         GLib.timeout_add(600, revert)
 
 
-# TODO: determine when controller would be passed to this button or drop
 class CopyIpButton(ClipboardButton):
-    def __init__(self, controller: Union["Controller", None], func: Callable) -> None:
-        super().__init__(controller, func)
+    def __init__(self, func: Callable[[], str]) -> None:
+        super().__init__(func)
 
         # TODO: strings
         self.set_tooltip_text("Copy IP to clipboard")
@@ -250,7 +245,6 @@ class AddButton(IconTextButton):
     def __init__(self) -> None:
         super().__init__(icon=LIST_ADD, label=connect_panel.add_button)
         self.set_tooltip_text(connect_panel.add_tooltip)
-
 
 
 class SpinnerButton(Gtk.Button):

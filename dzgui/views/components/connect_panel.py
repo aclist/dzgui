@@ -187,7 +187,7 @@ class FavPanel(Gtk.Frame):
 
         self.fav_button = SteamConnectButton()
         self.fav_button.connect("clicked", self._on_connect_clicked)
-        self.copy_button = CopyIpButton(self.controller, self.get_fav_ip)
+        self.copy_button = CopyIpButton(self.get_fav_ip)
 
         # TODO: strings
         self.unset_button = CloseButton("Unset")
