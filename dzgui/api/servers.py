@@ -13,6 +13,7 @@ from typing import Any, Optional, TYPE_CHECKING, Union
 
 from dzgui.const.constants import APP_NAME, REQUEST_TIMEOUT
 from dzgui.const.endpoints import STEAM_SERVERS
+from dzgui.model.proxy_model import ServerRow
 from dzgui.util.format import format_exception
 from dzgui.util import strings
 
@@ -139,7 +140,9 @@ def sanitize(name: str) -> str:
     return name
 
 
-def parse_json(json: list) -> list:
+def parse_json(
+    json: list[dict[str, Any]],
+) -> list[ServerRow]:
     """
     Server metadata is underspecified and server operators
     tend to insert random garbage in the headers. In case
@@ -224,7 +227,7 @@ def parse_json(json: list) -> list:
         mapname = row["map"].lower()
         players = row["players"]
         max_players = row["max_players"]
-        raw = (
+        raw = ServerRow(
             name,
             mapname,
             view,

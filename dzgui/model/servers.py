@@ -26,7 +26,7 @@ from gi.repository import Gtk, GLib  # noqa E402
 if TYPE_CHECKING:
     from dzgui.api.servers import A2SInfo, Record
     from dzgui.controllers.mc import Controller
-    from dzgui.model.proxy_model import ProxyModelManager
+    from dzgui.model.proxy_model import ProxyModelManager, ServerRow
     from dzgui.views.trees.tree_servers import ServerTreeView
 
 logger = logging.getLogger(APP_NAME)
@@ -241,10 +241,7 @@ class ServerModelManager:
 
     def update_history(
         self,
-        rows: (
-            list[tuple[str, str, str, str, int, int, int, str, int, int, str, bool]]
-            | None
-        ) = None,
+        rows: list["ServerRow"] | None = None,
     ) -> None:
         proxy_man = self._get_proxy_man()
         if rows is not None:
@@ -267,7 +264,6 @@ class ServerModelManager:
         self.first_iteration = False
         self.emitter.emit("load_maps", store)
 
-    # TODO: dataclass for record rows; check for other dict annotations
     def add_to_history(self, data: tuple[dict[str, Any], "Record"]) -> None:
         row, record = data
         proxy_man = self._get_proxy_man()
@@ -453,13 +449,13 @@ class ServerModelManager:
             dialog.show_all()
             dialog.run()
 
-    def _push_data(self, data: list[Any]) -> None:
+    def _push_data(self, data: list["ServerRow"]) -> None:
         self._get_proxy_man().push(data)
         self._sort_unique_maps(data)
         self.thread_man.set_cleanup_func(StoredFunc(self._cleanup_on_success))
 
-    def _sort_unique_maps(self, data: list) -> None:
-        u_maps = set([row[1] for row in data])
+    def _sort_unique_maps(self, data: list[Any]) -> None:
+        u_maps = set([row.mapname for row in data])
         self._set_new_maps(sorted(u_maps))
 
     def _set_new_maps(self, maps: list[str]) -> None:

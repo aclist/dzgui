@@ -412,5 +412,9 @@ class ServerTreeView(ContextMixin, TreeView):  # type: ignore
         if row_index >= start[0] <= end[0]:
             # NOTE: fetch raw data rows
             real_model = self.proxy_man.get_control()
-            value = real_model[row_index][col_index]
+            from dataclasses import fields
+            from dzgui.model.proxy_model import ServerRow
+            key = fields(ServerRow)[col_index].name
+
+            value = getattr(real_model[row_index], key)
             cell.set_property("text", str(value))
