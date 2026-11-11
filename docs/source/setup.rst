@@ -19,14 +19,14 @@ You will need at a minimum a :ref:`Steam Web API key<steam_api>` in order to bro
 
 Steam Web API key
 ^^^^^^^^^^^^^^^^^^
-
 **This step is required**.
 
-Register for a `Steam Web API key <https://steamcommunity.com/dev/apikey>`_ (free) using your Steam account. You will be asked for a unique URL for your app when registering.
+Register for a `Steam Web API key <https://steamcommunity.com/dev/apikey>`_ (free) using your Steam account.
 
-Since this key is for a personal use application and does not actually call back anywhere, set a generic local identifier here like "127.0.0.1" or some other name that is meaningful to you.
+You will be asked for a unique URL for your app when registering. Typically, an API would send logs back to your URL in the form of callbacks.
+However, since these API queries will be used for local consumption by a single user only, you can set a generic local identifier here like ``127.0.0.1`` to have the server discard them.
 
-Once configured, you can insert this key in the app when launching it for the first time.
+Once configured, you can insert this API key in the app when launching it for the first time.
 
 .. note::
     If you are confused about this requirement, please refer to DZGUI Knowledge Base article :ref:`DZG-007<DZG-007>` for additional information.
@@ -36,7 +36,16 @@ Battlemetrics API key
 .. warning::
 
     This feature is no longer supported in DZGUI. Battlemetrics has switched to a paid service.
-    Battlemetrics queries are expected to fail in DZGUI 6. In DZGUI 7, this feature has been removed entirely.
+
+Choosing a Steam client
+^^^^^^^^^^^^^^^^^^^^^^^^^
+If multiple Steam clients are available (native Steam client/Flatpak Steam client), you will be
+asked to choose which you want to use. Due to the way Steam's inter-process communication and internal URIs work,
+if you choose one or the other, you should not run both clients simultaneously. This can lead DZGUI to send requests to the wrong one.
+
+.. note::
+   If you decide to switch to using a different Steam client with DZGUI, please uninstall fully (``dzgui -u``) and re-run the first time setup.
+
 
 Next steps
 --------------
