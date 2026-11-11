@@ -57,6 +57,7 @@
 - List timestamp of last DayZ client update
 - Validate mods via Mod page to pull in updates
 - Support for Nasdara (Badlands) DLC
+- Load offline mods
 
 ### Changed
 - Conform to PEP 440 versioning for beta versions
@@ -99,16 +100,11 @@
 - Current keyword filter not being applied when refreshing table
 - Steam Flatpak cannot run DZGUI as a non-Steam game
 - Collisions between native Steam and Steam Flatpak clients
-
-### Unreleased
-- Load offline mods
-- Local documentation
-- Raw debug command in context menu
+- Sticky toggle signal on radio buttons when reloading Options
 
 ### Developer-facing
-- Add pyproject.toml file
-- Show deprecation warnings
 - Options -> Dev page
+- Raw debug command in preconnect menu
 
 ## [6.0.5] 2026-05-17
 ### Changed
