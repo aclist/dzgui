@@ -341,8 +341,8 @@ class ServerModelManager:
                 return
             config_man.add_saved_server(fqip)
 
-            # FIXME: this is valid if saved servers tab is already open,
-            # but not if app was just booted; causes single row to appear prematurely
+            # TODO: this is valid if saved servers tab is already open,
+            # but not if tab is unloaded; causes single row to appear prematurely
             if proxy_man.has_control_model() is False:
                 proxy_man.push(records)
             else:

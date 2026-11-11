@@ -136,7 +136,6 @@ class FolderHBox(HBox):
         self.folder = ""
         self.label.set_label("")
         self.unset_button.hide()
-        # FIXME: rename signal
         self.emitter.emit("custom_mods_unloaded", self)
 
     def get_button(self) -> Gtk.Button:
