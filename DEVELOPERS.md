@@ -5,7 +5,7 @@
 ### Fetch submodules
 git submodule update --recursive --init
 
-### Install with dev dependencies
+### Install into editable venv with dev dependencies
 uv pip install -e '.[dev]'
 
 This includes all dependencies for building, linting, testing, and checking in code.
@@ -16,7 +16,7 @@ docs: documentation tools
 lint: code linting, fixing, and type checking
 test: unit and integration tests
 
-## Miscellaneous
+## Build process
 
 ### Setting up precommit hooks
 pre-commit install
@@ -25,6 +25,7 @@ pre-commit install
 sphinx-build -M html source build -a
 
 ### Building standalone release binaries
-1. Set up the build target: `rustup target add x86_64-unknown-linux-musl`
-2. Run `python3 scripts/release.py`
-3. Generate a release and tag against the resulting tarfile generated in `dist`
+1. Install the applicable system package containing the 'musl-gcc' wrapper
+2. Set up the build target: `rustup target add x86_64-unknown-linux-musl`
+3. Run `python3 scripts/release.py`
+4. Generate a release and tag against the resulting tarfile generated in `dist`

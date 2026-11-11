@@ -1,3 +1,4 @@
+import gi
 import logging
 import signal
 
@@ -34,8 +35,6 @@ from dzgui.views.pages.preconnect import PreConnectionAssistant
 from dzgui.views.pages.servers import ServerNotebook
 from dzgui.views.pages.thanks import Thanks
 
-import gi
-
 gi.require_version("Gtk", "3.0")
 gi.require_version("GLibUnix", "2.0")
 from gi.repository import Gtk, GLib, GLibUnix, Gdk  # type: ignore
@@ -49,7 +48,10 @@ logger = logging.getLogger(APP_NAME)
 class OuterWindow(Gtk.ApplicationWindow):
     def __init__(self, app: "App") -> None:
         super().__init__(
-            application=app, title=APP_NAME, border_width=10, icon_name=APP_NAME_LOWER
+            application=app,
+            title=APP_NAME,
+            border_width=10,
+            icon_name=APP_NAME_LOWER,
         )
 
         self.hb = AppHeaderBar()

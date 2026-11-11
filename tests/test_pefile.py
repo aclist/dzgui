@@ -7,7 +7,7 @@ from dzgui.api.steam import (
     VDFLoadError,
     AppNotInstalledError,
     AppMovedError,
-    get_app_path
+    get_app_path,
 )
 
 from dzgui.config.query import get_config
@@ -26,9 +26,8 @@ def default_steam_path():
     conf = get_config(xdg.config)
     return conf["default_steam_path"]
 
+# TODO: additional parsing tests
 
-# TODO: split into separate test file
-# FIXME: use fixtures
 def test_pefile_length(default_steam_path):
     try:
         pe_file_path = PeFile.get_pefile_path(Path(default_steam_path), APPID_DAYZ)
@@ -47,6 +46,7 @@ def test_invalid_pefile_path():
             raise e
 
 
+# TODO: split into separate test file
 @pytest.mark.parametrize(
     "fixture, exception",
     [
@@ -57,6 +57,7 @@ def test_invalid_pefile_path():
 )
 def test_not_in_library(monkeypatch, fixture, exception):
     import dzgui.api.steam as steam
+
     monkeypatch.setattr(steam, "LIBRARYFOLDERS_PATH", fixture)
 
     folder_path = Path(fixture_path("api"))
@@ -74,6 +75,7 @@ def second_drive():
 
 def test_on_second_drive(monkeypatch, second_drive):
     import dzgui.api.steam as steam
+
     monkeypatch.setattr(steam, "LIBRARYFOLDERS_PATH", second_drive)
     folder_path = Path(fixture_path("api"))
     path = get_app_path(folder_path, APPID_DAYZ)

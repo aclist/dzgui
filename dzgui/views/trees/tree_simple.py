@@ -1,12 +1,12 @@
+import gi
+
 from typing import TYPE_CHECKING, Union
+
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gtk
 
 if TYPE_CHECKING:
     from dzgui.model.model_factory import FastInsertListStore
-
-import gi
-
-gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk  # noqa
 
 
 class SimpleTree(Gtk.ScrolledWindow):

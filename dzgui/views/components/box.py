@@ -1,9 +1,9 @@
-from typing import Sequence
-
 import gi
 
+from typing import Sequence
+
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk  # noqa
+from gi.repository import Gtk
 
 
 class GenericBox(Gtk.Box):

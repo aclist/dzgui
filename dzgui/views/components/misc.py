@@ -1,3 +1,4 @@
+import gi
 from typing import Self
 from warnings import deprecated
 
@@ -8,10 +9,8 @@ from dzgui.strings import options
 from dzgui.views.components.box import HBox
 from dzgui.views.components.buttons import Icon
 
-import gi
-
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk  # noqa
+from gi.repository import Gtk
 
 
 @deprecated("Client choice is determined at setup time")

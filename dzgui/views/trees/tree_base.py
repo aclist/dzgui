@@ -1,15 +1,14 @@
+import gi
 import logging
 
-from typing import Any, Optional, TYPE_CHECKING
+from typing import Any, TYPE_CHECKING
 
 from dzgui.const.constants import APP_NAME, SEPARATOR
 from dzgui.util.keys import is_ctrl_mask, is_navkey
 from dzgui.views.mixins.cursor_mixin import CursorMixin
 
-import gi
-
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, GLib, Gdk, GObject, Pango  # noqa
+from gi.repository import Gtk, Gdk, GObject
 
 logger = logging.getLogger(APP_NAME)
 
@@ -20,7 +19,7 @@ if TYPE_CHECKING:
 
 class TreeView(CursorMixin, Gtk.TreeView):  # type: ignore
     def __init__(
-        self, controller: "Controller", menu: Optional["ContextMenuGroup"]
+        self, controller: "Controller", menu: "ContextMenuGroup | None"
     ) -> None:
         super().__init__(
             enable_search=False,
@@ -59,7 +58,7 @@ class TreeView(CursorMixin, Gtk.TreeView):  # type: ignore
             return True
         return False
 
-    def get_current_iter(self) -> Optional[Gtk.TreeIter]:
+    def get_current_iter(self) -> Gtk.TreeIter | None:
         it = self.get_selection().get_selected()[1]
         return it
 
