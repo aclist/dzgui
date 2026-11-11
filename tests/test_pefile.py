@@ -7,7 +7,7 @@ from dzgui.api.steam import (
     VDFLoadError,
     AppNotInstalledError,
     AppMovedError,
-    get_app_path
+    get_app_path,
 )
 
 from dzgui.config.query import get_config
@@ -20,16 +20,14 @@ pytestmark = pytest.mark.apitest
 
 
 @pytest.fixture
-def default_steam_path():
+def default_steam_path() -> str:
     paths = get_xdg_paths()
     xdg = parse_filepaths(paths)
     conf = get_config(xdg.config)
-    return conf["default_steam_path"]
+    return str(conf["default_steam_path"])
 
 
-# TODO: split into separate test file
-# FIXME: use fixtures
-def test_pefile_length(default_steam_path):
+def test_pefile_length(default_steam_path: str) -> None:
     try:
         pe_file_path = PeFile.get_pefile_path(Path(default_steam_path), APPID_DAYZ)
         vers = PeFile.get_dayz_version(pe_file_path)
@@ -39,7 +37,7 @@ def test_pefile_length(default_steam_path):
     assert len(st) == 3
 
 
-def test_invalid_pefile_path():
+def test_invalid_pefile_path() -> None:
     with pytest.raises(VDFLoadError):
         try:
             PeFile.get_pefile_path(Path("/not/a/path"), APPID_DAYZ)
@@ -57,6 +55,7 @@ def test_invalid_pefile_path():
 )
 def test_not_in_library(monkeypatch, fixture, exception):
     import dzgui.api.steam as steam
+
     monkeypatch.setattr(steam, "LIBRARYFOLDERS_PATH", fixture)
 
     folder_path = Path(fixture_path("api"))
@@ -68,12 +67,13 @@ def test_not_in_library(monkeypatch, fixture, exception):
 
 
 @pytest.fixture
-def second_drive():
+def second_drive() -> str:
     return "in_library_on_second_drive.vdf"
 
 
-def test_on_second_drive(monkeypatch, second_drive):
+def test_on_second_drive(monkeypatch, second_drive: str) -> None:
     import dzgui.api.steam as steam
+
     monkeypatch.setattr(steam, "LIBRARYFOLDERS_PATH", second_drive)
     folder_path = Path(fixture_path("api"))
     path = get_app_path(folder_path, APPID_DAYZ)

@@ -5,7 +5,7 @@ from pathlib import Path
 
 
 @pytest.fixture
-def changelog(request) -> None:
+def changelog(request: pytest.FixtureRequest) -> str:
     root = request.config.rootpath
     changelog = Path(root).joinpath("CHANGELOG.md").read_text()
     return changelog
@@ -19,7 +19,7 @@ def count_hash(line: str) -> int:
     return cnt
 
 
-def test_changelog_prefix(changelog) -> None:
+def test_changelog_prefix(changelog: str) -> None:
     r = r".*(\[.*\]).*"
     lines = changelog.splitlines()
     sort = sorted(lines)

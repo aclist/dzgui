@@ -14,9 +14,9 @@ pytestmark = pytest.mark.flatpak
 
 
 class TestSteamDetection(unittest.TestCase):
-    def test_flatpak_detection_with_multiple_running_apps(self):
-        def flatpak_output(args, *, text):
-            # Default `flatpak ps` includes instance, PID, app and runtime columns.
+    def test_flatpak_detection_with_multiple_running_apps(self) -> None:
+        def flatpak_output(args, *, text: str) -> str:
+            # Default 'flatpak ps' includes instance, PID, app and runtime columns.
             if args == ["flatpak", "ps", "--columns=application"]:
                 return f"com.spotify.Client\n{FLATPAK_APPID}\n{FLATPAK_APPID}\n"
             return f"3904921611\t1257689\t{FLATPAK_APPID}\torg.freedesktop.Platform\n"
@@ -29,7 +29,7 @@ class TestSteamDetection(unittest.TestCase):
                 with self.subTest(client=client):
                     self.assertTrue(proc.is_steam_running(client))
 
-    def test_flatpak_not_running(self):
+    def test_flatpak_not_running(self) -> None:
         with patch.object(proc, "has_cmd", return_value=True):
             for output in ("", "com.spotify.Client\n", f"{FLATPAK_APPID}Helper\n"):
                 with (
@@ -38,7 +38,7 @@ class TestSteamDetection(unittest.TestCase):
                 ):
                     self.assertFalse(proc.is_flatpak_steam_running())
 
-    def test_flatpak_not_installed(self):
+    def test_flatpak_not_installed(self) -> None:
         with (
             patch.object(proc, "has_cmd", return_value=False),
             patch.object(proc.subprocess, "check_output") as check_output,
@@ -46,7 +46,7 @@ class TestSteamDetection(unittest.TestCase):
             self.assertFalse(proc.is_flatpak_steam_running())
             check_output.assert_not_called()
 
-    def test_native_steam(self):
+    def test_native_steam(self) -> None:
         with patch.object(proc, "has_cmd", return_value=True):
             for output, expected in (
                 (
@@ -73,6 +73,6 @@ class TestSteamDetection(unittest.TestCase):
                 ):
                     self.assertEqual(proc.is_native_steam_running(), expected)
 
-    def test_invalid_client(self):
+    def test_invalid_client(self) -> None:
         with self.assertRaises(TypeError):
             proc.is_steam_running("invalid-client")

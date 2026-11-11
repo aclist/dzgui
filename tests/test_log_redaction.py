@@ -7,13 +7,13 @@ from dzgui.util.redact import RedactionFilter, REDACTION_PATTERNS
 class RecordsListHandler(logging.Handler):
     def __init__(self) -> None:
         super().__init__()
-        self.records_list = []
+        self.records_list: list[logging.LogRecord] = []
 
     def emit(self, record: logging.LogRecord) -> None:
         self.records_list.append(record)
 
-    def pop(self) -> None:
-        return self.records_list[-1].msg
+    def pop(self) -> str:
+        return str(self.records_list[-1].msg)
 
 
 @pytest.mark.redact

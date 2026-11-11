@@ -1,11 +1,16 @@
 import pytest
 import tempfile
 
+from typing import TYPE_CHECKING
+
 from pathlib import Path
 from _pytest.monkeypatch import MonkeyPatch
 
 from dzgui.api.shortcuts import Shortcuts
 from tests.fixtures import fixture_path
+
+if TYPE_CHECKING:
+    from _pytest.monkeypatch import MonkeyPatch
 
 pytestmark = pytest.mark.apitest
 
@@ -22,13 +27,13 @@ def patch_api() -> None:
     mp.undo()
 
 
-def test_no_shortcuts(monkeypatch) -> None:
+def test_no_shortcuts(monkeypatch: "MonkeyPatch") -> None:
     s = Shortcuts(Path(""))
     assert len(s.shortcuts["shortcuts"]) == 0
 
 
 @pytest.fixture
-def dummy_app() -> None:
+def dummy_app() -> dict[str, str]:
     d = {
         "AppName": "TEST APP",
         "StartDir": "TEST_DIR",

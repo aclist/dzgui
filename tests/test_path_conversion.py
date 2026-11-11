@@ -1,8 +1,13 @@
 from pathlib import Path
+from typing import TYPE_CHECKING
+
 from dzgui.config.xdg import get_xdg_paths
 
+if TYPE_CHECKING:
+    from _pytest.monkeypatch import MonkeyPatch
 
-def test_path_fallback(monkeypatch) -> None:
+
+def test_path_fallback(monkeypatch: "MonkeyPatch") -> None:
     envs = ["XDG_DATA_HOME", "XDG_STATE_HOME", "XDG_CONFIG_HOME", "XDG_CACHE_HOME"]
     for env in envs:
         monkeypatch.setenv(env, "/etc/dzgui")

@@ -1,23 +1,28 @@
 import pytest
 
+from typing import TYPE_CHECKING
+
+from dzgui.api import probe
 from dzgui.config.query import get_config
 from dzgui.config.xdg import get_xdg_paths, parse_filepaths
-from dzgui.api import probe
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 pytestmark = pytest.mark.webtest
 
 
 @pytest.fixture
-def config():
+def config() -> dict[str, "Path"]:
     paths = get_xdg_paths()
     xdg = parse_filepaths(paths)
     return get_config(xdg.config)
 
 
-def test_ipdb():
+def test_ipdb() -> None:
     assert probe.test_ipdb()
 
 
-def test_steam(config):
+def test_steam(config: dict[str, "Path"]) -> None:
     key = config["steam_api"]
     assert probe.test_steam_api(key)
