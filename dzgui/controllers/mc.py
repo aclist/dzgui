@@ -366,7 +366,6 @@ class Controller(GObject.GObject):
         filter_man = self.get_filter_man()
         return filter_man.get_filters()
 
-    # FIXME: wipe maps store when changing tabs if model is none
     def has_server_model(self) -> bool:
         treeview = self.get_active_treeview()
         proxy_man = treeview.get_proxy_man()
