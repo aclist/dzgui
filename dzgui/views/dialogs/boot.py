@@ -1,13 +1,9 @@
+import gi
 import sys
+
+from enum import Enum
 from typing import Any, Literal, Self, TYPE_CHECKING
 
-# import time
-from enum import Enum
-
-
-from dzgui.views.mixins.colorscheme import ColorAwareApp
-
-# TODO: import dialog titles
 from dzgui.api.mods import remove_stale_signatures as remove_stale
 from dzgui.config.ipdb import get_ipdb
 from dzgui.const.constants import HEX_GREEN, HEX_RED
@@ -20,12 +16,10 @@ from dzgui.util.format import format_exception
 from dzgui.util.strings import dialog_header
 from dzgui.util.symlink import rebuild_symlinks
 from dzgui.views.components.buttons import ClipboardButton
-
-
-import gi
+from dzgui.views.mixins.colorscheme import ColorAwareApp
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, GLib, Gdk  # noqa
+from gi.repository import Gtk, GLib, Gdk
 
 if TYPE_CHECKING:
     from dzgui.config.xdg import Xdg

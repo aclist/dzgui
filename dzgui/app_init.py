@@ -6,7 +6,6 @@ from importlib import resources
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-
 from dzgui.const.constants import (
     APP_NAME,
     APP_NAME_LOWER,
@@ -107,7 +106,7 @@ def load_steam_icon() -> None:
     import gi
 
     gi.require_version("Gtk", "3.0")
-    from gi.repository import Gtk  # noqa
+    from gi.repository import Gtk
 
     try:
         traversable = resources.files(APP_NAME_LOWER).joinpath(ICONS_PATH)

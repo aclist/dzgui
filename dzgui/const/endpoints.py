@@ -8,9 +8,9 @@ STEAM_UNSUB = "https://api.steampowered.com/IPublishedFileService/Unsubscribe/v1
 STEAM_APP_DETAILS = "https://store.steampowered.com/api/appdetails?"
 
 GITHUB = "https://github.com/aclist"
-GITHUB_RELEASES = "https://api.github.com/repos/aclist/dztui/releases/latest"
+GITHUB_RELEASES = "https://api.github.com/repos/aclist/dzgui/releases/latest"
 CODEBERG_RELEASES = "https://codeberg.org/api/v1/repos/aclist/dzgui/releases/latest"
-GITHUB_USER_RELEASES = "https://github.com/aclist/dztui/releases"
+GITHUB_USER_RELEASES = "https://github.com/aclist/dzgui/releases"
 DB_IP = "https://db-ip.com/db/download/ip-to-city-lite"
 IP_ECHO = "https://ipecho.net/plain"
 COORDS_API = "http://ip-api.com/json"

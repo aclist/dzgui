@@ -1,10 +1,11 @@
-from typing import Self
-from dzgui.util import css
-
 import gi
 
+from typing import Self
+
+from dzgui.util import css
+
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk  # noqa
+from gi.repository import Gtk
 
 
 # TODO: subclass Gtk.Frame directly

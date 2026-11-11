@@ -1,28 +1,37 @@
 Installation
 ==================
 
-As of this writing, you have a choice of two DZGUI versions:
+.. note::
+   Version 6 of DZGUI 6 has been fully replaced with DZGUI 7.
+   Users on existing DZGUI 6 installations should migrate to the DZGUI 7 build.
 
-- DZGUI 6: Legacy stable version, more complicated to install
-- DZGUI 7: Unstable beta version, much easier to install
+In order to make the first-time setup experience easier for end-users, DZGUI 7 no longer requires
+the tool to be installed from source code into a working Python environment. All necessary dependencies and the
+runtime environment are built-in.
 
-DZGUI 6
---------------------
-This version is no longer receiving feature updates, but will receive security updates until it is replaced by DZGUI 7.
+Turnkey installer
+------------------------
 
-DZGUI 6 must be installed from the source code and has many more package dependencies and prerequisites for it to function correctly.
-If you are looking for a one-click, self-contained installer, use :ref:`DZGUI 7` instead.
+- Visit the project's `Releases page <https://github.com/aclist/dzgui/releases/latest>`_.
+- Download the DZGUI archive from the top of the **Assets** list. This file will be labeled ``dzgui-<VERSION>-x86_64-unknown-linux-musl.tar.gz``.
+- Extract the archive's contents.
+- From a terminal, run the command ``./dzgui`` or double click on the extracted file in a file explorer.
+- Once the setup wizard opens, follow the steps at the bottom of this page.
 
-To install **DZGUI 6**, visit :doc:`dzgui6`.
+UI dependencies (Python and PyGObject)
+---------------------------------------
+On most major distributions, GObject introspection libraries should be available by default.
 
+If you receive an error about a missing ``libgirepository-2.0`` dependency, install it via your system's package manager.
 
-DZGUI 7
---------------------
-This version is currently in beta testing and has all of the features found in DZGUI 6, but may be unstable.
+On Debian-based distributions (Ubuntu, etc.), this package is not explicitly installed on the system.
+You can install it via the following set of commands:
 
-DZGUI 7 has an all-in-one installer and setup wizard, and many new features not found in DZGUI 6.
-However, this codebase is newer and is provided as a pre-release beta candidate.
+.. code:: console
 
-If you want the simplest installer and don't mind experiencing the occasional bug, use this version.
+   sudo apt update
+   sudo apt install libgirepository-2.0-0
 
-To install **DZGUI 7**, visit :doc:`dzgui7`.
+Next steps
+---------------
+Proceed to the :doc:`setup` section for setup instructions.

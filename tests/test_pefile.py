@@ -26,6 +26,7 @@ def default_steam_path() -> str:
     conf = get_config(xdg.config)
     return str(conf["default_steam_path"])
 
+# TODO: additional parsing tests
 
 def test_pefile_length(default_steam_path: str) -> None:
     try:
@@ -45,6 +46,7 @@ def test_invalid_pefile_path() -> None:
             raise e
 
 
+# TODO: split into separate test file
 @pytest.mark.parametrize(
     "fixture, exception",
     [

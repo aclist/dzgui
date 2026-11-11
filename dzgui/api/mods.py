@@ -3,7 +3,6 @@ import logging
 import re
 
 from concurrent.futures import ThreadPoolExecutor, wait
-from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 

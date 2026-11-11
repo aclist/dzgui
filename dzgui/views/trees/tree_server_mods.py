@@ -1,15 +1,15 @@
+import gi
+
+from typing import TYPE_CHECKING
+
 from dzgui.const.enum import ContextMenuGroup
 from dzgui.model.model_factory import ModelFactory
 from dzgui.strings import server_mods
 from dzgui.views.mixins.context_mixin import ContextMixin
 from dzgui.views.trees.tree_base import TreeView
 
-from typing import TYPE_CHECKING
-
-import gi
-
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, GLib, Gdk, Pango  # noqa
+from gi.repository import Gtk, Pango
 
 if TYPE_CHECKING:
     from dzgui.controllers.mc import Controller

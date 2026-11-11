@@ -101,7 +101,7 @@ class Statusbar(Gtk.Grid):
         if type(context) is NotebookPage:
             self.prior_enum = context
         self.prior_status = ""
-        # FIXME: CalcDist is being called when table is not loaded
+
         if dist is None:
             self.set_by_context(context, "")
             return
