@@ -10,7 +10,7 @@ from dzgui.api.servers import ping, Record
 from dzgui.const.constants import APP_NAME
 from dzgui.const.enum import ContextMenuItem, ContextMenuGroup, ServerTab
 from dzgui.managers.filter import FilterManager
-from dzgui.model.proxy_model import ProxyModelManager
+from dzgui.model.proxy_model import ProxyModelManager, ServerRow
 from dzgui.util import strings
 from dzgui.util.dist import CalcDist
 from dzgui.util.keys import is_ctrl_mask
@@ -29,8 +29,14 @@ if TYPE_CHECKING:
     from dzgui.model.model_factory import FastInsertListStore
     from dzgui.util.dist import Haversine
 
+# TODO: consts
 QUEUE_CHECK_DELAY = 200
 
+IND_NAME = ServerRow.get_index("name")
+IND_ADDR = ServerRow.get_index("ip")
+IND_QPORT = ServerRow.get_index("qport")
+IND_PING = ServerRow.get_index("ping")
+IND_MODDED = ServerRow.get_index("modded")
 
 class ServerTreeView(ContextMixin, TreeView):  # type: ignore
     def __init__(
@@ -140,8 +146,8 @@ class ServerTreeView(ContextMixin, TreeView):  # type: ignore
         if model is None:
             return False
         tree_iter = model.get_iter(path[0])
-        ip = model.get_value(tree_iter, 7)
-        qport = model.get_value(tree_iter, 8)
+        ip = model.get_value(tree_iter, IND_ADDR)
+        qport = model.get_value(tree_iter, IND_QPORT)
         addr = ip + ":" + str(qport)
         note = self.controller.get_note_by_record(addr)
 
@@ -164,14 +170,12 @@ class ServerTreeView(ContextMixin, TreeView):  # type: ignore
         return self.enum
 
     def _on_map(self, widget: Self) -> None:
-        # TODO: disable filter panel if current model is None
         state = self.get_enum() is ServerTab.LAN
         self.emitter.emit("lan_tab_toggled", state)
 
         store = self.filter_man.get_map_store()
 
-        # FIXME: if model is none, wipe maps
-        # distinguish this signal from changing map combo in-situ
+        # TODO: distinguish this signal from changing map combo in-situ
         self.emitter.emit("load_maps", store)
         self.handler_id = self.emitter.connect("statusbar_loaded", self.start_distcalc)
         self.start_queue_checker()
@@ -216,7 +220,7 @@ class ServerTreeView(ContextMixin, TreeView):  # type: ignore
 
     def _check_result_queue(self) -> Literal[True]:
         latest_result = None
-        # FIXME: empty results cause statusbar to be emptied
+        # TODO: Nonetype results cause statusbar to be blank
         while not self.queue.empty():
             latest_result = self.queue.get()
 
@@ -262,14 +266,8 @@ class ServerTreeView(ContextMixin, TreeView):  # type: ignore
         (model, pathlist) = sels
         path = pathlist[0]
         tree_iter = model.get_iter(path)
-        has_mods = model.get_value(tree_iter, 11)
+        has_mods = model.get_value(tree_iter, IND_MODDED)
         return bool(has_mods)
-
-    # def get_selected_row(self) -> Gtk.TreeModelRow:
-    #    sel = self.get_selection()
-    #    sels = sel.get_selected_rows()
-    #    print(type(sels[0]))
-    #    return sels[0]
 
     def is_in_favs(self) -> bool:
         record = self.get_record_string()
@@ -299,17 +297,17 @@ class ServerTreeView(ContextMixin, TreeView):  # type: ignore
         self.start_distcalc()
 
     def get_name(self) -> str:
-        return str(self.get_value_at_index(0))
+        return str(self.get_value_at_index(IND_NAME))
 
     def get_simplified_ip(self) -> str:
-        addr = self.get_value_at_index(7)
-        qport = self.get_value_at_index(8)
+        addr = self.get_value_at_index(IND_ADDR)
+        qport = self.get_value_at_index(IND_QPORT)
         ip = addr.split(":")[0]
         return f"{ip}:{qport}"
 
     def get_record_string(self) -> str:
-        addr = self.get_value_at_index(7)
-        qport = self.get_value_at_index(8)
+        addr = self.get_value_at_index(IND_ADDR)
+        qport = self.get_value_at_index(IND_QPORT)
         return f"{addr}:{qport}"
 
     def get_record(self) -> Record | None:
@@ -348,8 +346,7 @@ class ServerTreeView(ContextMixin, TreeView):  # type: ignore
     def _redraw(
         self, model: "FastInsertListStore", _iter: Gtk.TreeIter, _ping: int
     ) -> None:
-        ping_column = 9
-        model.set(_iter, ping_column, _ping)
+        model.set(_iter, IND_PING, _ping)
         self.queue_draw()
 
     def wipe_cache(self) -> None:
@@ -364,13 +361,10 @@ class ServerTreeView(ContextMixin, TreeView):  # type: ignore
         data: Any,
     ) -> None:
 
-        addr_column = 7
-        qport_column = 8
-
-        addr = model.get_value(_iter, addr_column).split(":")
+        addr = model.get_value(_iter, IND_ADDR).split(":")
         ip = addr[0]
         gameport = int(addr[1])
-        qport = model.get_value(_iter, qport_column)
+        qport = model.get_value(_iter, IND_QPORT)
         record = Record(ip, gameport, qport)
 
         if record in self.seen_cache:
