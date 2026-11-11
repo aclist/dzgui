@@ -98,15 +98,28 @@ tend to have less headroom for simultaneous connections than their wired counter
 
 DZG-009: Floating dialogs appear maximized on tiling window managers
 -------------------------------------------------------------------
-
 The main DZGUI window and its child dialogs are expected to be rendered as floating by your window manager.
 DZGUI sends window manager hints to this effect, but tiling window managers designed to bisect the screen into quadrants (e.g., i3 window manager)
 may try to always launch applications in fullscreen.
 
 To resolve this, set specific exclusions or window hints in your WM's configuration file.
-For example, for i3, add the following to your `XDG_CONFIG_HOME/i3/config` file (defaults to `$HOME/.config/i3/config`):
+For example, for i3, add the following to your ``XDG_CONFIG_HOME/i3/config`` file (defaults to ``$HOME/.config/i3/config``):
 
 .. code:: console
 
     for_window [instance="DZGUI"] floating enable, move position center
     for_window [instance="DZGUI - Dialog"] floating enable, move position center
+
+DZG-010: Maps combobox extends to full height of window when there are many maps to choose from
+---------------------------------------------------------------------------------------------------
+This is a limitation of GTK 3. If and when DZGUI is refactored to support the GTK 4 API, this visual glitch is expected to be resolved.
+
+DZG-011: GTK reports "Failed to load module 'xapp-gtk3-module' when starting DZGUI
+---------------------------------------------------------------------------------------------------
+This is a purely cosmetic message that appears when Cinnamon (Xapp) desktop integations are not present.
+While you can suppress this message by installing the package ``xapp``, if you are not actually using Cinnamon as
+part of your desktop environment, it will pull in a large number of unnecessary dependencies.
+
+DZG-012: After adding the DZGUI Steam shortcut via the installer, shortcut icons do not appear in the small library list
+-------------------------------------------------------------------------------------------------------------------------
+It can take 1-2 restarts of the Steam client for these icons to synchronize.
