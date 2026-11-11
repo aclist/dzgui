@@ -38,6 +38,7 @@ IND_QPORT = ServerRow.get_index("qport")
 IND_PING = ServerRow.get_index("ping")
 IND_MODDED = ServerRow.get_index("modded")
 
+
 class ServerTreeView(ContextMixin, TreeView):  # type: ignore
     def __init__(
         self,
@@ -107,7 +108,7 @@ class ServerTreeView(ContextMixin, TreeView):  # type: ignore
                 if column_title in width_map:
                     w = width_map[column_title]
                     column.set_fixed_width(w)
-            if column_title == "Ping":
+            if i == IND_PING:
                 column.set_cell_data_func(renderer, self._get_ping)
 
             column.connect("notify::fixed-width", self._on_col_width_changed)
