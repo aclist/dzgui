@@ -1,6 +1,7 @@
 import pytest
-from pathlib import Path
 
+from pathlib import Path
+from typing import TYPE_CHECKING
 
 import dzgui.api.pefile as PeFile
 from dzgui.api.steam import (
@@ -16,19 +17,22 @@ from dzgui.const.constants import APPID_DAYZ
 
 from tests.fixtures import fixture_path
 
+if TYPE_CHECKING:
+    from _pytest.monkeypatch import MonkeyPatch
+
 pytestmark = pytest.mark.apitest
 
 
 @pytest.fixture
-def default_steam_path():
+def default_steam_path() -> str:
     paths = get_xdg_paths()
     xdg = parse_filepaths(paths)
     conf = get_config(xdg.config)
-    return conf["default_steam_path"]
+    return str(conf["default_steam_path"])
 
 # TODO: additional parsing tests
 
-def test_pefile_length(default_steam_path):
+def test_pefile_length(default_steam_path: str) -> None:
     try:
         pe_file_path = PeFile.get_pefile_path(Path(default_steam_path), APPID_DAYZ)
         vers = PeFile.get_dayz_version(pe_file_path)
@@ -38,7 +42,7 @@ def test_pefile_length(default_steam_path):
     assert len(st) == 3
 
 
-def test_invalid_pefile_path():
+def test_invalid_pefile_path() -> None:
     with pytest.raises(VDFLoadError):
         try:
             PeFile.get_pefile_path(Path("/not/a/path"), APPID_DAYZ)
@@ -55,7 +59,9 @@ def test_invalid_pefile_path():
         ("malformed.vdf", VDFLoadError),
     ],
 )
-def test_not_in_library(monkeypatch, fixture, exception):
+def test_not_in_library(
+    monkeypatch: "MonkeyPatch", fixture: str, exception: type[Exception]
+) -> None:
     import dzgui.api.steam as steam
 
     monkeypatch.setattr(steam, "LIBRARYFOLDERS_PATH", fixture)
@@ -69,11 +75,11 @@ def test_not_in_library(monkeypatch, fixture, exception):
 
 
 @pytest.fixture
-def second_drive():
+def second_drive() -> str:
     return "in_library_on_second_drive.vdf"
 
 
-def test_on_second_drive(monkeypatch, second_drive):
+def test_on_second_drive(monkeypatch: "MonkeyPatch", second_drive: str) -> None:
     import dzgui.api.steam as steam
 
     monkeypatch.setattr(steam, "LIBRARYFOLDERS_PATH", second_drive)

@@ -15,7 +15,7 @@ from dzgui.views.components.entry import validate_ip_truthy
         ("192.168.1.101:27016", True),
     ],
 )
-def test_ip_entry(ip) -> None:
+def test_ip_entry(ip: tuple[str, bool]) -> None:
     string, state = ip
     assert validate_ip_truthy(string) is state
 

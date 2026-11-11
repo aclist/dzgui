@@ -2,10 +2,11 @@ import pytest
 
 from dzgui.const.constants import FLATPAK_RUN_CMD, FLATPAK_SANDBOX
 from dzgui.const.enum import Preferences
+from dzgui.controllers.mc import Controller
 from dzgui.views.pages.options import FlatpakToggleField
 
 
-class MockController:
+class MockController(Controller):
     def __init__(self) -> None:
         self.command: str
 

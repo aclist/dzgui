@@ -20,20 +20,23 @@ def get_db_len(path: Path) -> int:
     c = conn.cursor()
     c.execute("SELECT COUNT(*) from ips")
     db_len = c.fetchone()[0]
-    return db_len
+    return int(db_len)
 
 
 @pytest.fixture
 def csv() -> Path:
     csv = Path(tempfile.NamedTemporaryFile().name)
     url = find_download_url(DB_IP)
+    if url is None:
+        raise TypeError
     tmp = serialize(url)
     unzip(tmp, csv)
     strip_ipv6(csv)
     return csv
 
+
 @pytest.mark.slow
-def test_stripping(csv):
+def test_stripping(csv: Path) -> None:
     with open(csv, "rb") as f:
         first = f.readline().decode().rstrip()
         try:
@@ -52,7 +55,7 @@ def test_stripping(csv):
 
 
 @pytest.mark.slow
-def test_row_parity(csv) -> None:
+def test_row_parity(csv: Path) -> None:
     rows = csv.read_text().splitlines()
 
     db = Path(tempfile.NamedTemporaryFile().name)

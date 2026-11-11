@@ -1,6 +1,8 @@
 import pytest
 import tempfile
 
+from typing import TYPE_CHECKING
+
 from dzgui.app_init import copy_bare_configs
 from dzgui.config.xdg import get_xdg_paths, parse_filepaths
 
@@ -8,9 +10,13 @@ from dzgui.config.xdg import get_xdg_paths, parse_filepaths
 CONF_STRING = "DZGUI_CONF\n"
 STATE_STRING = "DZGUI_STATE\n"
 
+if TYPE_CHECKING:
+    from _pytest.monkeypatch import MonkeyPatch
+    from dzgui.config.xdg import Xdg
+
 
 @pytest.fixture
-def state_files():
+def state_files() -> list[str]:
     state = [
         "dzg.history",
         "dzg.versions",
@@ -25,7 +31,7 @@ def state_files():
 
 
 @pytest.fixture
-def xdg_paths(monkeypatch):
+def xdg_paths(monkeypatch: "MonkeyPatch") -> "Xdg":
     routes = {
         "XDG_CONFIG_HOME": "",
         "XDG_STATE_HOME": "",
@@ -42,7 +48,7 @@ def xdg_paths(monkeypatch):
 
 
 @pytest.mark.mods
-def test_config_file_import(xdg_paths, state_files):
+def test_config_file_import(xdg_paths: "Xdg", state_files: list[str]) -> None:
 
     # NOTE: write bare files in root
     tmp_conf = xdg_paths.config.parent.parent
@@ -67,7 +73,7 @@ def test_config_file_import(xdg_paths, state_files):
 
 
 @pytest.mark.mods
-def test_config_file_no_import(xdg_paths, state_files):
+def test_config_file_no_import(xdg_paths: "Xdg", state_files: list[str]) -> None:
     for subdir in xdg_paths.config.parent, xdg_paths.resolution.parent:
         subdir.mkdir()
 
