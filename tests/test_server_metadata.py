@@ -3,6 +3,8 @@ import re
 
 from dzgui.api.servers import Details, Record, get_details
 
+pytestmark = pytest.mark.slow
+
 
 @pytest.fixture
 def details() -> Details:
