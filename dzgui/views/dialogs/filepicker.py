@@ -62,7 +62,7 @@ class FolderPicker(Gtk.FileChooserDialog):
                         return None
                     return Path.from_uri(uri)
                 except Exception:
-                    # FIXME: edge cases
+                    # TODO: edge cases
                     return Path("/")
             self.destroy()
             return Path(folder)

@@ -224,7 +224,7 @@ class ServerTreeView(ContextMixin, TreeView):  # type: ignore
         while not self.queue.empty():
             latest_result = self.queue.get()
 
-        # FIXME: cache is being checked in two passes
+        # TODO: cache is being checked in two passes
         cache = self.controller.get_dist_cache()
 
         if latest_result:
