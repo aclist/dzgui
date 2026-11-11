@@ -44,8 +44,9 @@ def test_signatures(monkeypatch: "MonkeyPatch", tmp: str, versions: str) -> None
     monkeypatch.setattr("dzgui.api.mods.lookup", mock_lookup)
     dzgui.api.mods.remove_stale_signatures(path, path, ids)
     with open(tmp, "r") as f:
-        lines = f.readlines()
-    assert ids not in lines
+        lines = [line.rstrip() for line in f.readlines()]
+    concat = ",".join(map(str, ids))
+    assert concat not in lines
 
 
 def test_signatures_with_no_ids(

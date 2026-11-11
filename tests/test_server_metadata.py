@@ -7,7 +7,7 @@ pytestmark = pytest.mark.slow
 
 
 @pytest.fixture
-def details() -> Details:
+def details() -> Details | None:
     """
     Static official server, metadata is expected to be invariate
     """
@@ -21,19 +21,21 @@ def test_invalid_server() -> None:
 
 
 @pytest.mark.parametrize("key, expect", [("day_accel", 2.3), ("night_accel", 6.8)])
-def test_time_accel(details, key, expect) -> None:
+def test_time_accel(details: Details | None, key: str, expect: float) -> None:
     assert getattr(details, key) == expect
 
 
 def test_gametime(details: Details | None) -> None:
     time_reg = r"^(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]$)"
     if details is None:
-        raise ValueError
+        raise TypeError
     match = re.match(time_reg, details.gametime)
     assert match is not None
 
 
-def test_metadata(details) -> None:
+def test_metadata(details: Details | None) -> None:
+    if details is None:
+        raise TypeError
     for row in details.data:
         label, value = row
         match label:

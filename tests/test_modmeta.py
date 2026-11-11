@@ -12,5 +12,5 @@ def test_modmeta(i: int) -> None:
     path = Path(fixture)
     meta = tokenize(path)
     if meta is None:
-        raise ValueError
+        raise TypeError
     assert meta["name"] == "ModName"

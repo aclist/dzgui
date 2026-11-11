@@ -2,7 +2,8 @@ import re
 
 from dzgui.model.proxy_model import DAY_REG, NIGHT_REG
 
-def iterate(h: str, r: str) -> None:
+
+def iterate(h: int, r: str) -> None:
     for m in range(60):
         time = f"{h:02}:{m:02}"
         assert re.match(r, time) is not None

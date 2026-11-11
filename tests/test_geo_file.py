@@ -28,7 +28,7 @@ def csv() -> Path:
     csv = Path(tempfile.NamedTemporaryFile().name)
     url = find_download_url(DB_IP)
     if url is None:
-        raise ValueError()
+        raise TypeError
     tmp = serialize(url)
     unzip(tmp, csv)
     strip_ipv6(csv)

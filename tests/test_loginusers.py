@@ -30,7 +30,7 @@ def test_loginusers(monkeypatch: "MonkeyPatch", fixture: str, expect: int) -> No
     monkeypatch.setattr("dzgui.api.steam.find_loginusers", mock_loginusers)
     uid = find_user_id(Path(""))
     if uid is None:
-        raise ValueError()
+        raise TypeError
     assert int(uid) == expect
 
 

@@ -18,9 +18,10 @@ def test_row_conversion() -> None:
         "Unofficial",
         False,
     ]
-    rows = [ServerRow(*data)]
+    rows = [ServerRow(*data)]  # type: ignore
     marshalled = ServerRow.marshal_rows(rows)
     store = ModelFactory().make_server_store()
     store.extend(marshalled)
-    converted = [[el for el in row] for row in store]
+    cols = store.get_n_columns()
+    converted = [[row[i] for i in range(cols)] for row in store]
     assert data == converted[0]

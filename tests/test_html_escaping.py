@@ -1,11 +1,9 @@
 import gi
 import pytest
-from typing import Any
 
 from dzgui.api.servers import Details
 from dzgui.controllers.mc import Controller
 from dzgui.controllers.emitter import Emitter
-from dzgui.views.base import OuterWindow
 from dzgui.views.dialogs.servers import ServerDetailsDialog
 
 

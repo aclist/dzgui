@@ -1,13 +1,10 @@
 import pytest
 
-from typing import Any, TYPE_CHECKING
+from typing import Any
 
 from dzgui.api import probe
 from dzgui.config.query import get_config
 from dzgui.config.xdg import get_xdg_paths, parse_filepaths
-
-if TYPE_CHECKING:
-    from pathlib import Path
 
 pytestmark = pytest.mark.webtest
 
