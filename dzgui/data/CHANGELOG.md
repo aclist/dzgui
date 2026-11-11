@@ -53,6 +53,11 @@
 - Expand/collapse changelog versions
 - Support local light/dark mode changes on system theme
 - Server time calculator
+- Add "Unmodded" filter to servers
+- List timestamp of last DayZ client update
+- Validate mods via Mod page to pull in updates
+- Support for Nasdara (Badlands) DLC
+- Load offline mods
 
 ### Changed
 - Conform to PEP 440 versioning for beta versions
@@ -74,6 +79,7 @@
 - Enable LAN page Empty/Full filters on first run of app
 - Propagate subscribed mods to Steam client
 - Make j/k keys in context menus follow same wraparound logic as down arrow/up arrow
+- Use SQLite DB for geolocation records
 
 ### Dropped
 - Battlemetrics API support
@@ -92,16 +98,13 @@
 - Moved dialogs out of threads
 - History table not being in lock-step with state file
 - Current keyword filter not being applied when refreshing table
-
-### Unreleased
-- Load offline mods
-- Local documentation
-- Raw debug command in context menu
+- Steam Flatpak cannot run DZGUI as a non-Steam game
+- Collisions between native Steam and Steam Flatpak clients
+- Sticky toggle signal on radio buttons when reloading Options
 
 ### Developer-facing
-- Add pyproject.toml file
-- Show deprecation warnings
 - Options -> Dev page
+- Raw debug command in preconnect menu
 
 ## [6.0.5] 2026-05-17
 ### Changed

@@ -1,9 +1,10 @@
+import gi
+
 from pathlib import Path
 from typing import Any, Callable, TYPE_CHECKING
 
 from dzgui.api import pefile as PeFile
 from dzgui.api.steam import get_last_updated
-
 from dzgui.config import query
 from dzgui.const.constants import (
     APPID_DAYZ,
@@ -14,12 +15,11 @@ from dzgui.const.constants import (
     FLATPAK_SANDBOX,
     FLATPAK_STEAM_PATH,
 )
-from dzgui.const.icons import ICON_VIEW_CONCEAL, ICON_VIEW_REVEAL
 from dzgui.const.endpoints import STEAM_API_SETUP
 from dzgui.const.enum import Preferences, ServerTab
+from dzgui.const.icons import ICON_VIEW_CONCEAL, ICON_VIEW_REVEAL
 from dzgui.strings import options
 from dzgui.util import strings, css, open_links
-
 from dzgui.views.components.box import ShortHBox, VBox
 from dzgui.views.components.eventbox import InfoEventBox
 from dzgui.views.components.labels import LeftLabel
@@ -29,11 +29,8 @@ from dzgui.views.components.misc import ErrorPopover
 from dzgui.views.dialogs.generic import ExceptionDialog
 from dzgui.views.mixins.scrollable_mixin import ScrollableMixin
 
-
-import gi
-
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, Gdk  # noqa
+from gi.repository import Gtk, Gdk
 
 if TYPE_CHECKING:
     from dzgui.controllers.mc import Controller
@@ -233,10 +230,19 @@ class ToggleField(Gtk.Box):
         self.pack_start(self.radio1, expand=False, fill=False, padding=0)
         self.pack_start(self.radio2, expand=False, fill=False, padding=0)
 
+        self.signal_id: int | None = None
+
+    def disconnect_signal(self) -> None:
+        if self.signal_id is not None:
+            self.radio1.disconnect(self.signal_id)
+
     def set_suboption_active(self, state: bool) -> None:
         # NOTE: defer connection of signal until after state is set
         self.radio2.set_active(state)
-        self.radio1.connect("toggled", self._on_radio_toggled, self.context)
+        self.disconnect_signal()
+        self.signal_id = self.radio1.connect(
+            "toggled", self._on_radio_toggled, self.context
+        )
 
     def _on_radio_toggled(self, button: Gtk.RadioButton, context: Preferences) -> None:
         self.controller.toggle_config(context)
@@ -485,15 +491,6 @@ class Options(ScrollableMixin, Gtk.ScrolledWindow):  # type: ignore
 
         start_tab = self.controller.query_config(Preferences.START_TAB)
         self.start_tab_combo.set_active(start_tab)
-
-    def _suppress_toggles(self, state: bool) -> None:
-        for toggle in [
-            self.fullscreen_toggle,
-            self.distance_toggle,
-        ]:
-            self.controller.suppress_signal(
-                self, toggle.get_children()[0], "_on_radio_toggled", state
-            )
 
     def grab_content_area(self) -> None:
         self.grab_focus()

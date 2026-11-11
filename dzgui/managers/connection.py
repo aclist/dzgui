@@ -330,7 +330,6 @@ class ConnectionManager:
 
         self.thread_man.update_dialog(waiting_for_launch)
         while True:
-            # FIXME: cancel should not be visible here per setting above
             if self.controller.is_cancel_pending():
                 # TODO: some facility to also close spawned steam process
                 return

@@ -1,13 +1,12 @@
+import gi
 import pytest
 import subprocess
 
 from dzgui.const.constants import GIO_SETTINGS_KEY
 from dzgui.views.mixins.colorscheme import ColorAwareApp
 
-import gi
-
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, Gio, GLib  # noqa
+from gi.repository import Gtk, GLib
 
 
 class DummyWidget(ColorAwareApp, Gtk.Button):  # type: ignore

@@ -58,6 +58,11 @@ class ServerRow:
         getter = cls._to_tuple
         return [getter(row) for row in rows]
 
+    @classmethod
+    def get_index(cls, field: str) -> int:
+        _fields = [f.name for f in fields(cls)]
+        return _fields.index(field)
+
 
 class FiltrationManager:
     def __init__(self) -> None:

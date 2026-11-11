@@ -1,10 +1,10 @@
 import a2s
-from ipaddress import ip_address
 import requests
 import shutil
 import subprocess
 
 from dataclasses import dataclass
+from ipaddress import ip_address
 from typing import TYPE_CHECKING
 
 from dzgui.api.servers import Record
@@ -12,12 +12,11 @@ from dzgui.config.ipdb import read_from_table
 from dzgui.const.constants import REQUEST_TIMEOUT
 from dzgui.const.endpoints import IP_ECHO
 
-
 if TYPE_CHECKING:
     from pathlib import Path
 
 
-@dataclass
+@dataclass(slots=True, frozen=True)
 class Coords:
     lat: float
     lon: float

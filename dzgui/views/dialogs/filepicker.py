@@ -54,6 +54,7 @@ class FolderPicker(Gtk.FileChooserDialog):
             return None
         if res == Gtk.ResponseType.OK:
             folder = self.get_current_folder()
+            # TODO: this should never be possible
             if folder is None:
                 try:
                     uri = self.get_uri()
@@ -61,7 +62,7 @@ class FolderPicker(Gtk.FileChooserDialog):
                         return None
                     return Path.from_uri(uri)
                 except Exception:
-                    # FIXME: edge cases
+                    # TODO: edge cases
                     return Path("/")
             self.destroy()
             return Path(folder)

@@ -9,7 +9,7 @@ import subprocess
 import threading
 
 from dataclasses import dataclass
-from typing import Any, Optional, TYPE_CHECKING, Union
+from typing import Any, TYPE_CHECKING, Union
 
 from dzgui.const.constants import APP_NAME, REQUEST_TIMEOUT
 from dzgui.const.endpoints import STEAM_SERVERS
@@ -491,7 +491,7 @@ def query_by_record(record: Record, update_gameport: bool = False) -> A2SInfo:
         return A2SInfo(record, None)
 
 
-def short_ip_to_record(addr: str) -> Optional[Record]:
+def short_ip_to_record(addr: str) -> Record | None:
     r = addr.split(":")
     # TODO: raise exceptions instead of Nonetype
     if len(r) != 2:
@@ -499,7 +499,7 @@ def short_ip_to_record(addr: str) -> Optional[Record]:
     return Record(r[0], 0, int(r[1]))
 
 
-def fqip_to_record(addr: str) -> Optional[Record]:
+def fqip_to_record(addr: str) -> Record | None:
     r = addr.split(":")
     if len(r) != 3:
         return None

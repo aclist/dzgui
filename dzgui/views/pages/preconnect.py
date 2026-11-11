@@ -1,11 +1,12 @@
-from dataclasses import dataclass
+import gi
+
 from typing import Self, Sequence, TYPE_CHECKING
 
+from dzgui.const.enum import NotebookPage
 from dzgui.const.icons import (
     ICON_ERROR,
     ICON_WARNING,
 )
-from dzgui.const.enum import NotebookPage
 from dzgui.util.css import add_class
 from dzgui.util.keys import is_ctrl_mask
 from dzgui.util.localize import number
@@ -15,31 +16,13 @@ from dzgui.views.dialogs.generic import DebugDialog
 from dzgui.views.components.frame import HeadingFrame
 from dzgui.views.trees.tree_server_mods import ServerModTreeView
 
-import gi
-
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gdk, Gtk
-
 
 if TYPE_CHECKING:
     from dzgui.managers.connection import Prerequisites
     from dzgui.controllers.mc import Controller
     from dzgui.controllers.emitter import Emitter
-
-
-@dataclass
-class Warnings:
-    passworded: bool
-    dayz_running: bool
-    no_steam: bool
-    wrong_version: bool
-
-
-@dataclass
-class Errors:
-    no_space: bool
-    no_dayz_exp: bool
-    no_dayz: bool
 
 
 class Placeholder(Gtk.Label):

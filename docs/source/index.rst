@@ -15,8 +15,8 @@ A DayZ server browser/mod manager for Linux. Used to list official and community
 
 Source code:
 
-- `GitHub <https://www.github.com/aclist/dztui>`_
-- `Codeberg (mirror) <https://codeberg.org/aclist/dztui>`_
+- `GitHub <https://www.github.com/aclist/dzgui>`_
+- `Codeberg (mirror) <https://codeberg.org/aclist/dzgui>`_
 
 Installation
 -------------
@@ -56,8 +56,8 @@ See: :doc:`kb` or :ref:`Submitting a ticket`.
    :maxdepth: 3
    :hidden:
 
-   steam
    locale
+   flags
 
 .. toctree::
    :caption: Help

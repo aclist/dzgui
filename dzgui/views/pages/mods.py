@@ -1,3 +1,4 @@
+import gi
 from pathlib import Path
 
 from typing import Self, TYPE_CHECKING
@@ -8,10 +9,8 @@ from dzgui.views.components.buttons import SteamWorkshopButton
 from dzgui.views.components.scrollable import NoOverlayScrolledWindow
 from dzgui.views.trees.tree_mods import ModTreeView
 
-import gi
-
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, Gdk  # noqa
+from gi.repository import Gtk
 
 if TYPE_CHECKING:
     from dzgui.controllers.mc import Controller

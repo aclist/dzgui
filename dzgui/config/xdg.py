@@ -12,7 +12,7 @@ from dzgui.const.constants import (
 from dzgui.init.proc import is_sandboxed
 
 
-@dataclass
+@dataclass(slots=True, frozen=True)
 class Xdg:
     config: Path
     columns: Path
