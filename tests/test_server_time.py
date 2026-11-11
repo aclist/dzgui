@@ -2,8 +2,6 @@ import pytest
 
 from datetime import datetime, timedelta
 from hypothesis import given, strategies as st
-from typing import Any, Callable
-
 from dzgui.views.dialogs.calc import (
     Emitter,
     LocalClock,
