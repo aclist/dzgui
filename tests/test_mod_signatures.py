@@ -11,13 +11,16 @@ import dzgui.config.query
 from tests.fixtures import fixture_path
 
 if TYPE_CHECKING:
-    from dzgui.const.enums import Preferences
+    from _pytest.monkeypatch import MonkeyPatch
+    from dzgui.const.enum import Preferences
 
 pytestmark = pytest.mark.mods
 
+
 @pytest.fixture
-def versions() -> str:
+def versions() -> "Path":
     return fixture_path("dzg.versions")
+
 
 @pytest.fixture
 def tmp() -> str:
@@ -25,13 +28,16 @@ def tmp() -> str:
         tmp = f.name
     return tmp
 
+
 def mock_local_ids(path: Path) -> list[int]:
     return [3410710885, 3739934289]
+
 
 def mock_lookup(path: Path, prefs: "Preferences") -> str:
     return ""
 
-def test_signatures(monkeypatch, tmp: str, versions: str) -> None:
+
+def test_signatures(monkeypatch: "MonkeyPatch", tmp: str, versions: str) -> None:
     ids = [1559212036, 1654462998]
     shutil.copyfile(versions, tmp)
     path = Path(tmp)
@@ -41,12 +47,15 @@ def test_signatures(monkeypatch, tmp: str, versions: str) -> None:
         lines = f.readlines()
     assert ids not in lines
 
-def test_signatures_with_no_ids(monkeypatch, tmp: str, versions: str) -> None:
+
+def test_signatures_with_no_ids(
+    monkeypatch: "MonkeyPatch", tmp: str, versions: str
+) -> None:
     shutil.copyfile(versions, tmp)
     path = Path(tmp)
     monkeypatch.setattr("dzgui.api.mods.get_local_mod_ids", mock_local_ids)
     monkeypatch.setattr("dzgui.api.mods.lookup", mock_lookup)
     dzgui.api.mods.remove_stale_signatures(path, path)
     with open(tmp, "r") as f:
-        lines = f.readlines()
-    assert lines == ["3410710885,1752864732\n", "3739934289,1780855136\n"]
+        lines = [line.rstrip() for line in f.readlines()]
+    assert lines == ["3410710885,1752864732", "3739934289,1780855136"]

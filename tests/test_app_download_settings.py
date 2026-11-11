@@ -1,6 +1,7 @@
 import pytest
 
 from _pytest.monkeypatch import MonkeyPatch
+from collections.abc import Iterator
 from pathlib import Path
 
 from dzgui.api.steam import get_app_allows_downloads, get_last_updated
@@ -36,7 +37,7 @@ def steam_path() -> Path:
 
 
 @pytest.fixture(scope="module", autouse=True)
-def patch_api() -> None:
+def patch_api() -> Iterator[None]:
     mp = MonkeyPatch()
     mp.setattr("dzgui.api.steam.get_app_path", mock_path)
     yield

@@ -27,6 +27,8 @@ def test_time_accel(details, key, expect) -> None:
 
 def test_gametime(details: Details | None) -> None:
     time_reg = r"^(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]$)"
+    if details is None:
+        raise ValueError
     match = re.match(time_reg, details.gametime)
     assert match is not None
 

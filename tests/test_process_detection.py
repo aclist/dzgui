@@ -1,6 +1,8 @@
 import pytest
 import unittest
+
 from unittest.mock import patch
+from typing import Any
 
 from dzgui.const.constants import (
     FLATPAK_APPID,
@@ -15,7 +17,7 @@ pytestmark = pytest.mark.flatpak
 
 class TestSteamDetection(unittest.TestCase):
     def test_flatpak_detection_with_multiple_running_apps(self) -> None:
-        def flatpak_output(args, *, text: str) -> str:
+        def flatpak_output(args: Any, *, text: str) -> str:
             # Default 'flatpak ps' includes instance, PID, app and runtime columns.
             if args == ["flatpak", "ps", "--columns=application"]:
                 return f"com.spotify.Client\n{FLATPAK_APPID}\n{FLATPAK_APPID}\n"

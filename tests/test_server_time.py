@@ -1,7 +1,8 @@
 import pytest
 
-from hypothesis import given, strategies as st
 from datetime import datetime, timedelta
+from hypothesis import given, strategies as st
+from typing import Any
 
 from dzgui.views.dialogs.calc import (
     LocalClock,
@@ -17,12 +18,12 @@ class DummyEmitter:
     def __init__(self) -> None:
         pass
 
-    def connect(self, _, __) -> None:
+    def connect(self, _: Any, __: Any) -> None:
         pass
 
 
 @pytest.fixture(params=[("05:00", 10.0), ("15:30", 5.0)])
-def accel_server_clock(request) -> None:
+def accel_server_clock(request) -> tuple[str, ServerClock]:
     clock_time, expect = request.param
     cur_time = Time(clock_time, 5.0, 2.0)
     emitter = DummyEmitter()
@@ -31,13 +32,18 @@ def accel_server_clock(request) -> None:
     return expect, server_clock
 
 
-def test_accel_factor(accel_server_clock) -> None:
+def test_accel_factor(accel_server_clock: tuple[str, ServerClock]) -> None:
     """Static test checking times at known boundaries"""
     expect, clock = accel_server_clock
     assert clock.get_accel_factor(clock.cur_time) == expect
 
 
-def reference_calc(start, end, day_factor, night_factor):
+def reference_calc(
+    start: datetime,
+    end: datetime,
+    day_factor: float,
+    night_factor: float,
+) -> timedelta:
     """
     Reference implementation to test validity of UI-side calculator
     Aggregates total seconds and applies accel factors after
@@ -80,7 +86,7 @@ night_accel = st.floats(
 
 
 @st.composite
-def time_ranges(draw):
+def time_ranges(draw: st.DrawFn) -> tuple[datetime, datetime]:
     start_time = draw(st.times())
     deltas = st.timedeltas(min_value=timedelta(0), max_value=timedelta(days=1))
     duration = draw(deltas)
@@ -91,7 +97,11 @@ def time_ranges(draw):
 
 
 @given(span=time_ranges(), day_factor=day_accel, night_factor=night_accel)
-def test_time_aggregation(span, day_factor, night_factor) -> None:
+def test_time_aggregation(
+    span: tuple[datetime, datetime],
+    day_factor: float,
+    night_factor: float,
+) -> None:
     start, end = span
 
     strtime = start.strftime("%H:%M")

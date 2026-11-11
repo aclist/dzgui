@@ -1,6 +1,7 @@
 import pytest
-from pathlib import Path
 
+from pathlib import Path
+from typing import TYPE_CHECKING
 
 import dzgui.api.pefile as PeFile
 from dzgui.api.steam import (
@@ -15,6 +16,9 @@ from dzgui.config.xdg import get_xdg_paths, parse_filepaths
 from dzgui.const.constants import APPID_DAYZ
 
 from tests.fixtures import fixture_path
+
+if TYPE_CHECKING:
+    from _pytest.monkeypatch import MonkeyPatch
 
 pytestmark = pytest.mark.apitest
 
@@ -53,7 +57,9 @@ def test_invalid_pefile_path() -> None:
         ("malformed.vdf", VDFLoadError),
     ],
 )
-def test_not_in_library(monkeypatch, fixture, exception):
+def test_not_in_library(
+    monkeypatch: "MonkeyPatch", fixture: str, exception: type[Exception]
+) -> None:
     import dzgui.api.steam as steam
 
     monkeypatch.setattr(steam, "LIBRARYFOLDERS_PATH", fixture)
@@ -71,7 +77,7 @@ def second_drive() -> str:
     return "in_library_on_second_drive.vdf"
 
 
-def test_on_second_drive(monkeypatch, second_drive: str) -> None:
+def test_on_second_drive(monkeypatch: "MonkeyPatch", second_drive: str) -> None:
     import dzgui.api.steam as steam
 
     monkeypatch.setattr(steam, "LIBRARYFOLDERS_PATH", second_drive)
