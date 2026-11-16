@@ -17,7 +17,7 @@ desc_flatpak_path = (
     "This is the default Steam path if you are using <b>Flatpak Steam</b>."
 )
 desc_ubuntu_path = "This is the default Steam path on <b>Ubuntu-based systems</b>."
-desc_ubuntu_snap_path = "This is the default Steam path on <b>Ubuntu-based systems using Snap packages</b>."
+desc_snap_path = "This is the default Steam path on <b>systems using Snap packages</b>."
 desc_debian_path = "This is the default Steam path on <b>Debian-based systems</b>."
 no_valid_paths = (
     "No valid Steam path or Steam command found on system. Please install Steam to continue."
