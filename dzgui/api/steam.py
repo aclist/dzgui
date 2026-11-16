@@ -27,6 +27,7 @@ from dzgui.const.constants import (
     FLATPAK_STEAM_PATH,
     LIBRARYFOLDERS_PATH,
     REQUEST_TIMEOUT,
+    UBUNTU_SNAP_STEAM_PATH,
     UBUNTU_STEAM_PATH,
     VDF_PATH,
 )
@@ -75,15 +76,23 @@ def get_steam_paths() -> list[tuple[Path, str]]:
         FLATPAK_PATH = HOME.joinpath(FLATPAK_STEAM_PATH)
         UBUNTU_PATH = HOME.joinpath(UBUNTU_STEAM_PATH)
         DEBIAN_PATH = HOME.joinpath(DEBIAN_STEAM_PATH)
+        UBUNTU_SNAP_PATH = HOME.joinpath(UBUNTU_SNAP_STEAM_PATH)
 
         human = {
             DEFAULT_PATH: wizard.desc_default_path,
             FLATPAK_PATH: wizard.desc_flatpak_path,
             UBUNTU_PATH: wizard.desc_ubuntu_path,
+            UBUNTU_SNAP_PATH: wizard.desc_ubuntu_snap_path,
             DEBIAN_PATH: wizard.desc_debian_path,
         }
 
-        for path in DEFAULT_PATH, FLATPAK_PATH, UBUNTU_PATH, DEBIAN_PATH:
+        for path in (
+            DEFAULT_PATH,
+            FLATPAK_PATH,
+            UBUNTU_PATH,
+            UBUNTU_SNAP_PATH,
+            DEBIAN_PATH,
+        ):
             if path is FLATPAK_PATH and has_flatpak_client() is False:
                 continue
             if path is not FLATPAK_PATH and has_steam_client() is False:
