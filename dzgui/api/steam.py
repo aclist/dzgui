@@ -67,11 +67,11 @@ def get_steam_paths() -> list[tuple[Path, str]]:
         HOME = Path.home()
         env = os.environ.get("XDG_DATA_HOME")
         if env is not None:
-            XDG_DATA_HOME = env
+            XDG_DATA_HOME = Path(env)
+            DEFAULT_PATH = XDG_DATA_HOME.joinpath("Steam")
         else:
-            XDG_DATA_HOME = DEFAULT_STEAM_PATH
+            DEFAULT_PATH = HOME.joinpath(DEFAULT_STEAM_PATH)
 
-        DEFAULT_PATH = HOME.joinpath(XDG_DATA_HOME)
         FLATPAK_PATH = HOME.joinpath(FLATPAK_STEAM_PATH)
         UBUNTU_PATH = HOME.joinpath(UBUNTU_STEAM_PATH)
         DEBIAN_PATH = HOME.joinpath(DEBIAN_STEAM_PATH)
