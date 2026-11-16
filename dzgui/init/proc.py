@@ -31,12 +31,16 @@ def is_sandboxed() -> bool:
     return bool(os.environ.get("FLATPAK_ID"))
 
 
-def get_flatpak_output() -> list[str]:
-    proc = subprocess.check_output(
-        [FLATPAK_CMD, "ps", "--columns=application"], text=True
-    )
-    lines = proc.splitlines()
-    return lines
+def get_flatpak_output() -> list[str] | None:
+    try:
+        proc = subprocess.check_output(
+            [FLATPAK_CMD, "ps", "--columns=application"], text=True
+        )
+        lines = proc.splitlines()
+        return lines
+    except Exception as e:
+        logger.debug(e)
+        return None
 
 
 def is_flatpak_steam_running() -> bool:
@@ -44,17 +48,12 @@ def is_flatpak_steam_running() -> bool:
         return True
     if has_cmd(FLATPAK_CMD) is False:
         return False
-    try:
-        proc = subprocess.check_output(
-            [FLATPAK_CMD, "ps", "--columns=application"], text=True
-        )
-        lines = proc.splitlines()
-        if FLATPAK_APPID in lines:
-            return True
+    lines = get_flatpak_output()
+    if lines is None:
         return False
-    except Exception as e:
-        logger.debug(e)
-        return False
+    if FLATPAK_APPID in lines:
+        return True
+    return False
 
 
 def get_steam_procs() -> list[list[str]]:
