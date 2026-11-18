@@ -12,9 +12,7 @@ from typing import Any, Generator, Union
 from warnings import deprecated
 
 from dzgui.api.acf import ACF
-from dzgui.const.endpoints import VALIDATE
-from dzgui.init.prereqs import has_any_client
-from dzgui.init.prereqs import has_flatpak_client, has_steam_client
+from dzgui.config.xdg import get_real_home
 from dzgui.const.constants import (
     APPID_DAYZ,
     APPID_DAYZ_EXP,
@@ -36,7 +34,10 @@ from dzgui.const.endpoints import (
     STEAM_PUBLISHED_FILES,
     STEAM_SUB,
     STEAM_UNSUB,
+    VALIDATE,
 )
+from dzgui.init.prereqs import has_any_client
+from dzgui.init.prereqs import has_flatpak_client, has_steam_client
 from dzgui.strings import wizard
 from dzgui.strings.errors import api_validation_error, workshop_endpoint_error
 from dzgui.util.bash import concat_bash_args
@@ -65,7 +66,7 @@ class VDFLoadError(Exception):
 def get_steam_paths() -> list[tuple[Path, str]]:
     paths = []
     if has_any_client():
-        HOME = Path.home()
+        HOME = get_real_home()
         env = os.environ.get("XDG_DATA_HOME")
         if env is not None:
             XDG_DATA_HOME = Path(env)
