@@ -70,8 +70,10 @@ def get_steam_paths() -> list[tuple[Path, str]]:
         if env is not None:
             XDG_DATA_HOME = Path(env)
             DEFAULT_PATH = XDG_DATA_HOME.joinpath("Steam")
+            default_label = wizard.desc_custom_path
         else:
             DEFAULT_PATH = HOME.joinpath(DEFAULT_STEAM_PATH)
+            default_label = wizard.desc_default_path
 
         FLATPAK_PATH = HOME.joinpath(FLATPAK_STEAM_PATH)
         UBUNTU_PATH = HOME.joinpath(UBUNTU_STEAM_PATH)
@@ -79,7 +81,7 @@ def get_steam_paths() -> list[tuple[Path, str]]:
         SNAP_PATH = HOME.joinpath(SNAP_STEAM_PATH)
 
         human = {
-            DEFAULT_PATH: wizard.desc_default_path,
+            DEFAULT_PATH: default_label,
             FLATPAK_PATH: wizard.desc_flatpak_path,
             UBUNTU_PATH: wizard.desc_ubuntu_path,
             SNAP_PATH: wizard.desc_snap_path,

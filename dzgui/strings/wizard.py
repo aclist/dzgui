@@ -12,6 +12,7 @@ blurb_steam_path = """
 DZGUI needs to find the location to your default Steam installation.
 This will be used to determine whether (and where) DayZ is installed.
 """
+desc_custom_path = "This is the expected Steam path <b>if you set a custom XDG_DATA_HOME directory.</b>"
 desc_default_path = "This is the default Steam path on <b>most distributions</b>."
 desc_flatpak_path = (
     "This is the default Steam path if you are using <b>Flatpak Steam</b>."
