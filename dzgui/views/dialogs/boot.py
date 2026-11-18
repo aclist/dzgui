@@ -19,7 +19,7 @@ from dzgui.views.components.buttons import ClipboardButton
 from dzgui.views.mixins.colorscheme import ColorAwareApp
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, GLib, Gdk
+from gi.repository import Gtk, GLib, Gdk, Pango
 
 if TYPE_CHECKING:
     from dzgui.config.xdg import Xdg
@@ -95,7 +95,7 @@ class BootDialog(ColorAwareApp, Gtk.Dialog):  # type: ignore
             margin_top=30,
             margin_bottom=30,
         )
-        self.error_label = Gtk.Label(margin_start=15, margin_end=15)
+        self.error_label = Gtk.Label(margin_start=15, margin_end=15, wrap=True, wrap_mode=Pango.WrapMode.WORD)
 
         # TODO: abstract class
         self.copy_button = ClipboardButton(self.error_label.get_text)
