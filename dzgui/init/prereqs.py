@@ -3,13 +3,13 @@ import shutil
 import subprocess
 
 from dzgui.const.constants import APP_NAME, FLATPAK_APPID, FLATPAK_CMD, STEAM_CMD
-from dzgui.init.proc import is_sandboxed
+from dzgui.init.proc import is_flatpak_sandbox
 
 logger = logging.getLogger(APP_NAME)
 
 
 def has_flatpak_client() -> bool:
-    if is_sandboxed():
+    if is_flatpak_sandbox():
         return True
     try:
         res = subprocess.run(
