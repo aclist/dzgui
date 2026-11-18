@@ -713,7 +713,7 @@ class ShortcutCreationPage(OptionalPageMixin, EnumeratedWizardPage):  # type: ig
 
     def set_steam_path(self, path: Path) -> None:
         self.steam_path = path
-        if SNAP_STEAM_PATH in self.steam_path:
+        if SNAP_STEAM_PATH in str(self.steam_path):
             self.steam_checkbox.set_active(False)
             self.steam_checkbox.set_sensitive(False)
 
