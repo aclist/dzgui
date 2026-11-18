@@ -35,6 +35,8 @@ def rebuild_symlinks(config: Path) -> None:
         expunge_link(file)
 
     workshop = get_local_mod_path(steam_path)
+    if workshop.is_dir() is False:
+        return
     # NOTE: create symlinks for missing mods
     for mod_id in get_local_mod_ids(steam_path):
         uid = str(mod_id)

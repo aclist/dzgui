@@ -35,6 +35,9 @@ def get_local_mod_path(steam_path: Path) -> Path:
 
 
 def get_local_mods(workshop_path: Path) -> list[Path]:
+    # NOTE: user may not have staged mods before
+    if workshop_path.is_dir() is False:
+        return []
     mods = [file for file in workshop_path.iterdir() if file.is_dir()]
     return mods
 
@@ -123,6 +126,7 @@ def remove_stale_signatures(
 
     path = lookup(config, Preferences.DEFAULT)
     steam_path = Path(path)
+
     if ids is None:
         local_ids = get_local_mod_ids(steam_path)
 
