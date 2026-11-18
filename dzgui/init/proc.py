@@ -27,19 +27,40 @@ def is_steam_running(cmd: str) -> bool:
         raise TypeError("Not a valid Steam client selection")
 
 
-def is_sandboxed() -> bool:
+def is_snap_sandbox() -> bool:
+    return bool(os.environ.get("SNAP"))
+
+
+def is_flatpak_sandbox() -> bool:
     return bool(os.environ.get("FLATPAK_ID"))
 
 
+def is_sandboxed() -> bool:
+    if is_snap_sandbox() or is_flatpak_sandbox():
+        return True
+    return False
+
+
+def get_flatpak_output() -> list[str] | None:
+    try:
+        proc = subprocess.check_output(
+            [FLATPAK_CMD, "ps", "--columns=application"], text=True
+        )
+        lines = proc.splitlines()
+        return lines
+    except Exception as e:
+        logger.debug(e)
+        return None
+
+
 def is_flatpak_steam_running() -> bool:
-    if is_sandboxed():
+    if is_flatpak_sandbox():
         return True
     if has_cmd(FLATPAK_CMD) is False:
         return False
-    proc = subprocess.check_output(
-        [FLATPAK_CMD, "ps", "--columns=application"], text=True
-    )
-    lines = proc.splitlines()
+    lines = get_flatpak_output()
+    if lines is None:
+        return False
     if FLATPAK_APPID in lines:
         return True
     return False

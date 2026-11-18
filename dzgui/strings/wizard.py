@@ -3,7 +3,7 @@ title_intro = "Welcome"
 blurb_intro = """
 This wizard will help you set up some common config options before launching the application.
 """
-error_sandbox = "Setup cannot be run from inside Flatpak sandbox.\nPlease launch the application directly."
+error_sandbox = "Setup cannot be run from inside a sandboxed version of Steam (Snap/Flatpak).\nPlease launch the application directly first."
 welcome = "Welcome to {0}!"
 
 ### SteamPathPage
@@ -12,15 +12,15 @@ blurb_steam_path = """
 DZGUI needs to find the location to your default Steam installation.
 This will be used to determine whether (and where) DayZ is installed.
 """
+desc_custom_path = "This is the expected Steam path <b>if you set a custom XDG_DATA_HOME directory.</b>"
 desc_default_path = "This is the default Steam path on <b>most distributions</b>."
 desc_flatpak_path = (
     "This is the default Steam path if you are using <b>Flatpak Steam</b>."
 )
 desc_ubuntu_path = "This is the default Steam path on <b>Ubuntu-based systems</b>."
+desc_snap_path = "This is the default Steam path on <b>systems using Snap packages</b>."
 desc_debian_path = "This is the default Steam path on <b>Debian-based systems</b>."
-no_valid_paths = (
-    "No valid Steam path or Steam command found on system. Please install Steam to continue."
-)
+no_valid_paths = "No valid Steam path or Steam command found on system. Please install Steam to continue."
 button_scan = "Scan for Steam"
 
 ### ConfigMigrationPage
@@ -73,7 +73,7 @@ checkbox_steam_shortcut = (
         "This creates a standalone copy of DZGUI and adds it to Steam. "
         "You <b>must restart Steam</b> for the shortcut to appear. This will not replace or update existing shortcuts. "
         "If you update DZGUI when it is launched via Steam, updates will be applied to the Steam version. "
-        "Not available if you selected the Flatpak client as your Steam default."
+        "Not available if you selected the Snap client as your Steam default."
     ),
 )
 checkbox_start_menu = (
