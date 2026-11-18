@@ -14,6 +14,7 @@ from dzgui.const.constants import (
     HERO_PATH,
     FLATPAK_ROOT_PATH,
     LEGACY_CONFIG_PATH,
+    SNAP_STEAM_PATH,
     TMP_PATH,
 )
 from dzgui.config.xdg import get_real_home
@@ -701,6 +702,7 @@ class ShortcutCreationPage(OptionalPageMixin, EnumeratedWizardPage):  # type: ig
 
         self.add_start(self.checks_area)
         self.show_all()
+
         self.connect("map", self._on_map)
 
     def _on_start_menu_toggled(self, button: Gtk.CheckButton) -> None:
@@ -711,6 +713,9 @@ class ShortcutCreationPage(OptionalPageMixin, EnumeratedWizardPage):  # type: ig
 
     def set_steam_path(self, path: Path) -> None:
         self.steam_path = path
+        if SNAP_STEAM_PATH in self.steam_path:
+            self.steam_checkbox.set_active(False)
+            self.steam_checkbox.set_sensitive(False)
 
     def is_steam_checkbox_active(self) -> bool:
         return self.steam_checkbox.get_active()

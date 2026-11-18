@@ -20,9 +20,7 @@ desc_flatpak_path = (
 desc_ubuntu_path = "This is the default Steam path on <b>Ubuntu-based systems</b>."
 desc_snap_path = "This is the default Steam path on <b>systems using Snap packages</b>."
 desc_debian_path = "This is the default Steam path on <b>Debian-based systems</b>."
-no_valid_paths = (
-    "No valid Steam path or Steam command found on system. Please install Steam to continue."
-)
+no_valid_paths = "No valid Steam path or Steam command found on system. Please install Steam to continue."
 button_scan = "Scan for Steam"
 
 ### ConfigMigrationPage
@@ -75,7 +73,7 @@ checkbox_steam_shortcut = (
         "This creates a standalone copy of DZGUI and adds it to Steam. "
         "You <b>must restart Steam</b> for the shortcut to appear. This will not replace or update existing shortcuts. "
         "If you update DZGUI when it is launched via Steam, updates will be applied to the Steam version. "
-        "Not available if you selected the Flatpak client as your Steam default."
+        "Not available if you selected the Snap client as your Steam default."
     ),
 )
 checkbox_start_menu = (
