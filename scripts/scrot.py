@@ -8,7 +8,13 @@ def get_image_path() -> Path:
     return get_git_root().joinpath("dzgui/data/images/example.png")
 
 
-p = get_image_path()
-app = build_gui("", False)
-app.set_automation_param("screenshot_path", p)
-app.run(None)
+def take_screenshot() -> None:
+    p = get_image_path()
+    app = build_gui("", False)
+    if app is None:
+        return
+    app.set_automation_param("screenshot_path", p)
+    app.run(None)
+
+
+take_screenshot()

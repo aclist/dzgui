@@ -347,7 +347,9 @@ thanks = Thanks(
         "scandalouss",
         "SnackSBR",
         "StevelDusa",
+        "sylvaingirardbe",
         "Thoughtduck216",
+        "u-alexandru",
     ],
 )
 
