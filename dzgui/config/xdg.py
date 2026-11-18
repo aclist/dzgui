@@ -6,10 +6,9 @@ from dataclasses import dataclass
 from dzgui.const.constants import (
     APP_NAME_LOWER,
     DEBUG_LOG,
-    FLATPAK_ROOT_PATH,
     SYSTEM_LOG,
 )
-from dzgui.init.proc import is_sandboxed
+from dzgui.init.proc import is_flatpak_sandbox, is_snap_sandbox
 
 
 @dataclass(slots=True, frozen=True)
@@ -53,6 +52,10 @@ def is_writeable(path_str: str) -> bool:
 
 def get_xdg_paths() -> dict[str, Path]:
     home = Path.home()
+    if resolved := os.environ.get("SNAP_REAL_HOME"): # Snap
+        home = Path(resolved)
+    elif resolved := os.environ.get("HOME"): # Flatpak
+        home = Path(resolved)
     xdg_paths = {
         "XDG_CONFIG_HOME": home / ".config",
         "XDG_STATE_HOME": home / ".local" / "state",
@@ -62,9 +65,6 @@ def get_xdg_paths() -> dict[str, Path]:
     resolved_paths = {}
     for path in xdg_paths:
         real_path = os.environ.get(path)
-        if real_path is not None and is_sandboxed():
-            search_string = FLATPAK_ROOT_PATH + "/"
-            real_path = real_path.replace(search_string, "")
         if real_path is not None and is_writeable(real_path):
             new_path = Path(real_path)
         else:
