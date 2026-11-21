@@ -2,6 +2,7 @@ import gi
 import logging
 import threading
 
+from pathlib import Path
 from typing import Any, TYPE_CHECKING, Union
 
 from dzgui.config.userprefs import UserPrefs
@@ -23,7 +24,7 @@ from dzgui.model.servers import ServerModelManager
 from dzgui.util.diag import write_diagnostic
 from dzgui.util.format import format_exception, format_player_count
 from dzgui.util.open_links import open_user_workshop, open_workshop_page
-from dzgui.views.dialogs.filepicker import FilePicker
+from dzgui.views.dialogs.filepicker import DebugLogPicker, DiagnosticLogPicker
 from dzgui.views.dialogs.generic import ExceptionDialog
 
 gi.require_version("Gtk", "3.0")
@@ -297,15 +298,29 @@ class Controller(GObject.GObject):
         return self.get_active_treeview().get_filter_man()
 
     def dump_diagnostics(self) -> None:
-        picker = FilePicker(self.mediator.window)
+        picker = DiagnosticLogPicker(self.mediator.window)
         file = picker.pick_file()
-        if file is not None:
-            try:
-                write_diagnostic(self.prefs.paths.config, file)
-            except Exception as e:
-                dialog = ExceptionDialog(self, str(e))
-                dialog.show_all()
-                dialog.run()  # type: ignore[no-untyped-call]
+        if file is None:
+            return
+        try:
+            write_diagnostic(self.prefs.paths.config, file)
+        except Exception as e:
+            dialog = ExceptionDialog(self, str(e))
+            dialog.show_all()
+            dialog.run()  # type: ignore[no-untyped-call]
+
+    def dump_log(self) -> None:
+        picker = DebugLogPicker(self.mediator.window)
+        file = picker.pick_file()
+        if file is None:
+            return
+        try:
+            log = self.prefs.paths.debug.read_text()
+            Path(file).write_text(log)
+        except Exception as e:
+            dialog = ExceptionDialog(self, str(e))
+            dialog.show_all()
+            dialog.run()  # type: ignore[no-untyped-call]
 
     def update_steam_api_key(self, text: str) -> None:
         self.config_man.update_steam_api_key(text)

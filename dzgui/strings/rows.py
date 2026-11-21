@@ -7,8 +7,11 @@ log_status = "Read the DZGUI log generated since startup"
 separator_label = "SEPARATOR"
 separator_status = ""
 
-system_log_label = "Output system info to log file"
+system_log_label = "Output system info to a file"
 system_log_status = "Dump diagnostic data for troubleshooting"
+
+debug_log_label = "Output debug log to a file"
+debug_log_status = "Dump a summary of errors/events since DZGUI started"
 
 docs_label = "Documentation/help files (GitHub) ⧉"
 docs_status = "Open the DZGUI documentation in a browser"
