@@ -3,6 +3,7 @@ import textwrap
 
 from pathlib import Path
 
+from dzgui.config.xdg import get_real_home
 from dzgui.util.dirs import copy_dzgui_to_xdg_data, find_icon_resource, make_parents
 
 
@@ -36,7 +37,8 @@ def write_desktop_file(exe_path: Path) -> Path:
 
 def write_desktop_shortcut(desktop_file: Path) -> None:
     # NOTE: necessarily depends on the above (UI blocks creation without XDG entry first)
-    link = Path.home().joinpath("Desktop/dzgui.desktop")
+    home = get_real_home()
+    link = home.joinpath("Desktop/dzgui.desktop")
     make_parents(link)
     if link.exists():
         link.unlink()
