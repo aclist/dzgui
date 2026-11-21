@@ -1,186 +1,36 @@
 from dataclasses import dataclass
-from dzgui.const.constants import SYSTEM_LOG
+
+@dataclass(slots=True, frozen=True)
+class DevelopersPage:
+    header: str
+    paths_label: str
+    prefs_label: str
+    columns: list[str]
+
+@dataclass(slots=True, frozen=True)
+class ServerLabels:
+    browser: str
+    saved: str
+    recent: str
+    lan: str
 
 
-# General
-dialog_header = "DZGUI - Dialog"
-dz = "DayZ"
-dz_exp = "DayZ Experimental"
-delimiter = "␞"
-
-# GenericDialog
-main_menu = "Return to main menu"
-exit_app = "Exit"
-modlist = "Modlist"
-input_required = "User input required"
-confirm = "Confirmation"
-notice = "Notice"
-wait = "Please wait"
-restart_required = "App relaunch required"
-
-# Wait dialogs
-ping = "Ping"
-mod = "Mod"
-_id = "ID"
-
-# ContextMenu
-add_note = "Add note"
-edit_note = "Edit note"
-show_mods = "Show server-side mods"
-show_details = "Show server details"
-refresh_players = "Refresh player count"
-open_workshop = "Open in Steam Workshop"
-unsub_mod = "Unsubscribe mod"
-validate_mod = "Validate mod"
-copy_name = "Copy name to clipboard"
-copy_ip = "Copy IP to clipboard"
-copy_log = "Copy record(s) to clipboard"
-add = "Add to Saved Servers"
-add_fav = "Set as favorite"
-remove = "Remove from Saved Servers"
-remove_history = "Remove from history"
-connect = "Connect"
-
-# Columns
-server_mod_cols = ["Mod", "ID", "Installed"]
-mod_cols = ["Mod", "Symlink", "ID", "Size (MiB)", "Color"]
-log_cols = ["Timestamp", "Flag", "Traceback", "Message"]
-browser_cols = [
-    "Name",
-    "Map",
-    "View",
-    "Gametime",
-    "Players",
-    "Max",
-    "Queue",
-    "IP",
-    "Qport",
-    "Ping",
-]
-
-# DetailsDialog
-workshop = "Enter/double click a row to open in Steam Workshop."
-
-# LanDialog
-default_port = "Use default query port (27016)"
-custom_port = "Enter custom query port"
-scan_servers = "Scan LAN servers"
-select_port = "Select the query port"
-
-# Errors
-error_heading = "Error"
-config_not_found = "DZGUI configuration file not found. Please exit and restart."
-cannot_acquire_lock = "DZGUI is already open."
-something_wrong = "Something went wrong. See the detailed error below."
-steam_key_missing = "No Steam API key is set."
-malformed_mods = "Found mods on system, but was unable to parse results."
-steam_missing = "Local Steam installation is not set, possibly malformed config file."
-build_corrupted = (
-    "Steam settings or DayZ installation may be corrupted. Try restarting Steam."
-)
-server_timeout = "Timed out when querying server(s). Check IP or try again later."
-server_error = (
-    "Error while contacting server, possibly timed out. Please wait and try again."
-)
-server_protected = (
-    "This server is password-protected and you will be "
-    "prompted when connecting. Do you want to proceed?"
-)
+@dataclass(slots=True, frozen=True)
+class AtomicButton:
+    refresh: str
+    refresh_tooltip: str
+    copy: str
+    keys: str
+    keys_tooltip: str
 
 
-# KeybindingsDialog
-navigation = {
-    "Enter/space/double click": "select row item",
-    "Down arrow": "move down a row/scroll down",
-    "Up arrow": "move up a row/scroll up",
-    "Right arrow": "jump to sidebar from main area",
-    "Left arrow": "jump to main area from sidebar",
-    "Tab": "cycle forward through elements",
-    "Shift-tab": "cycle backward through elements",
-    "ESC/Enter": "close dialogs",
-    "?": "show/hide this dialog",
-    "Ctrl-q": "Quit",
-}
-servers = {
-    "Enter/space/double-click": "connect to server",
-    "Right-click/Ctrl-l": "additional context menus",
-    "Ctrl-r": "refresh players",
-    "Ctrl-f": "jump to keyword search field",
-    "Ctrl-m": "jump to maps field",
-    "Ctrl-d": "select default LAN port",
-    "Ctrl-n": "select custom LAN port",
-    "Ctrl-u": "connect to server from preconnect dialog",
-    "Ctrl-i": "jump to IP insert field",
-    "n": "navigate to next tab",
-    "p": "navigate to previous tab",
-    "ESC": "return to table",
-    "1-9": "toggle filter 1-9 on/off",
-    "0": "toggle filter 10",
-    "Minus": "toggle filter 11",
-    "Backslash": "toggle filter 12",
-    "Apostrophe": "toggle filter 13",
-}
-vim = {
-    "j": "Move down a row/scroll up",
-    "k": "Move up a row/scroll down",
-    "h": "Jump to main area from sidebar",
-    "l": "Jump to sidebar from main area",
-    "g": "Jump to first row/top of page",
-    "G": "Jump to last row/bottom of page",
-}
-key_contexts = ["Servers", "Navigation", "Vim-style keys"]
-key_header = "Keybindings"
-
-# ModSelectionPanel
-
-# labels
-label_main_menu = "Main menu"
-
-# buttons
-ping_servers = "Ping servers"
-ping_tooltip = (
-    "Refresh the ping for visible servers.\n" "Available once per unique filter context"
-)
-
-# statusbar_helptext = "Select a row to see its detailed description"
-# statusbar_helptext = "No server metadata to list."
-
-# use e.g. filters.1pp
-filter_1pp = "1PP"
-filter_3pp = "3PP"
-filter_day = "Day"
-filter_night = "Night"
-filter_empty = "Empty"
-filter_full = "Full"
-filter_lowpop = "Low pop"
-filter_nonascii = "Non-ASCII"
-filter_duplicate = "Duplicate"
-filter_official = "Official"
-filter_unofficial = "Unofficial"
-filter_modded = "Modded"
-filter_unmodded = "Unmodded"
-
-# state
-unknown = "Unknown"
-none_provided = "None provided"
-disabled = "Disabled"
-enabled = "Enabled"
-null = "-"
-unspecified = "not specified"
-
-# DLC
-dlc_frostline = "Frostline"
-dlc_badlands = "Badlands"
-dlc_none = "None"
-
-# platform
-windows = "Windows"
-linux = "Linux"
-
-# misc
-self_workshop = "Open Steam workshop"
-settings_updated = "Settings updated!"
-
+@dataclass(slots=True, frozen=True)
+class Flags:
+    description: str
+    version: str
+    uninstall: str
+    debug: str
+    map_count: str
 
 @dataclass(slots=True, frozen=True)
 class ModPanelStrings:
@@ -280,12 +130,6 @@ class Options:
     manual_dl: str
     auto_dl: str
     update: str
-    install_mode: str
-    force_update: str
-    dl_eventbox: str
-    force_eventbox: str
-    self_update: str
-    no_self_update: str
     api_key: str
     prefs: str
     mods: str
@@ -293,7 +137,140 @@ class Options:
     branch: str
     stable: str
     testing: str
-    manual_sub_msg: str
+
+
+# General
+dialog_header = "DZGUI - Dialog"
+dz = "DayZ"
+dz_exp = "DayZ Experimental"
+delimiter = "␞"
+
+# GenericDialog
+main_menu = "Return to main menu"
+exit_app = "Exit"
+modlist = "Modlist"
+input_required = "User input required"
+confirm = "Confirmation"
+notice = "Notice"
+wait = "Please wait"
+restart_required = "App relaunch required"
+
+# Wait dialogs
+ping = "Ping"
+mod = "Mod"
+_id = "ID"
+
+# ContextMenu
+add_note = "Add note"
+edit_note = "Edit note"
+show_mods = "Show server-side mods"
+show_details = "Show server details"
+refresh_players = "Refresh player count"
+open_workshop = "Open in Steam Workshop"
+unsub_mod = "Unsubscribe mod"
+validate_mod = "Validate mod"
+copy_name = "Copy name to clipboard"
+copy_ip = "Copy IP to clipboard"
+copy_log = "Copy record(s) to clipboard"
+add = "Add to Saved Servers"
+add_fav = "Set as favorite"
+remove = "Remove from Saved Servers"
+remove_history = "Remove from history"
+connect = "Connect"
+
+# Columns
+server_mod_cols = ["Mod", "ID", "Installed"]
+mod_cols = ["Mod", "Symlink", "ID", "Size (MiB)", "Color"]
+log_cols = ["Timestamp", "Flag", "Traceback", "Message"]
+browser_cols = [
+    "Name",
+    "Map",
+    "View",
+    "Gametime",
+    "Players",
+    "Max",
+    "Queue",
+    "IP",
+    "Qport",
+    "Ping",
+]
+
+# DetailsDialog
+workshop = "Enter/double click a row to open in Steam Workshop."
+
+# LanDialog
+default_port = "Use default query port (27016)"
+custom_port = "Enter custom query port"
+scan_servers = "Scan LAN servers"
+select_port = "Select the query port"
+
+# Errors
+error_heading = "Error"
+config_not_found = "DZGUI configuration file not found. Please exit and restart."
+cannot_acquire_lock = "DZGUI is already open."
+something_wrong = "Something went wrong. See the detailed error below."
+steam_key_missing = "No Steam API key is set."
+malformed_mods = "Found mods on system, but was unable to parse results."
+steam_missing = "Local Steam installation is not set, possibly malformed config file."
+build_corrupted = (
+    "Steam settings or DayZ installation may be corrupted. Try restarting Steam."
+)
+server_timeout = "Timed out when querying server(s). Check IP or try again later."
+server_error = (
+    "Error while contacting server, possibly timed out. Please wait and try again."
+)
+server_protected = (
+    "This server is password-protected and you will be "
+    "prompted when connecting. Do you want to proceed?"
+)
+
+
+# labels
+label_main_menu = "Main menu"
+
+# buttons
+ping_servers = "Ping servers"
+ping_tooltip = (
+    "Refresh the ping for visible servers.\n" "Available once per unique filter context"
+)
+
+# use e.g. filters.1pp
+filter_1pp = "1PP"
+filter_3pp = "3PP"
+filter_day = "Day"
+filter_night = "Night"
+filter_empty = "Empty"
+filter_full = "Full"
+filter_lowpop = "Low pop"
+filter_nonascii = "Non-ASCII"
+filter_duplicate = "Duplicate"
+filter_official = "Official"
+filter_unofficial = "Unofficial"
+filter_modded = "Modded"
+filter_unmodded = "Unmodded"
+
+# state
+unknown = "Unknown"
+none_provided = "None provided"
+disabled = "Disabled"
+enabled = "Enabled"
+null = "-"
+unspecified = "not specified"
+
+# DLC
+dlc_frostline = "Frostline"
+dlc_badlands = "Badlands"
+dlc_none = "None"
+
+# platform
+windows = "Windows"
+linux = "Linux"
+
+# misc
+self_workshop = "Open Steam workshop"
+settings_updated = "Settings updated!"
+
+
 
 
 init = Init(
@@ -371,20 +348,6 @@ options = Options(
     manual_dl="Manual",
     auto_dl="Auto",
     update="Update",
-    install_mode="Mod install mode",
-    force_update="Force update local mods",
-    dl_eventbox=(
-        "Manual: prompt to subscribe to mods in Steam. " "Auto: unmanned downloads."
-    ),
-    force_eventbox="Synchronize all local mods. Automatic mode must be enabled.",
-    self_update=(
-        "Stable: only contains stable features. "
-        "Testing: pre-release beta, contains new features."
-    ),
-    no_self_update=(
-        "In-app updates are disabled when DZGUI is "
-        "installed globally (e.g., via package manager)."
-    ),
     api_key="API Key",
     prefs="Preferences",
     mods="Mods",
@@ -392,13 +355,6 @@ options = Options(
     branch="DZGUI branch",
     stable="Stable",
     testing="Testing",
-    manual_sub_msg="""When switching from MANUAL to AUTO mod install mode,
-DZGUI will manage mod installation and deletion for you.
-To prevent conflicts with Steam Workshop subscriptions and old mods from being downloaded
-when Steam updates, you should unsubscribe from any existing Workshop mods you manually subscribed to.
-Open your Profile, then 'Workshop Items' and select 'Unsubscribe from all'
-on the right-hand side.
-""",
 )
 
 dialog = Dialog(
@@ -445,14 +401,6 @@ no_mods = "No local mods found."
 no_servers = "No server metadata to list."
 
 
-@dataclass(slots=True, frozen=True)
-class Flags:
-    description: str
-    version: str
-    uninstall: str
-    debug: str
-    map_count: str
-
 
 flags = Flags(
     description="DayZ server browser and mod manager",
@@ -463,28 +411,11 @@ flags = Flags(
 )
 
 
-@dataclass(slots=True, frozen=True)
-class FilePicker:
-    title: str
-    placeholder: str
-
-
-picker = FilePicker(
-    title="Save diagnostic log to file",
-    placeholder=SYSTEM_LOG,
-)
-
 api_error = (
     "API key validation error or timeout. See 'Help > Show debug log' for details."
 )
 
 
-@dataclass(slots=True, frozen=True)
-class DevelopersPage:
-    header: str
-    paths_label: str
-    prefs_label: str
-    columns: list[str]
 
 
 developers = DevelopersPage(
@@ -495,14 +426,6 @@ developers = DevelopersPage(
 )
 
 
-@dataclass(slots=True, frozen=True)
-class ServerLabels:
-    browser: str
-    saved: str
-    recent: str
-    lan: str
-
-
 server_labels = ServerLabels(
     browser="Server Browser",
     saved="Saved Servers",
@@ -511,17 +434,7 @@ server_labels = ServerLabels(
 )
 
 
-distance_suffix = "Distance: calculating..."
 dialog_error = "ERROR"
-
-
-@dataclass(slots=True, frozen=True)
-class AtomicButton:
-    refresh: str
-    refresh_tooltip: str
-    copy: str
-    keys: str
-    keys_tooltip: str
 
 
 atomic_buttons = AtomicButton(
