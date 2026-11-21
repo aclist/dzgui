@@ -497,11 +497,11 @@ def is_dayz_downloading(steam_path: Path, appid: int) -> bool:
 
 def get_app_path(folders_path: Path, appid: int) -> Path:
     app_path = None
-
     try:
         with open(folders_path / LIBRARYFOLDERS_PATH) as f:
             folders = vdf.load(f)
-    except Exception:
+    except Exception as e:
+        logger.debug(e)
         raise VDFLoadError("Failed to parse libraryfolders")
 
     for obj in folders["libraryfolders"]:
