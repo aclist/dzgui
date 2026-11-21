@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 
 from dzgui.views.mixins.scrollable_mixin import ScrollableMixin
-from dzgui.util.strings import navigation, servers, vim, key_header, key_contexts
+from dzgui.strings import keybindings
 from dzgui.util.css import add_class
 
 import gi
@@ -26,10 +26,12 @@ class Keybindings(ScrollableMixin, Gtk.ScrolledWindow):  # type: ignore
         self.controller = controller
         self.box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
 
-        label = Gtk.Label(label=key_header)
+        label = Gtk.Label(label=keybindings.key_header)
         add_class(label, "page-heading")
 
-        grid = self.build_grid([servers, navigation, vim])
+        grid = self.build_grid(
+            [keybindings.servers, keybindings.navigation, keybindings.vim]
+        )
         self.box.add(label)
         self.box.add(grid)
         self.add(self.box)
@@ -94,7 +96,7 @@ class Keybindings(ScrollableMixin, Gtk.ScrolledWindow):  # type: ignore
 
         row, column = 1, 1
         w, h = 1, 1
-        sidebar = self.build_sidebar(key_contexts)
+        sidebar = self.build_sidebar(keybindings.key_contexts)
         separator = Gtk.Separator()
         keys_box = self.build_keys(items)
 
