@@ -1,11 +1,5 @@
 from dataclasses import dataclass
 
-@dataclass(slots=True, frozen=True)
-class DevelopersPage:
-    header: str
-    paths_label: str
-    prefs_label: str
-    columns: list[str]
 
 @dataclass(slots=True, frozen=True)
 class ServerLabels:
@@ -31,6 +25,7 @@ class Flags:
     uninstall: str
     debug: str
     map_count: str
+
 
 @dataclass(slots=True, frozen=True)
 class ModPanelStrings:
@@ -101,13 +96,6 @@ class Crumbs:
     default: str
     offline: str
     connect: str
-
-
-@dataclass(slots=True, frozen=True)
-class Thanks:
-    header: str
-    description: str
-    users: list[str]
 
 
 @dataclass(slots=True, frozen=True)
@@ -271,8 +259,6 @@ self_workshop = "Open Steam workshop"
 settings_updated = "Settings updated!"
 
 
-
-
 init = Init(
     is_steam_running="Is Steam running? DZGUI must be run on top of Steam.",
     is_dayz_running="Is DayZ already running? DZGUI cannot launch DayZ if another process is using it.",
@@ -301,33 +287,6 @@ mod_panel = ModPanelStrings(
     validate="Validate selected",
     validate_tooltip="Validates selected mods and updates them if necessary",
 )
-
-
-thanks = Thanks(
-    header="# Special thanks",
-    description=(
-        "This page recognizes beta testers, collaborators, code "
-        "contributors, and sponsors of the project in alphabetical order.\n"
-        "If you wish to be removed from this list, please submit a ticket."
-    ),
-    users=[
-        "bongjutsu",
-        "Deku",
-        "dj3hac",
-        "finntux",
-        "GaryBlackbourne",
-        "jiriks74",
-        "Johnofwrong",
-        "MatheusLasserr",
-        "nolan-perez",
-        "OnniSaarni",
-        "scandalouss",
-        "SnackSBR",
-        "StevelDusa",
-        "Thoughtduck216",
-    ],
-)
-
 
 options = Options(
     header="Options",
@@ -401,7 +360,6 @@ no_mods = "No local mods found."
 no_servers = "No server metadata to list."
 
 
-
 flags = Flags(
     description="DayZ server browser and mod manager",
     version="print version information",
@@ -413,16 +371,6 @@ flags = Flags(
 
 api_error = (
     "API key validation error or timeout. See 'Help > Show debug log' for details."
-)
-
-
-
-
-developers = DevelopersPage(
-    header="Developers",
-    paths_label="Resolved XDG paths",
-    prefs_label="Boot preferences",
-    columns=["Key", "Value"],
 )
 
 

@@ -1,6 +1,7 @@
 from pathlib import Path
 
-from dzgui.util.strings import picker
+from dzgui.const.constants import DEBUG_LOG, SYSTEM_LOG
+from dzgui.strings.filepickers import diagnostic_picker_title, debug_picker_title
 
 import gi
 
@@ -9,9 +10,9 @@ from gi.repository import Gtk
 
 
 class FilePicker(Gtk.FileChooserDialog):
-    def __init__(self, parent: Gtk.Window) -> None:
+    def __init__(self, parent: Gtk.Window, title: str, placeholder: str) -> None:
         super().__init__(
-            title=picker.title,
+            title=title,
             action=Gtk.FileChooserAction.SAVE,
             transient_for=parent,
             resizable=True,
@@ -20,7 +21,7 @@ class FilePicker(Gtk.FileChooserDialog):
         self.add_buttons("_Save", Gtk.ResponseType.OK)  # type: ignore[no-untyped-call]
         self.set_default_response(Gtk.ResponseType.OK)
 
-        self.set_current_name(picker.placeholder)
+        self.set_current_name(placeholder)
 
     def pick_file(self) -> Path | None:
         res = self.run()  # type: ignore[no-untyped-call]
@@ -33,6 +34,16 @@ class FilePicker(Gtk.FileChooserDialog):
                 self.destroy()
                 return Path(file)
         return None
+
+
+class DiagnosticLogPicker(FilePicker):
+    def __init__(self, parent: Gtk.Window) -> None:
+        super().__init__(parent, diagnostic_picker_title, SYSTEM_LOG)
+
+
+class DebugLogPicker(FilePicker):
+    def __init__(self, parent: Gtk.Window) -> None:
+        super().__init__(parent, debug_picker_title, DEBUG_LOG)
 
 
 class FolderPicker(Gtk.FileChooserDialog):

@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 
 from dzgui.util.format import format_pango
-from dzgui.util.strings import thanks
+from dzgui.strings import thanks
 from dzgui.views.mixins.help_menu_mixin import HelpMenuMixin
 from dzgui.views.mixins.scrollable_mixin import ScrollableMixin
 
