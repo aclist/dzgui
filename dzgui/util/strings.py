@@ -360,20 +360,6 @@ no_mods = "No local mods found."
 no_servers = "No server metadata to list."
 
 
-flags = Flags(
-    description="DayZ server browser and mod manager",
-    version="print version information",
-    uninstall="clean up state/config files",
-    debug="enable developer debugging features",
-    map_count="check and update system map count value",
-)
-
-
-api_error = (
-    "API key validation error or timeout. See 'Help > Show debug log' for details."
-)
-
-
 server_labels = ServerLabels(
     browser="Server Browser",
     saved="Saved Servers",
@@ -389,7 +375,3 @@ atomic_buttons = AtomicButton(
     keys="Keys",
     keys_tooltip="Toggles the keybindings dialog",
 )
-
-address_already_saved = "This address is already in your Saved Servers"
-stop_scanning = "Stop scanning on first hit"
-abort_tooltip = "Unless you have multiple DayZ servers on your LAN,\nleave this checked to get results faster"
