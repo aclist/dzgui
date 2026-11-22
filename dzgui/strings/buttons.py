@@ -14,3 +14,9 @@ update_button = "Updates available"
 
 unset_button_label = "Unset"
 unset_button_tooltip = "Unset this server as favorite"
+
+refresh_button = "Refresh"
+refresh_tooltip = "Refresh server data"
+copy_button = "Copy"
+keys_button = "Keys"
+keys_button_tooltip = "Toggles the keybindings dialog"

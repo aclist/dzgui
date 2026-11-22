@@ -10,24 +10,6 @@ class ServerLabels:
 
 
 @dataclass(slots=True, frozen=True)
-class AtomicButton:
-    refresh: str
-    refresh_tooltip: str
-    copy: str
-    keys: str
-    keys_tooltip: str
-
-
-@dataclass(slots=True, frozen=True)
-class Flags:
-    description: str
-    version: str
-    uninstall: str
-    debug: str
-    map_count: str
-
-
-@dataclass(slots=True, frozen=True)
 class ModPanelStrings:
     header: str
     unhighlight_stale: str
@@ -365,13 +347,4 @@ server_labels = ServerLabels(
     saved="Saved Servers",
     recent="Recent",
     lan="LAN",
-)
-
-
-atomic_buttons = AtomicButton(
-    refresh="Refresh",
-    refresh_tooltip="Refresh server data",
-    copy="Copy",
-    keys="Keys",
-    keys_tooltip="Toggles the keybindings dialog",
 )
