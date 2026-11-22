@@ -2,6 +2,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from enum import Enum
 
+from dzgui.strings import side_buttons
 from dzgui.util import strings
 from dzgui.strings import rows
 
@@ -262,28 +263,28 @@ class ModButton(Enum):
 
 class ButtonType(Enum):
     SERVERS = ButtonTypeMeta(
-        strings.buttons.servers_label,
-        strings.buttons.servers_tooltip,
+        side_buttons.servers_label,
+        side_buttons.servers_tooltip,
         NotebookPage.SERVERS,
     )
     MODS = ButtonTypeMeta(
-        strings.buttons.mods_label,
-        strings.buttons.mods_tooltip,
+        side_buttons.mods_label,
+        side_buttons.mods_tooltip,
         NotebookPage.MODS,
     )
     OPTIONS = ButtonTypeMeta(
-        strings.buttons.options_label,
-        strings.buttons.options_tooltip,
+        side_buttons.options_label,
+        side_buttons.options_tooltip,
         NotebookPage.OPTIONS,
     )
     HELP = ButtonTypeMeta(
-        strings.buttons.help_label,
-        strings.buttons.help_tooltip,
+        side_buttons.help_label,
+        side_buttons.help_tooltip,
         NotebookPage.HELP,
     )
     EXIT = ButtonTypeMeta(
-        strings.buttons.exit_label,
-        strings.buttons.exit_tooltip,
+        side_buttons.exit_label,
+        side_buttons.exit_tooltip,
         None,
     )
 

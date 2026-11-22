@@ -51,20 +51,6 @@ class Init:
 
 
 @dataclass(slots=True, frozen=True)
-class Button:
-    servers_label: str
-    servers_tooltip: str
-    mods_label: str
-    mods_tooltip: str
-    options_label: str
-    options_tooltip: str
-    help_label: str
-    help_tooltip: str
-    exit_label: str
-    exit_tooltip: str
-
-
-@dataclass(slots=True, frozen=True)
 class Crumbs:
     changelog: str
     keys: str
@@ -308,19 +294,6 @@ dialog = Dialog(
     working="Working",
     updating_mods="Updating mods",
     scanning="Scanning LAN ports",
-)
-
-buttons = Button(
-    servers_label="Servers",
-    servers_tooltip="Search for and connect to servers",
-    mods_label="Mods",
-    mods_tooltip="Manage local mods",
-    options_label="Options",
-    options_tooltip="Advanced options",
-    help_label="Help",
-    help_tooltip="Troubleshooting and documentation",
-    exit_label="Exit",
-    exit_tooltip="Quits the application",
 )
 
 crumbs = Crumbs(
