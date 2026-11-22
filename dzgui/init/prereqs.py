@@ -23,7 +23,7 @@ def has_flatpak_client() -> bool:
         else:
             return False
     except Exception as e:
-        logger.debug(e)
+        logger.critical(e)
         return False
 
 
