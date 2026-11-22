@@ -58,6 +58,7 @@
 - Validate mods via Mod page to pull in updates
 - Support for Nasdara (Badlands) DLC
 - Load offline mods
+- Support Snap package version of Steam
 
 ### Changed
 - Conform to PEP 440 versioning for beta versions
@@ -101,6 +102,8 @@
 - Steam Flatpak cannot run DZGUI as a non-Steam game
 - Collisions between native Steam and Steam Flatpak clients
 - Sticky toggle signal on radio buttons when reloading Options
+- Handle missing mods directory if not installed previously
+- Filters not blocked by keyboard keys when filters are disabled
 
 ### Developer-facing
 - Options -> Dev page

@@ -12,13 +12,15 @@ from dzgui.const.constants import (
     LEGACY_IPS_PATH,
 )
 from dzgui.config.convert import rc2json
+from dzgui.config.xdg import get_real_home
 from dzgui.util._json import read_json, write_json
 
 logger = logging.getLogger(APP_NAME)
 
 
 def migrate_legacy_conf(config: Path) -> Any:
-    old_conf = Path.home() / LEGACY_CONFIG_PATH
+    home = get_real_home()
+    old_conf = home / LEGACY_CONFIG_PATH
     j = rc2json(old_conf)
     return json.loads(j)
 
@@ -44,7 +46,8 @@ def convert_cols_file(res: Path) -> Any | None:
 
 def migrate_cols_file(res: Path) -> None:
     # NOTE: filename "dzg.columns.json" is API 7 spec
-    old_res = Path.home() / LEGACY_COLS_PATH
+    home = get_real_home()
+    old_res = home / LEGACY_COLS_PATH
     if old_res.is_file():
         j = convert_cols_file(old_res)
         if j is not None:
@@ -52,7 +55,7 @@ def migrate_cols_file(res: Path) -> None:
 
 
 def copy_state_files(state_path: Path) -> None:
-    home = Path.home()
+    home = get_real_home()
     legacy = home / ".local/state/dzgui"
     to_copy = [
         "dzg.res.json",
@@ -71,7 +74,7 @@ def copy_state_files(state_path: Path) -> None:
 
 
 def copy_ipdb(ips_path: Path) -> None:
-    home = Path.home()
+    home = get_real_home()
     legacy = home / LEGACY_IPS_PATH
     if ips_path == legacy:
         return
