@@ -14,8 +14,10 @@ from dzgui.const.constants import (
     HERO_PATH,
     FLATPAK_ROOT_PATH,
     LEGACY_CONFIG_PATH,
+    SNAP_STEAM_PATH,
     TMP_PATH,
 )
+from dzgui.config.xdg import get_real_home
 from dzgui.const.boilerplate import config_boilerplate
 from dzgui.const.endpoints import STEAM_API_SETUP
 from dzgui.config import freedesktop
@@ -506,7 +508,8 @@ class Assistant(Gtk.Assistant):
 
         self.pages: dict[EnumeratedWizardPage, int] = {}
 
-        legacy_path = Path.home().joinpath(LEGACY_CONFIG_PATH)
+        home = get_real_home()
+        legacy_path = home.joinpath(LEGACY_CONFIG_PATH)
         self.has_legacy_config = legacy_path.is_file()
         for page in (
             self.page_intro,
@@ -699,6 +702,7 @@ class ShortcutCreationPage(OptionalPageMixin, EnumeratedWizardPage):  # type: ig
 
         self.add_start(self.checks_area)
         self.show_all()
+
         self.connect("map", self._on_map)
 
     def _on_start_menu_toggled(self, button: Gtk.CheckButton) -> None:
@@ -709,6 +713,9 @@ class ShortcutCreationPage(OptionalPageMixin, EnumeratedWizardPage):  # type: ig
 
     def set_steam_path(self, path: Path) -> None:
         self.steam_path = path
+        if SNAP_STEAM_PATH in str(self.steam_path):
+            self.steam_checkbox.set_active(False)
+            self.steam_checkbox.set_sensitive(False)
 
     def is_steam_checkbox_active(self) -> bool:
         return self.steam_checkbox.get_active()

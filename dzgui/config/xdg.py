@@ -8,7 +8,6 @@ from dzgui.const.constants import (
     DEBUG_LOG,
     SYSTEM_LOG,
 )
-from dzgui.init.proc import is_flatpak_sandbox, is_snap_sandbox
 
 
 @dataclass(slots=True, frozen=True)
@@ -49,13 +48,17 @@ def is_writeable(path_str: str) -> bool:
     file.unlink()
     return True
 
+def get_real_home() -> Path:
+    home = Path.home()
+    if resolved := os.environ.get("SNAP_REAL_HOME"):  # Snap
+        home = Path(resolved)
+    elif resolved := os.environ.get("HOME"):  # Flatpak
+        home = Path(resolved)
+    return home
+
 
 def get_xdg_paths() -> dict[str, Path]:
-    home = Path.home()
-    if resolved := os.environ.get("SNAP_REAL_HOME"): # Snap
-        home = Path(resolved)
-    elif resolved := os.environ.get("HOME"): # Flatpak
-        home = Path(resolved)
+    home = get_real_home()
     xdg_paths = {
         "XDG_CONFIG_HOME": home / ".config",
         "XDG_STATE_HOME": home / ".local" / "state",
