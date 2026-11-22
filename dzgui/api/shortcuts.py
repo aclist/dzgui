@@ -2,7 +2,7 @@ import binascii
 import ctypes
 import logging
 import shutil
-import vdf  # type: ignore
+import vdf  # type: ignore[import-untyped]
 
 from dataclasses import dataclass
 from importlib import resources

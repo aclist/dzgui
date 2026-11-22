@@ -4,7 +4,7 @@ import psutil
 import re
 import requests
 import subprocess
-import vdf  # type: ignore
+import vdf  # type: ignore[import-untyped]
 
 from pathlib import Path
 from requests.exceptions import HTTPError
