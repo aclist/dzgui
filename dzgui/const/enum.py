@@ -207,7 +207,8 @@ class RowType(Enum):
     CHANGELOG = RowMeta(rows.changelog_label, rows.changelog_status)
     SHOW_LOG = RowMeta(rows.log_label, rows.log_status)
     SEPARATOR = RowMeta(rows.separator_label, rows.separator_status)
-    DUMP_LOG = RowMeta(rows.system_log_label, rows.system_log_status)
+    DUMP_DIAGNOSTIC = RowMeta(rows.system_log_label, rows.system_log_status)
+    DUMP_DEBUG = RowMeta(rows.debug_log_label, rows.debug_log_status)
     DOCS = RowMeta(rows.docs_label, rows.docs_status)
     DOCS_FALLBACK = RowMeta(rows.docs_fallback_label, rows.docs_fallback_status)
     BUGS = RowMeta(rows.bugs_label, rows.bugs_status)
@@ -302,7 +303,8 @@ class ButtonType(Enum):
 HELP_MENU_ROWS = (
     RowType.CHANGELOG,
     RowType.SHOW_LOG,
-    RowType.DUMP_LOG,
+    RowType.DUMP_DIAGNOSTIC,
+    RowType.DUMP_DEBUG,
     RowType.SEPARATOR,
     RowType.DOCS,
     RowType.DOCS_FALLBACK,
