@@ -92,8 +92,8 @@ with tarfile.open(tarpath, "w:gz") as tar:
     tar.add(subfolder, arcname=appname, filter=update_uname)
     print(f"Wrote tarfile to '{tarpath}'")
 
-proc = subprocess.run([release_exe, "-v"], capture_output=True, text=True)
-assert proc.stdout.rstrip() == version
+built_proc = subprocess.run([release_exe, "-v"], capture_output=True, text=True)
+assert str(built_proc.stdout).rstrip() == version
 
 # TODO: clean up staging directory
 release_exe.unlink()
