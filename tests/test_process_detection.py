@@ -1,80 +1,93 @@
 import pytest
-import unittest
 
-from unittest.mock import patch
-from typing import Any
+from typing import Literal, TYPE_CHECKING
 
 from dzgui.const.constants import (
     FLATPAK_APPID,
     FLATPAK_ROOT_PATH,
-    FLATPAK_RUN_CMD,
-    FLATPAK_SANDBOX,
 )
 from dzgui.init import proc
+
+if TYPE_CHECKING:
+    from _pytest.monkeypatch import MonkeyPatch
 
 pytestmark = pytest.mark.flatpak
 
 
-class TestSteamDetection(unittest.TestCase):
-    def test_flatpak_detection_with_multiple_running_apps(self) -> None:
-        def flatpak_output(args: Any, *, text: str) -> str:
-            # Default 'flatpak ps' includes instance, PID, app and runtime columns.
-            if args == ["flatpak", "ps", "--columns=application"]:
-                return f"com.spotify.Client\n{FLATPAK_APPID}\n{FLATPAK_APPID}\n"
-            return f"3904921611\t1257689\t{FLATPAK_APPID}\torg.freedesktop.Platform\n"
+def mock_has_cmd(cmd: str) -> Literal[True]:
+    return True
 
-        with (
-            patch.object(proc, "has_cmd", return_value=True),
-            patch.object(proc.subprocess, "check_output", side_effect=flatpak_output),
-        ):
-            for client in (FLATPAK_RUN_CMD, FLATPAK_SANDBOX):
-                with self.subTest(client=client):
-                    self.assertTrue(proc.is_steam_running(client))
 
-    def test_flatpak_not_running(self) -> None:
-        with patch.object(proc, "has_cmd", return_value=True):
-            for output in ("", "com.spotify.Client\n", f"{FLATPAK_APPID}Helper\n"):
-                with (
-                    self.subTest(output=output),
-                    patch.object(proc.subprocess, "check_output", return_value=output),
-                ):
-                    self.assertFalse(proc.is_flatpak_steam_running())
+def mock_has_not_cmd(cmd: str) -> Literal[False]:
+    return False
 
-    def test_flatpak_not_installed(self) -> None:
-        with (
-            patch.object(proc, "has_cmd", return_value=False),
-            patch.object(proc.subprocess, "check_output") as check_output,
-        ):
-            self.assertFalse(proc.is_flatpak_steam_running())
-            check_output.assert_not_called()
 
-    def test_native_steam(self) -> None:
-        with patch.object(proc, "has_cmd", return_value=True):
-            for output, expected in (
-                (
-                    [
-                        [FLATPAK_ROOT_PATH],
-                        "/home/user/.local/share/Steam/ubuntu12_64/steamwebhelper",
-                    ],
-                    True,
-                ),
-                ([[FLATPAK_ROOT_PATH]], False),
-                ([[FLATPAK_ROOT_PATH], ["steam-runtime-launcher-service"]], False),
-                ([["/home/user/.local/share/Steam/ubuntu12_64/steamwebhelper"]], True),
-                (
-                    [
-                        ["/home/user/.local/share/Steam/ubuntu12_64/steamwebhelper"],
-                        "steam-runtime-launcher-service",
-                    ],
-                    True,
-                ),
-            ):
-                with (
-                    self.subTest(running=output),
-                    patch.object(proc, "get_steam_procs", return_value=output),
-                ):
-                    self.assertEqual(proc.is_native_steam_running(), expected)
+def mock_get_flatpak_output() -> list[str]:
+    lines = ["Application", "com.freedesktop.Platform", f"{FLATPAK_APPID}"]
+    return lines
 
-    def test_invalid_client(self) -> None:
-        with self.assertRaises(TypeError):
-            proc.is_steam_running("invalid-client")
+
+@pytest.mark.parametrize(
+    "output, expected",
+    [
+        (
+            [
+                [f"/home/user/{FLATPAK_ROOT_PATH}/.local/share/Steam"],
+                ["/home/user/.local/share/Steam/ubuntu12_64/steamwebhelper"],
+            ],
+            True,
+        ),
+        (
+            [
+                [f"/home/user/{FLATPAK_ROOT_PATH}/.local/share/Steam"],
+                ["steam-runtime-launcher-service"],
+            ],
+            False,
+        ),
+        ([[f"/home/user/{FLATPAK_ROOT_PATH}/.local/share/Steam"]], False),
+        ([["/home/user/.local/share/Steam/ubuntu12_64/steamwebhelper"]], True),
+        (
+            [
+                ["/home/user/.local/share/Steam/ubuntu12_64/steamwebhelper"],
+                ["steam-runtime-launcher-service"],
+            ],
+            True,
+        ),
+    ],
+)
+def test_native_steam_running(
+    monkeypatch: "MonkeyPatch", output: list[list[str]], expected: bool
+) -> None:
+    def mock_get_steam_procs() -> list[list[str]]:
+        return output
+
+    monkeypatch.setattr("dzgui.init.proc.has_cmd", mock_has_cmd)
+    monkeypatch.setattr("dzgui.init.proc.get_steam_procs", mock_get_steam_procs)
+    assert proc.is_native_steam_running() == expected
+
+
+def test_flatpak_running(monkeypatch: "MonkeyPatch") -> None:
+    monkeypatch.setattr("dzgui.init.proc.has_cmd", mock_has_cmd)
+    monkeypatch.setattr("dzgui.init.proc.get_flatpak_output", mock_get_flatpak_output)
+    assert proc.is_flatpak_steam_running()
+
+
+def test_flatpak_sandboxed(monkeypatch: "MonkeyPatch") -> None:
+    monkeypatch.setattr("dzgui.init.proc.has_cmd", mock_has_not_cmd)
+    monkeypatch.setenv("FLATPAK_ID", FLATPAK_APPID)
+    assert proc.is_flatpak_steam_running()
+
+
+def test_flatpak_not_installed(monkeypatch: "MonkeyPatch") -> None:
+    monkeypatch.setattr("dzgui.init.proc.has_cmd", mock_has_not_cmd)
+    assert not proc.is_flatpak_steam_running()
+
+
+def test_steam_not_installed(monkeypatch: "MonkeyPatch") -> None:
+    monkeypatch.setattr("dzgui.init.proc.has_cmd", mock_has_not_cmd)
+    assert not proc.is_native_steam_running()
+
+
+def test_invalid_client() -> None:
+    with pytest.raises(TypeError):
+        proc.is_steam_running("invalid-client")

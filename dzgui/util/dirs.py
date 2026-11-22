@@ -10,8 +10,9 @@ from dzgui.const.constants import APP_NAME, APP_NAME_LOWER, IMAGES_PATH
 logger = logging.getLogger(APP_NAME)
 
 
-def make_parents(path: "Path") -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
+def make_parents(path: "Path", descend: bool = False) -> None:
+    p = path if descend else path.parent
+    p.mkdir(parents=True, exist_ok=True)
 
 
 def copy_dzgui_to_xdg_data(exe_path: Path) -> None:

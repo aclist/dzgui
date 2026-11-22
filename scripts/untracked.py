@@ -3,14 +3,9 @@ import subprocess
 import sys
 
 cmd = ["git", "ls-files", "--others", "--exclude-standard"]
-result = subprocess.Popen(
-    cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True
-)
-with open(".gitignore", "r") as f:
-    ignored = [line.rstrip() for line in f]
-
-untracked = [os.path.basename(line.rstrip()) for line in result.stdout]
-for file in untracked:
-    if not any(file in item for item in ignored):
-        print(f"File '{file}' is untracked. Add to .gitignore file if this is intended.")
-        sys.exit(1)
+result = subprocess.run(cmd, capture_output=True, text=True)
+untracked = [os.path.basename(line.rstrip()) for line in result.stdout.splitlines()]
+if bool(untracked):
+    print("The following files are untracked. Add to .gitignore if this is intended.")
+    print("\n".join(untracked))
+    sys.exit(1)

@@ -56,19 +56,18 @@ class MenuTreeView(TreeView):
                 self.controller.populate_log()
             case RowType.CHANGELOG:
                 self.controller.open_page(NotebookPage.CHANGELOG)
-            case RowType.DUMP_LOG:
+            case RowType.DUMP_DIAGNOSTIC:
                 self.controller.dump_diagnostics()
-                pass
-
-        docs = [
-            RowType.DOCS,
-            RowType.DOCS_FALLBACK,
-            RowType.BUGS,
-            RowType.FORUM,
-            RowType.SPONSOR,
-        ]
-        if row_type in docs:
-            open_link_by_rowtype(row_type)
+            case RowType.DUMP_DEBUG:
+                self.controller.dump_log()
+            case (
+                RowType.DOCS
+                | RowType.DOCS_FALLBACK
+                | RowType.BUGS
+                | RowType.FORUM
+                | RowType.SPONSOR
+            ):
+                open_link_by_rowtype(row_type)
 
     def get_row_enum(self) -> str:
         # NOTE: col 1 contains a RowType enum

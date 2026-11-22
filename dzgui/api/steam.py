@@ -12,9 +12,7 @@ from typing import Any, Generator, Union
 from warnings import deprecated
 
 from dzgui.api.acf import ACF
-from dzgui.const.endpoints import VALIDATE
-from dzgui.init.prereqs import has_any_client
-from dzgui.init.prereqs import has_flatpak_client, has_steam_client
+from dzgui.config.xdg import get_real_home
 from dzgui.const.constants import (
     APPID_DAYZ,
     APPID_DAYZ_EXP,
@@ -27,6 +25,7 @@ from dzgui.const.constants import (
     FLATPAK_STEAM_PATH,
     LIBRARYFOLDERS_PATH,
     REQUEST_TIMEOUT,
+    SNAP_STEAM_PATH,
     UBUNTU_STEAM_PATH,
     VDF_PATH,
 )
@@ -35,7 +34,10 @@ from dzgui.const.endpoints import (
     STEAM_PUBLISHED_FILES,
     STEAM_SUB,
     STEAM_UNSUB,
+    VALIDATE,
 )
+from dzgui.init.prereqs import has_any_client
+from dzgui.init.prereqs import has_flatpak_client, has_steam_client
 from dzgui.strings import wizard
 from dzgui.strings.errors import api_validation_error, workshop_endpoint_error
 from dzgui.util.bash import concat_bash_args
@@ -64,26 +66,36 @@ class VDFLoadError(Exception):
 def get_steam_paths() -> list[tuple[Path, str]]:
     paths = []
     if has_any_client():
-        HOME = Path.home()
+        HOME = get_real_home()
         env = os.environ.get("XDG_DATA_HOME")
         if env is not None:
-            XDG_DATA_HOME = env
+            XDG_DATA_HOME = Path(env)
+            DEFAULT_PATH = XDG_DATA_HOME.joinpath("Steam")
+            default_label = wizard.desc_custom_path
         else:
-            XDG_DATA_HOME = DEFAULT_STEAM_PATH
+            DEFAULT_PATH = HOME.joinpath(DEFAULT_STEAM_PATH)
+            default_label = wizard.desc_default_path
 
-        DEFAULT_PATH = HOME.joinpath(XDG_DATA_HOME)
         FLATPAK_PATH = HOME.joinpath(FLATPAK_STEAM_PATH)
         UBUNTU_PATH = HOME.joinpath(UBUNTU_STEAM_PATH)
         DEBIAN_PATH = HOME.joinpath(DEBIAN_STEAM_PATH)
+        SNAP_PATH = HOME.joinpath(SNAP_STEAM_PATH)
 
         human = {
-            DEFAULT_PATH: wizard.desc_default_path,
+            DEFAULT_PATH: default_label,
             FLATPAK_PATH: wizard.desc_flatpak_path,
             UBUNTU_PATH: wizard.desc_ubuntu_path,
+            SNAP_PATH: wizard.desc_snap_path,
             DEBIAN_PATH: wizard.desc_debian_path,
         }
 
-        for path in DEFAULT_PATH, FLATPAK_PATH, UBUNTU_PATH, DEBIAN_PATH:
+        for path in (
+            DEFAULT_PATH,
+            FLATPAK_PATH,
+            UBUNTU_PATH,
+            SNAP_PATH,
+            DEBIAN_PATH,
+        ):
             if path is FLATPAK_PATH and has_flatpak_client() is False:
                 continue
             if path is not FLATPAK_PATH and has_steam_client() is False:
@@ -485,11 +497,11 @@ def is_dayz_downloading(steam_path: Path, appid: int) -> bool:
 
 def get_app_path(folders_path: Path, appid: int) -> Path:
     app_path = None
-
     try:
         with open(folders_path / LIBRARYFOLDERS_PATH) as f:
             folders = vdf.load(f)
-    except Exception:
+    except Exception as e:
+        logger.debug(e)
         raise VDFLoadError("Failed to parse libraryfolders")
 
     for obj in folders["libraryfolders"]:
