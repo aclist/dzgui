@@ -382,9 +382,6 @@ server_labels = ServerLabels(
 )
 
 
-dialog_error = "ERROR"
-
-
 atomic_buttons = AtomicButton(
     refresh="Refresh",
     refresh_tooltip="Refresh server data",

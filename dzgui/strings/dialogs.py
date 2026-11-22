@@ -1,3 +1,6 @@
+default_header = "DZGUI - Dialog"
+error = "ERROR"
+
 waiting_for_launch = "Waiting for DayZ to launch"
 waiting_for_mods = "Queueing up mods (step 1/2)"
 waiting_for_directories = "Steam is staging mods (step 2/2)"

@@ -28,7 +28,7 @@ class GenericDialog(Gtk.MessageDialog):
             buttons=buttons,
             text=text,
             secondary_text=secondary,
-            title=strings.dialog_header,
+            title=dialogs.default_header,
             modal=True,
         )
 

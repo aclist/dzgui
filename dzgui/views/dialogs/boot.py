@@ -13,7 +13,6 @@ from dzgui.init.update import check_updates
 from dzgui.managers.threading import call_on_thread, StoredFunc, ThreadingManager
 from dzgui.strings import preboot, dialogs
 from dzgui.util.format import format_exception
-from dzgui.util.strings import dialog_header
 from dzgui.util.symlink import rebuild_symlinks
 from dzgui.views.components.buttons import ClipboardButton
 from dzgui.views.mixins.colorscheme import ColorAwareApp
@@ -36,7 +35,7 @@ class Success(Enum):
 class BootDialog(ColorAwareApp, Gtk.Dialog):  # type: ignore
     def __init__(self, parent: "BootWindow", xdg: "Xdg", version: str) -> None:
         super().__init__(
-            title=dialog_header,
+            title=dialogs.default_header,
             transient_for=parent,
             modal=True,
         )
