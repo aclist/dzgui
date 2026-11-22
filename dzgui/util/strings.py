@@ -75,7 +75,6 @@ class Options:
 
 
 # General
-dialog_header = "DZGUI - Dialog"
 dz = "DayZ"
 dz_exp = "DayZ Experimental"
 delimiter = "␞"
@@ -129,15 +128,6 @@ browser_cols = [
     "Qport",
     "Ping",
 ]
-
-# DetailsDialog
-workshop = "Enter/double click a row to open in Steam Workshop."
-
-# LanDialog
-default_port = "Use default query port (27016)"
-custom_port = "Enter custom query port"
-scan_servers = "Scan LAN servers"
-select_port = "Select the query port"
 
 # Errors
 error_heading = "Error"
@@ -200,11 +190,6 @@ dlc_none = "None"
 # platform
 windows = "Windows"
 linux = "Linux"
-
-# misc
-self_workshop = "Open Steam workshop"
-settings_updated = "Settings updated!"
-
 
 init = Init(
     is_steam_running="Is Steam running? DZGUI must be run on top of Steam.",
