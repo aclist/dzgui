@@ -2,9 +2,10 @@ from __future__ import annotations
 from dataclasses import dataclass
 from enum import Enum
 
+from dzgui.strings import mod_panel
+from dzgui.strings import rows
 from dzgui.strings import side_buttons
 from dzgui.util import strings
-from dzgui.strings import rows
 
 
 class Port(Enum):
@@ -227,29 +228,25 @@ class RowType(Enum):
 
 
 class ModButton(Enum):
-    SELECT_ALL = ModButtonMeta(
-        strings.mod_panel.select_all, strings.mod_panel.select_all_tooltip
-    )
-    UNSELECT_ALL = ModButtonMeta(
-        strings.mod_panel.unselect_all, strings.mod_panel.unselect_all_tooltip
-    )
+    SELECT_ALL = ModButtonMeta(mod_panel.select_all, mod_panel.select_all_tooltip)
+    UNSELECT_ALL = ModButtonMeta(mod_panel.unselect_all, mod_panel.unselect_all_tooltip)
     HIGHLIGHT_STALE = ModButtonMeta(
-        strings.mod_panel.highlight_stale, strings.mod_panel.highlight_stale_tooltip
+        mod_panel.highlight_stale, mod_panel.highlight_stale_tooltip
     )
     UNHIGHLIGHT_STALE = ModButtonMeta(
-        strings.mod_panel.unhighlight_stale, strings.mod_panel.unhighlight_stale_tooltip
+        mod_panel.unhighlight_stale, mod_panel.unhighlight_stale_tooltip
     )
     UNSUB_SELECTED = ModButtonMeta(
-        strings.mod_panel.unsub_selected,
-        strings.mod_panel.unsub_selected_tooltip,
+        mod_panel.unsub_selected,
+        mod_panel.unsub_selected_tooltip,
     )
     SELECT_STALE = ModButtonMeta(
-        strings.mod_panel.select_stale,
-        strings.mod_panel.select_stale_tooltip,
+        mod_panel.select_stale,
+        mod_panel.select_stale_tooltip,
     )
     VALIDATE = ModButtonMeta(
-        strings.mod_panel.validate,
-        strings.mod_panel.validate_tooltip,
+        mod_panel.validate,
+        mod_panel.validate_tooltip,
     )
 
     @property

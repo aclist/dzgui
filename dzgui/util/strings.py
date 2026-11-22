@@ -10,27 +10,6 @@ class ServerLabels:
 
 
 @dataclass(slots=True, frozen=True)
-class ModPanelStrings:
-    header: str
-    unhighlight_stale: str
-    unhighlight_stale_tooltip: str
-    highlight_stale: str
-    highlight_stale_tooltip: str
-    unsub_selected: str
-    unsub_selected_tooltip: str
-    unselect_all: str
-    unselect_all_tooltip: str
-    select_all: str
-    select_all_tooltip: str
-    bulk_select: str
-    clear_highlights: str
-    select_stale: str
-    select_stale_tooltip: str
-    validate: str
-    validate_tooltip: str
-
-
-@dataclass(slots=True, frozen=True)
 class Dialog:
     querying: str
     fetching: str
@@ -233,28 +212,6 @@ init = Init(
     requires_steam="Your chosen client (Steam/Flatpak Steam) must be installed on the system.",
 )
 
-mod_panel = ModPanelStrings(
-    header="Mod actions",
-    unhighlight_stale="Unhighlight stale",
-    unhighlight_stale_tooltip="Clears highlight from stale mods",
-    highlight_stale="Highlight stale",
-    highlight_stale_tooltip=(
-        "Shows locally-installed mods which are not \n"
-        "used by any server in your Saved Servers"
-    ),
-    unsub_selected="Unsubscribe selected",
-    unsub_selected_tooltip="Unsubscribes from selected mods",
-    unselect_all="Unselect all",
-    unselect_all_tooltip="Bulk unselects all mods",
-    select_all="Select all",
-    select_all_tooltip="Bulk selects all mods",
-    bulk_select="Bulk selects all currently highlighted mods",
-    clear_highlights="Clears highlights and reverts the table to a default state",
-    select_stale="Select stale",
-    select_stale_tooltip="Only selects highlighted stale mods",
-    validate="Validate selected",
-    validate_tooltip="Validates selected mods and updates them if necessary",
-)
 
 options = Options(
     header="Options",
