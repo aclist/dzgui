@@ -42,15 +42,9 @@ from dzgui.api.steam import is_dayz_running
 from dzgui.const.enum import NotebookPage, Preferences
 from dzgui.init.proc import is_steam_running
 from dzgui.managers.threading import call_on_thread, StoredFunc, ThreadingManager
-from dzgui.strings.dialogs import (
-    waiting_for_launch,
-    waiting_for_mods,
-    waiting_for_directories,
-)
-from dzgui.strings import kb
+from dzgui.strings import dialogs, errors, kb
 from dzgui.strings.server_mods import checkmark, resync, invalid_mod
 from dzgui.util.format import format_exception, format_mib
-from dzgui.util.strings import dialog, server_timeout
 from dzgui.util.symlink import rebuild_symlinks
 from dzgui.views.dialogs.generic import ExceptionDialog
 from dzgui.views.dialogs.servers import ServerDetailsDialog, ServerModDialog
@@ -103,12 +97,12 @@ class ConnectionManager:
         self.remote_mod_ids: list[str] = []
         self.missing_mods: list[tuple[str, str, int, int]] = []
 
-    @call_on_thread(dialog.querying)
+    @call_on_thread(dialogs.querying)
     def connect_by_ip(self, addr: str) -> None:
         res = Servers.query_by_ip(addr)
         self._prepare_connection(res)
 
-    @call_on_thread(dialog.querying)
+    @call_on_thread(dialogs.querying)
     def connect_by_record(self, record: Servers.Record) -> None:
         res = Servers.query_by_record(record)
         self._prepare_connection(res)
@@ -230,7 +224,7 @@ class ConnectionManager:
         except Exception:
             return False
 
-    @call_on_thread(dialog.querying)
+    @call_on_thread(dialogs.querying)
     def query_details(self, record: Servers.Record) -> None:
         details = Servers.get_details(record)
         if details is None:
@@ -275,7 +269,7 @@ class ConnectionManager:
 
         return alpha_mods, missing_mods
 
-    @call_on_thread(dialog.querying)
+    @call_on_thread(dialogs.querying)
     def query_modlist_and_present(self, record: Servers.Record) -> None:
         try:
             mods, missing_mods = self._query_modlist(record)
@@ -303,7 +297,7 @@ class ConnectionManager:
         dialog.run()  # type: ignore[no-untyped-call]
 
     def _server_timeout(self) -> None:
-        dialog = ExceptionDialog(self.controller, server_timeout)
+        dialog = ExceptionDialog(self.controller, errors.server_timeout)
         dialog.set_details_buffer(kb.DZG_006)
         dialog.show_all()
         dialog.run()  # type: ignore[no-untyped-call]
@@ -328,7 +322,7 @@ class ConnectionManager:
             self.thread_man.set_cleanup_func(func)
             return
 
-        self.thread_man.update_dialog(waiting_for_launch)
+        self.thread_man.update_dialog(dialogs.waiting_for_launch)
         while True:
             if self.controller.is_cancel_pending():
                 # TODO: some facility to also close spawned steam process
@@ -361,7 +355,7 @@ class ConnectionManager:
                 self.thread_man.set_cleanup_func(func, destroy_first=True)
                 return
 
-        self.thread_man.update_dialog(waiting_for_directories)
+        self.thread_man.update_dialog(dialogs.waiting_for_directories)
         for title, mod, stamp, size in self.missing_mods:
             mod_path = self.workshop / mod
 
@@ -387,7 +381,7 @@ class ConnectionManager:
         # TODO: just push steam path directly
         self._connect_steam(menu_only)
 
-    @call_on_thread(waiting_for_mods, show_cancel=True)
+    @call_on_thread(dialogs.waiting_for_mods, show_cancel=True)
     def update_and_connect(self, menu_only: bool = False) -> None:
         if len(self.missing_mods) > 0:
             self._update_mods(menu_only)

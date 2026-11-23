@@ -15,7 +15,7 @@ class AbortDialog(ColorAwareApp, Gtk.MessageDialog):  # type: ignore
     def __init__(self, string: str, buttons: Gtk.ButtonsType) -> None:
         super().__init__(
             title=dialogs.default_header,
-            text=dialogs.error,
+            text=(dialogs.error).upper(),
             transient_for=None,
             buttons=buttons,
         )
