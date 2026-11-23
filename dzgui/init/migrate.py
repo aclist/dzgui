@@ -66,6 +66,7 @@ def copy_state_files(state_path: Path) -> None:
         ".month",
     ]
     if state_path == legacy:
+        logger.debug(f"Legacy state path '{legacy}' is identical to current")
         # TODO: log this
         return
     for file in legacy.iterdir():
