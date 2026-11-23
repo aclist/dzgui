@@ -6,7 +6,7 @@ from pathlib import Path
 from typing import TextIO
 
 from dzgui.const.constants import LOCK_FILE
-from dzgui.util.strings import cannot_acquire_lock
+from dzgui.strings import errors
 from dzgui.views.dialogs.early_alert import EarlyAlertDialog
 
 
@@ -21,6 +21,6 @@ def lock_acquire() -> TextIO:
     try:
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
     except OSError:
-        EarlyAlertDialog(cannot_acquire_lock)
+        EarlyAlertDialog(errors.cannot_acquire_lock)
         sys.exit(1)
     return lock

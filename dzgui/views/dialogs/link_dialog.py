@@ -1,7 +1,7 @@
 import textwrap
 from typing import Self, TYPE_CHECKING
 
-from dzgui.util.strings import notice
+from dzgui.strings import dialogs
 from dzgui.views.dialogs.generic import GenericDialog
 from dzgui.views.components.buttons import SteamTextButton
 
@@ -22,7 +22,7 @@ class WorkshopLinkDialog(GenericDialog):
         text = textwrap.dedent(text).replace("\n", " ")
         super().__init__(
             controller,
-            text=notice,
+            text=dialogs.notice,
             mtype=Gtk.MessageType.INFO,
             buttons=Gtk.ButtonsType.OK,
             secondary=text,

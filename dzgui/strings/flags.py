@@ -1,0 +1,5 @@
+description = "DayZ server browser and mod manager"
+version = "print version information"
+uninstall = "clean up state/config files"
+debug = "enable developer debugging features"
+map_count = "check and update system map count value"

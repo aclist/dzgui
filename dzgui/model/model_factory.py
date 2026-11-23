@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 from typing import Any, Sequence, TYPE_CHECKING
 
+from dzgui.const.constants import LOG_DELIMITER
 from dzgui.const.enum import HELP_MENU_ROWS
-from dzgui.util.strings import delimiter
 
 import gi
 
@@ -131,7 +131,7 @@ class ModelFactory:
     def new_model_from_logfile(self, path: "Path") -> FastInsertListStore:
         store = self.make_log_store()
         with open(path, "r") as f:
-            lines = [line.split(delimiter) for line in f.read().splitlines()]
+            lines = [line.split(LOG_DELIMITER) for line in f.read().splitlines()]
             for record in lines:
                 store.append(record)
         return store

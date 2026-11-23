@@ -3,7 +3,7 @@ from typing import Self, Union, TYPE_CHECKING
 
 from dzgui.const.enum import NotebookPage
 from dzgui.util.css import add_class
-from dzgui.util.strings import developers
+from dzgui.strings import developers
 from dzgui.views.components.labels import BoldLabel
 from dzgui.views.trees.tree_base import TreeView
 
@@ -32,7 +32,7 @@ class Developers(Gtk.ScrolledWindow):
             orientation=Gtk.Orientation.VERTICAL, margin_start=10, margin_end=10
         )
 
-        heading = Gtk.Label(label=developers.header)
+        heading = Gtk.Label(label=developers.page_header)
         heading.set_halign(Gtk.Align.CENTER)
         add_class(heading, "page-heading")
 

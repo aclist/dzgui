@@ -12,7 +12,7 @@ from typing import Any
 from dzgui.api.steam import find_user_id_32
 from dzgui.const.constants import APP_NAME, APP_NAME_LOWER, IMAGES_PATH
 from dzgui.util.dirs import copy_dzgui_to_xdg_data, make_parents
-from dzgui.util.strings import unknown
+from dzgui.strings import metadata
 
 logger = logging.getLogger(APP_NAME)
 
@@ -61,10 +61,10 @@ class Shortcuts:
                         return str(self.shortcuts["shortcuts"][key]["AppName"])
                     except Exception as e:
                         logger.debug(e)
-                    return unknown
+                    return metadata.unknown
         except Exception as e:
             logger.debug(e)
-        return unknown
+        return metadata.unknown
 
     def get_shortcuts(self) -> Any:
         return self.shortcuts

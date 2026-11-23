@@ -52,6 +52,7 @@ SYSTEM_LOG = f"{APP_NAME}_SYSTEM.LOG"
 CHANGELOG_PATH = "data/CHANGELOG.md"
 IMAGES_PATH = "data/images"
 ICONS_PATH = "data/images/gtk"
+LOG_DELIMITER = "␞"
 
 HERO_PATH = "data/images/_hero.png"
 CSS_PATH = "data/app.css"

@@ -2,8 +2,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from enum import Enum
 
-from dzgui.util import strings
-from dzgui.strings import rows
+from dzgui.strings import crumbs, context_menu, mod_panel, rows, side_buttons
 
 
 class Port(Enum):
@@ -84,21 +83,21 @@ class ContextMenuMeta:
 
 
 class ContextMenuItem(Enum):
-    ADD_NOTE = ContextMenuMeta(strings.add_note)
-    ADD_SERVER = ContextMenuMeta(strings.add)
-    CONNECT = ContextMenuMeta(strings.connect)
-    COPY_LOG_CLIPBOARD = ContextMenuMeta(strings.copy_log)
-    COPY_SERVER_IP = ContextMenuMeta(strings.copy_ip)
-    COPY_SERVER_NAME = ContextMenuMeta(strings.copy_name)
-    UNSUB_MOD = ContextMenuMeta(strings.unsub_mod)
-    VALIDATE_MOD = ContextMenuMeta(strings.validate_mod)
-    OPEN_WORKSHOP = ContextMenuMeta(strings.open_workshop)
-    REFRESH_PLAYERS = ContextMenuMeta(strings.refresh_players)
-    REMOVE_HISTORY = ContextMenuMeta(strings.remove_history)
-    REMOVE_SERVER = ContextMenuMeta(strings.remove)
-    SET_FAV = ContextMenuMeta(strings.add_fav)
-    SHOW_DETAILS = ContextMenuMeta(strings.show_details)
-    SHOW_MODS = ContextMenuMeta(strings.show_mods)
+    ADD_NOTE = ContextMenuMeta(context_menu.add_note)
+    ADD_SERVER = ContextMenuMeta(context_menu.add)
+    CONNECT = ContextMenuMeta(context_menu.connect)
+    COPY_LOG_CLIPBOARD = ContextMenuMeta(context_menu.copy_log)
+    COPY_SERVER_IP = ContextMenuMeta(context_menu.copy_ip)
+    COPY_SERVER_NAME = ContextMenuMeta(context_menu.copy_name)
+    UNSUB_MOD = ContextMenuMeta(context_menu.unsub_mod)
+    VALIDATE_MOD = ContextMenuMeta(context_menu.validate_mod)
+    OPEN_WORKSHOP = ContextMenuMeta(context_menu.open_workshop)
+    REFRESH_PLAYERS = ContextMenuMeta(context_menu.refresh_players)
+    REMOVE_HISTORY = ContextMenuMeta(context_menu.remove_history)
+    REMOVE_SERVER = ContextMenuMeta(context_menu.remove)
+    SET_FAV = ContextMenuMeta(context_menu.set_fav)
+    SHOW_DETAILS = ContextMenuMeta(context_menu.show_details)
+    SHOW_MODS = ContextMenuMeta(context_menu.show_mods)
 
     @property
     def label(self) -> str:
@@ -182,17 +181,17 @@ class Preferences(Enum):
 
 
 class NotebookPage(Enum):
-    OFFLINE = NotebookMeta(strings.crumbs.offline, True)
-    CHANGELOG = NotebookMeta(strings.crumbs.changelog, True)
-    DEVELOPERS = NotebookMeta(strings.crumbs.developers, False)
-    HELP = NotebookMeta(strings.crumbs._help, True)
-    KEYS = NotebookMeta(strings.crumbs.keys, True)
-    LOG = NotebookMeta(strings.crumbs.log, True)
-    MODS = NotebookMeta(strings.crumbs.mods, True)
-    OPTIONS = NotebookMeta(strings.crumbs.options, False)
-    SERVERS = NotebookMeta(strings.crumbs.servers, True)
-    THANKS = NotebookMeta(strings.crumbs.thanks, True)
-    CONNECTION = NotebookMeta(strings.crumbs.connect, True)
+    OFFLINE = NotebookMeta(crumbs.offline, True)
+    CHANGELOG = NotebookMeta(crumbs.changelog, True)
+    DEVELOPERS = NotebookMeta(crumbs.developers, False)
+    HELP = NotebookMeta(crumbs._help, True)
+    KEYS = NotebookMeta(crumbs.keys, True)
+    LOG = NotebookMeta(crumbs.log, True)
+    MODS = NotebookMeta(crumbs.mods, True)
+    OPTIONS = NotebookMeta(crumbs.options, False)
+    SERVERS = NotebookMeta(crumbs.servers, True)
+    THANKS = NotebookMeta(crumbs.thanks, True)
+    CONNECTION = NotebookMeta(crumbs.connect, True)
 
     @property
     def crumbs(self) -> str:
@@ -226,29 +225,25 @@ class RowType(Enum):
 
 
 class ModButton(Enum):
-    SELECT_ALL = ModButtonMeta(
-        strings.mod_panel.select_all, strings.mod_panel.select_all_tooltip
-    )
-    UNSELECT_ALL = ModButtonMeta(
-        strings.mod_panel.unselect_all, strings.mod_panel.unselect_all_tooltip
-    )
+    SELECT_ALL = ModButtonMeta(mod_panel.select_all, mod_panel.select_all_tooltip)
+    UNSELECT_ALL = ModButtonMeta(mod_panel.unselect_all, mod_panel.unselect_all_tooltip)
     HIGHLIGHT_STALE = ModButtonMeta(
-        strings.mod_panel.highlight_stale, strings.mod_panel.highlight_stale_tooltip
+        mod_panel.highlight_stale, mod_panel.highlight_stale_tooltip
     )
     UNHIGHLIGHT_STALE = ModButtonMeta(
-        strings.mod_panel.unhighlight_stale, strings.mod_panel.unhighlight_stale_tooltip
+        mod_panel.unhighlight_stale, mod_panel.unhighlight_stale_tooltip
     )
     UNSUB_SELECTED = ModButtonMeta(
-        strings.mod_panel.unsub_selected,
-        strings.mod_panel.unsub_selected_tooltip,
+        mod_panel.unsub_selected,
+        mod_panel.unsub_selected_tooltip,
     )
     SELECT_STALE = ModButtonMeta(
-        strings.mod_panel.select_stale,
-        strings.mod_panel.select_stale_tooltip,
+        mod_panel.select_stale,
+        mod_panel.select_stale_tooltip,
     )
     VALIDATE = ModButtonMeta(
-        strings.mod_panel.validate,
-        strings.mod_panel.validate_tooltip,
+        mod_panel.validate,
+        mod_panel.validate_tooltip,
     )
 
     @property
@@ -262,28 +257,28 @@ class ModButton(Enum):
 
 class ButtonType(Enum):
     SERVERS = ButtonTypeMeta(
-        strings.buttons.servers_label,
-        strings.buttons.servers_tooltip,
+        side_buttons.servers_label,
+        side_buttons.servers_tooltip,
         NotebookPage.SERVERS,
     )
     MODS = ButtonTypeMeta(
-        strings.buttons.mods_label,
-        strings.buttons.mods_tooltip,
+        side_buttons.mods_label,
+        side_buttons.mods_tooltip,
         NotebookPage.MODS,
     )
     OPTIONS = ButtonTypeMeta(
-        strings.buttons.options_label,
-        strings.buttons.options_tooltip,
+        side_buttons.options_label,
+        side_buttons.options_tooltip,
         NotebookPage.OPTIONS,
     )
     HELP = ButtonTypeMeta(
-        strings.buttons.help_label,
-        strings.buttons.help_tooltip,
+        side_buttons.help_label,
+        side_buttons.help_tooltip,
         NotebookPage.HELP,
     )
     EXIT = ButtonTypeMeta(
-        strings.buttons.exit_label,
-        strings.buttons.exit_tooltip,
+        side_buttons.exit_label,
+        side_buttons.exit_tooltip,
         None,
     )
 

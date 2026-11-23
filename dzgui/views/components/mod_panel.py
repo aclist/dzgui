@@ -1,7 +1,7 @@
 from typing import Self, TYPE_CHECKING
 
 from dzgui.const.enum import ModButton
-from dzgui.util.strings import mod_panel
+from dzgui.strings import mod_panel
 from dzgui.views.components.labels import BoldLabel
 
 import gi

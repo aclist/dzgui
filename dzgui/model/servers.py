@@ -14,8 +14,7 @@ from dzgui.const.constants import (
 )
 from dzgui.const.enum import FilterMode, Preferences, ServerTab
 from dzgui.managers.threading import call_on_thread, StoredFunc, ThreadingManager
-from dzgui.strings import dialogs, kb
-from dzgui.util.strings import server_timeout, dialog
+from dzgui.strings import dialogs, errors, kb
 from dzgui.views.dialogs.generic import ExceptionDialog
 
 import gi
@@ -83,7 +82,7 @@ class ServerModelManager:
         self.preserve_on_fail = True
         self.load()
 
-    @call_on_thread(dialog.fetching)
+    @call_on_thread(dialogs.fetching_server)
     def _dump_api(self) -> None:
         # TODO: pass api key a priori in .load() call?
         failure_func = StoredFunc(self._cleanup_on_failure)
@@ -126,7 +125,7 @@ class ServerModelManager:
         parsed = Servers.parse_json(servers)
         self._push_data(parsed)
 
-    @call_on_thread(dialog.scanning, show_cancel=True)
+    @call_on_thread(dialogs.scanning_lan, show_cancel=True)
     def dump_lan(self, port: int, early_abort: bool) -> None:
         self.first_iteration = True
 
@@ -159,7 +158,7 @@ class ServerModelManager:
         parsed = Servers.parse_json(servers)
         self._push_data(parsed)
 
-    @call_on_thread(dialog.fetching)
+    @call_on_thread(dialogs.fetching_server)
     def _dump_ips(self, ips: list[str]) -> None:
         job = Servers.query_direct
         servers = []
@@ -199,7 +198,7 @@ class ServerModelManager:
         parsed = Servers.parse_json(servers)
         self._push_data(parsed)
 
-    @call_on_thread(dialog.querying)
+    @call_on_thread(dialogs.querying)
     def add_by_ip(self, addr: str) -> None:
         self.preserve_on_fail = True
         try:
@@ -212,7 +211,7 @@ class ServerModelManager:
             )
             return
 
-    @call_on_thread(dialog.querying)
+    @call_on_thread(dialogs.querying)
     def add_by_record(self, record: Servers.Record) -> None:
         self.preserve_on_fail = True
         # NOTE: rationale: a raw Record as shown in server browser may resolve to a different IP
@@ -226,7 +225,7 @@ class ServerModelManager:
             )
             return
 
-    @call_on_thread(dialog.querying)
+    @call_on_thread(dialogs.querying)
     def remove_by_record(self, record: Servers.Record) -> None:
         self.preserve_on_fail = True
         try:
@@ -287,7 +286,7 @@ class ServerModelManager:
         config_man.remove_from_history_file(fqip)
         self.update_history()
 
-    @call_on_thread(dialog.querying)
+    @call_on_thread(dialogs.querying)
     def update_playercount(
         self, treeiter: Gtk.TreeIter, record: Servers.Record
     ) -> None:
@@ -448,7 +447,7 @@ class ServerModelManager:
         # TODO: distinguish signals, e.g. "servers_failed_to_load", "servers_loaded_empty"
         # customize statusbar and dialog accordingly
         if show_dialog:
-            dialog = ExceptionDialog(self.controller, server_timeout)
+            dialog = ExceptionDialog(self.controller, errors.server_timeout)
             dialog.set_details_buffer(kb.DZG_006)
             dialog.show_all()
             dialog.run()  # type: ignore[no-untyped-call]
@@ -471,7 +470,7 @@ class ServerModelManager:
     def _get_proxy_man(self) -> "ProxyModelManager":
         return self.proxy_man
 
-    @call_on_thread(dialog.filtering)
+    @call_on_thread(dialogs.filtering)
     def refilter(self, mode: FilterMode) -> None:
         self.first_iteration = False
         proxy_man = self._get_proxy_man()

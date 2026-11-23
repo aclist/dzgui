@@ -2,9 +2,6 @@ from typing import Callable, Literal, Self, TYPE_CHECKING
 
 from dzgui.util.clip import copy_clipboard
 from dzgui.strings import buttons
-from dzgui.util.strings import (
-    atomic_buttons,
-)
 from dzgui.const.icons import (
     ICON_CLIPBOARD,
     ICON_CLOSE,
@@ -99,7 +96,7 @@ class LargeIconTextButton(IconButton):
 
 class ClipboardButton(IconTextButton):
     def __init__(self, func: Callable[[], str]) -> None:
-        super().__init__(ICON_CLIPBOARD, atomic_buttons.copy)
+        super().__init__(ICON_CLIPBOARD, buttons.copy_button)
         self.connect("clicked", self._on_button_clicked, func)
 
         self.set_tooltip_text(buttons.clipboard_button)
@@ -139,7 +136,7 @@ class RefreshButton(IconTextButton):
     def __init__(self, controller: "Controller") -> None:
         super().__init__(
             icon=ICON_REFRESH,
-            label=atomic_buttons.refresh,
+            label=buttons.refresh_button,
         )
 
         self.controller = controller
@@ -152,7 +149,7 @@ class RefreshButton(IconTextButton):
         self.set_margin_top(10)
         self.set_margin_start(80)
         self.set_margin_end(80)
-        self.set_tooltip_text(atomic_buttons.refresh_tooltip)
+        self.set_tooltip_text(buttons.refresh_tooltip)
 
         self.connect("clicked", self._on_refresh_clicked)
         emitter.connect("servers_loaded", self._on_load)
@@ -196,21 +193,21 @@ class RefreshButton(IconTextButton):
 
     def show_time(self, state: bool) -> None:
         if state is True:
-            self.set_label(f"{atomic_buttons.refresh} ({str(self.time)})")
+            self.set_label(f"{buttons.refresh_button} ({str(self.time)})")
         else:
-            self.set_label(atomic_buttons.refresh)
+            self.set_label(buttons.refresh_button)
 
 
 class KeysButton(IconTextButton):
     def __init__(self, controller: "Controller") -> None:
-        super().__init__(icon=ICON_INPUT_KEYBOARD, label=atomic_buttons.keys)
+        super().__init__(icon=ICON_INPUT_KEYBOARD, label=buttons.keys_button)
 
         self.controller = controller
         self.set_margin_top(10)
         self.set_margin_start(80)
         self.set_margin_end(80)
 
-        self.set_tooltip_text(atomic_buttons.keys_tooltip)
+        self.set_tooltip_text(buttons.keys_button_tooltip)
 
         self.connect("clicked", self._on_keys_clicked)
 

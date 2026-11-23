@@ -6,7 +6,8 @@ from typing import Any, TYPE_CHECKING
 from dzgui.const.constants import APP_NAME, HEX_RED
 from dzgui.const.enum import ContextMenuGroup
 from dzgui.managers.mods import ModManager
-from dzgui.util import strings, localize
+from dzgui.strings import labels
+from dzgui.util import localize
 from dzgui.views.mixins.context_mixin import ContextMixin
 from dzgui.views.mixins.mods_mixin import ModsMixin
 from dzgui.views.trees.tree_base import TreeView
@@ -38,7 +39,7 @@ class ModTreeView(ModsMixin, ContextMixin, TreeView):  # type: ignore
         self.set_fixed_height_mode(True)
         self.set_model(None)
 
-        for i, column_title in enumerate(strings.mod_cols):
+        for i, column_title in enumerate(labels.mod_cols):
             renderer = Gtk.CellRendererText()
             column = Gtk.TreeViewColumn(column_title, renderer, text=i)
             column.set_cell_data_func(renderer, self._format_color, func_data=None)

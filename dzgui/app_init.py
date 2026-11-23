@@ -22,14 +22,13 @@ from dzgui.init.migrate import (
     migrate_cols_file,
 )
 from dzgui.init.prereqs import has_flatpak_client, has_steam_client
-from dzgui.strings import boot
+from dzgui.strings import boot, errors
 
 from dzgui.util.deck import is_steam_deck, is_game_mode
 from dzgui.util.dirs import make_parents
 from dzgui.util.localize import set_locale
 from dzgui.util.map_count import test_map_count
 from dzgui.util.redact import RedactionFilter, REDACTION_PATTERNS
-from dzgui.util.strings import init
 
 from dzgui.views.base import App
 from dzgui.views.dialogs.boot import BootWindow
@@ -159,7 +158,7 @@ def build_gui(version: str, is_debug: bool) -> App | None:
         else:
             has_client = has_steam_client()
         if has_client is False:
-            EarlyAlertDialog(init.requires_steam)
+            EarlyAlertDialog(errors.requires_steam)
 
     bootwin = BootWindow(XDG, version)
     local_coords, latest_release = bootwin.get_results()

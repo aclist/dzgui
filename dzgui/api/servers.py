@@ -15,7 +15,7 @@ from dzgui.const.constants import APP_NAME, REQUEST_TIMEOUT
 from dzgui.const.endpoints import STEAM_SERVERS
 from dzgui.model.proxy_model import ServerRow
 from dzgui.util.format import format_exception
-from dzgui.util import strings
+from dzgui.strings import metadata
 
 import a2s
 import dayzquery
@@ -182,14 +182,14 @@ def parse_json(
             continue
 
         if "no3rd" in r:
-            view = strings.filter_1pp
+            view = metadata.filter_1pp
         else:
-            view = strings.filter_3pp
+            view = metadata.filter_3pp
 
         if "external" in r:
-            provider = strings.filter_unofficial
+            provider = metadata.filter_unofficial
         else:
-            provider = strings.filter_official
+            provider = metadata.filter_official
 
         if "mod" in r:
             modded = True
@@ -209,9 +209,9 @@ def parse_json(
             if test_time:
                 time = test_time.group(0)
             else:
-                time = strings.unknown
+                time = metadata.unknown
         except AttributeError:
-            time = strings.unknown
+            time = metadata.unknown
 
         try:
             ip = row["addr"].split(":")[0] + ":" + str(row["gameport"])
@@ -290,7 +290,7 @@ def query_direct(ip: str, qport: int, timeout: float = 3.0) -> dict[str, Any] | 
 def get_details(record: Record) -> Details | None:
     ip = record.ip
     qport = record.qport
-    default_str = strings.none_provided
+    default_str = metadata.none_provided
 
     try:
         info = a2s.info((ip, qport))
@@ -300,9 +300,9 @@ def get_details(record: Record) -> Details | None:
         logger.critical(e)
         return None
 
-    battleye = strings.disabled
+    battleye = metadata.disabled
     if "battleye" in keywords:
-        battleye = strings.enabled
+        battleye = metadata.enabled
 
     name = info.server_name
     day_accel = 1.0
@@ -322,48 +322,48 @@ def get_details(record: Record) -> Details | None:
     try:
         password = info.password_protected
         if password is False:
-            password = strings.disabled
+            password = metadata.disabled
         else:
-            password = strings.enabled
+            password = metadata.enabled
     except AttributeError:
         password = "-"
 
     try:
         vac = info.vac_enabled
         if vac is False:
-            vac = strings.disabled
+            vac = metadata.disabled
         else:
-            vac = strings.enabled
+            vac = metadata.enabled
     except AttributeError:
-        vac = strings.null
+        vac = metadata.null
 
     try:
         version = info.version
     except AttributeError:
-        version = strings.null
+        version = metadata.null
 
     try:
         dlc = rules.dlc_flags
         match dlc:
             case 0:
-                dlc = strings.dlc_none
+                dlc = metadata.dlc_none
             case 2:
-                dlc = strings.dlc_frostline
+                dlc = metadata.dlc_frostline
             case 4:
-                dlc = strings.dlc_badlands
+                dlc = metadata.dlc_badlands
             case _:
-                dlc = strings.unspecified
+                dlc = metadata.unspecified
     except AttributeError:
-        dlc = strings.unspecified
+        dlc = metadata.unspecified
 
     try:
         platform = rules.platform
         if platform == "win":
-            platform = strings.windows
+            platform = metadata.windows
         if platform == "?":
-            platform = strings.linux
+            platform = metadata.linux
     except AttributeError:
-        platform = strings.unspecified
+        platform = metadata.unspecified
 
     try:
         description = rules.description.strip()

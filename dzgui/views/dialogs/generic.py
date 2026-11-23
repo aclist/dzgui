@@ -1,7 +1,6 @@
 from typing import Literal, Self, TYPE_CHECKING
 
 from dzgui.strings import dialogs
-from dzgui.util import strings
 from dzgui.views.components.buttons import ClipboardButton
 
 import gi
@@ -28,7 +27,7 @@ class GenericDialog(Gtk.MessageDialog):
             buttons=buttons,
             text=text,
             secondary_text=secondary,
-            title=strings.dialog_header,
+            title=dialogs.default_header,
             modal=True,
         )
 
@@ -52,7 +51,7 @@ class ConfirmationDialog(GenericDialog):
     def __init__(self, controller: "Controller", secondary: str):
         super().__init__(
             controller=controller,
-            text=strings.confirm,
+            text=dialogs.confirm,
             mtype=Gtk.MessageType.QUESTION,
             buttons=Gtk.ButtonsType.OK_CANCEL,
             secondary=secondary,
@@ -63,7 +62,7 @@ class IgnoreDialog(GenericDialog):
     def __init__(self, controller: "Controller", secondary: str):
         super().__init__(
             controller=controller,
-            text=strings.confirm,
+            text=dialogs.confirm,
             mtype=Gtk.MessageType.QUESTION,
             buttons=Gtk.ButtonsType.OK_CANCEL,
             secondary=secondary,
@@ -79,7 +78,7 @@ class NotifyDialog(GenericDialog):
     def __init__(self, controller: "Controller", secondary: str):
         super().__init__(
             controller=controller,
-            text=strings.notice,
+            text=dialogs.notice,
             mtype=Gtk.MessageType.INFO,
             buttons=Gtk.ButtonsType.OK,
             secondary=secondary,
@@ -96,7 +95,7 @@ class WaitDialog(GenericDialog):
     ):
         super().__init__(
             controller=controller,
-            text=strings.wait,
+            text=dialogs.wait,
             mtype=Gtk.MessageType.INFO,
             buttons=Gtk.ButtonsType.NONE,
             secondary=secondary,
@@ -150,14 +149,14 @@ class QuitDialog(GenericDialog):
     def __init__(self, controller: "Controller", secondary: str):
         super().__init__(
             controller=controller,
-            text=strings.restart_required,
+            text=dialogs.restart_required,
             mtype=Gtk.MessageType.INFO,
             buttons=Gtk.ButtonsType.NONE,
             secondary=secondary,
         )
 
         self.controller = controller
-        self.add_button(strings.exit_app, Gtk.ResponseType.OK)
+        self.add_button(dialogs.exit_app, Gtk.ResponseType.OK)
 
         self.connect("response", self._on_response)
         # TODO: superfluous with the above
@@ -250,8 +249,8 @@ class ExceptionDialog(TextBufferDialog):
     def __init__(self, controller: "Controller", trace: str):
         super().__init__(
             controller=controller,
-            heading=strings.error_heading,
-            secondary=strings.something_wrong,
+            heading=dialogs.error,
+            secondary=dialogs.something_wrong,
             text=trace,
             mtype=Gtk.MessageType.ERROR,
         )

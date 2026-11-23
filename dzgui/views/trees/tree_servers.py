@@ -11,7 +11,7 @@ from dzgui.const.constants import APP_NAME
 from dzgui.const.enum import ContextMenuItem, ContextMenuGroup, ServerTab
 from dzgui.managers.filter import FilterManager
 from dzgui.model.proxy_model import ProxyModelManager, ServerRow
-from dzgui.util import strings
+from dzgui.strings import labels
 from dzgui.util.dist import CalcDist
 from dzgui.util.keys import is_ctrl_mask
 from dzgui.views.mixins.context_mixin import ContextMixin
@@ -89,7 +89,7 @@ class ServerTreeView(ContextMixin, TreeView):  # type: ignore
 
         # TODO: abstract column population logic
         # TODO: resize col width func causes snapping behavior
-        browser_cols = strings.browser_cols
+        browser_cols = labels.browser_cols
         for i, column_title in enumerate(browser_cols):
             renderer = Gtk.CellRendererText()
             column = Gtk.TreeViewColumn(column_title, renderer, text=i)

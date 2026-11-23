@@ -10,8 +10,8 @@ from dzgui.const.constants import APP_NAME
 from dzgui.const.enum import Preferences
 from dzgui.config.query import lookup
 from dzgui.init.prefix import get_version
+from dzgui.strings import metadata
 from dzgui.util.redact import redact_home
-from dzgui.util.strings import unknown
 
 logger = logging.getLogger(APP_NAME)
 
@@ -43,7 +43,7 @@ def write_diagnostic(config: Path, outfile: Path) -> None:
         distro = platform.freedesktop_os_release()["ID_LIKE"]
     except Exception as e:
         logger.warn(e)
-        distro = unknown
+        distro = metadata.unknown
 
     kernel = os.uname().release
     cpu = get_cpu_model()

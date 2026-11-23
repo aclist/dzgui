@@ -7,7 +7,6 @@ from importlib import resources
 
 from dzgui.const.constants import APP_NAME, APP_NAME_LOWER, CHANGELOG_PATH
 from dzgui.strings import changelog as clog
-from dzgui.util.strings import missing_changelog
 from dzgui.util.format import format_pango
 from dzgui.views.mixins.help_menu_mixin import HelpMenuMixin
 from dzgui.views.mixins.scrollable_mixin import ScrollableMixin
@@ -30,8 +29,10 @@ class Changelog(HelpMenuMixin, ScrollableMixin, Gtk.ScrolledWindow):  # type: ig
         try:
             changelog = resources.read_text(APP_NAME_LOWER, CHANGELOG_PATH)
         except OSError as e:
+            # TODO: this string will never be parsable by self._parse()
+            # need to update entire label area
             logger.critical(e)
-            changelog = missing_changelog
+            changelog = clog.missing_changelog
 
         self.controller = controller
         self.box = Gtk.Box(

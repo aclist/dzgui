@@ -7,7 +7,7 @@ from dzgui.init.libgi import test_libgi_missing
 from dzgui.init.prefix import get_version
 from dzgui.util.deck import is_steam_deck
 from dzgui.util.map_count import set_map_count
-from dzgui.util.strings import flags
+from dzgui.strings import flags
 
 from dzgui.views.dialogs.uninstall import UninstallWizard
 from dzgui.config.xdg import get_xdg_paths
