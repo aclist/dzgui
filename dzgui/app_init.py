@@ -158,7 +158,7 @@ def build_gui(version: str, is_debug: bool) -> App | None:
         else:
             has_client = has_steam_client()
         if has_client is False:
-            EarlyAlertDialog(init.requires_steam)
+            EarlyAlertDialog(errors.requires_steam)
 
     bootwin = BootWindow(XDG, version)
     local_coords, latest_release = bootwin.get_results()
