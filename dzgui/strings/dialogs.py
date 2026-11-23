@@ -1,4 +1,3 @@
-# TODO: is this key in use?
 caught_cancel_signal = "Caught cancel signal, cleaning up"
 checking_api = "Checking API key"
 confirm = "Confirmation"
