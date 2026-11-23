@@ -10,39 +10,10 @@ class ServerLabels:
 
 
 @dataclass(slots=True, frozen=True)
-class Dialog:
-    querying: str
-    fetching: str
-    filtering: str
-    refreshing: str
-    details: str
-    modlist: str
-    working: str
-    updating_mods: str
-    scanning: str
-
-
-@dataclass(slots=True, frozen=True)
 class Init:
     is_steam_running: str
     is_dayz_running: str
     requires_steam: str
-
-
-@dataclass(slots=True, frozen=True)
-class Crumbs:
-    changelog: str
-    keys: str
-    log: str
-    _help: str
-    mods: str
-    options: str
-    servers: str
-    thanks: str
-    developers: str
-    default: str
-    offline: str
-    connect: str
 
 
 @dataclass(slots=True, frozen=True)
@@ -79,41 +50,12 @@ dz = "DayZ"
 dz_exp = "DayZ Experimental"
 delimiter = "␞"
 
-# GenericDialog
-main_menu = "Return to main menu"
-exit_app = "Exit"
-modlist = "Modlist"
-input_required = "User input required"
-confirm = "Confirmation"
-notice = "Notice"
-wait = "Please wait"
-restart_required = "App relaunch required"
-
 # Wait dialogs
 ping = "Ping"
 mod = "Mod"
 _id = "ID"
 
-# ContextMenu
-add_note = "Add note"
-edit_note = "Edit note"
-show_mods = "Show server-side mods"
-show_details = "Show server details"
-refresh_players = "Refresh player count"
-open_workshop = "Open in Steam Workshop"
-unsub_mod = "Unsubscribe mod"
-validate_mod = "Validate mod"
-copy_name = "Copy name to clipboard"
-copy_ip = "Copy IP to clipboard"
-copy_log = "Copy record(s) to clipboard"
-add = "Add to Saved Servers"
-add_fav = "Set as favorite"
-remove = "Remove from Saved Servers"
-remove_history = "Remove from history"
-connect = "Connect"
-
 # Columns
-server_mod_cols = ["Mod", "ID", "Installed"]
 mod_cols = ["Mod", "Symlink", "ID", "Size (MiB)", "Color"]
 log_cols = ["Timestamp", "Flag", "Traceback", "Message"]
 browser_cols = [
@@ -130,28 +72,8 @@ browser_cols = [
 ]
 
 # Errors
-error_heading = "Error"
-config_not_found = "DZGUI configuration file not found. Please exit and restart."
-cannot_acquire_lock = "DZGUI is already open."
-something_wrong = "Something went wrong. See the detailed error below."
-steam_key_missing = "No Steam API key is set."
-malformed_mods = "Found mods on system, but was unable to parse results."
-steam_missing = "Local Steam installation is not set, possibly malformed config file."
-build_corrupted = (
-    "Steam settings or DayZ installation may be corrupted. Try restarting Steam."
-)
 server_timeout = "Timed out when querying server(s). Check IP or try again later."
-server_error = (
-    "Error while contacting server, possibly timed out. Please wait and try again."
-)
-server_protected = (
-    "This server is password-protected and you will be "
-    "prompted when connecting. Do you want to proceed?"
-)
 
-
-# labels
-label_main_menu = "Main menu"
 
 # buttons
 ping_servers = "Ping servers"
@@ -225,37 +147,6 @@ options = Options(
     stable="Stable",
     testing="Testing",
 )
-
-dialog = Dialog(
-    querying="Querying server",
-    fetching="Fetching server metadata",
-    filtering="Filtering servers",
-    refreshing="Refreshing player count",
-    details="Fetching details",
-    modlist="Fetching modlist",
-    working="Working",
-    updating_mods="Updating mods",
-    scanning="Scanning LAN ports",
-)
-
-crumbs = Crumbs(
-    changelog="Help > Changelog",
-    keys="Keybindings",
-    log="Help > Debug log",
-    _help="Help",
-    mods="Mods",
-    options="Options",
-    servers="Servers > Server browser",
-    thanks="Help > Special thanks",
-    developers="Options > Developers",
-    default="Servers > ",
-    offline="Mods > Play offline",
-    connect="Connect",
-)
-
-no_mods = "No local mods found."
-no_servers = "No server metadata to list."
-
 
 server_labels = ServerLabels(
     browser="Server Browser",
