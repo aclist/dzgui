@@ -119,6 +119,6 @@ The milestone of 500 tickets/PRs being closed was reached.
 - 2023: 322
 - 2024: 347
 - 2025: 426
-- 2026: 1300
+- 2026: 1521
 
 DZGUI 7 is scheduled to release as a stable version within the year.
