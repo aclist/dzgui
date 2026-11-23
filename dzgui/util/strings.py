@@ -9,13 +9,6 @@ class ServerLabels:
     lan: str
 
 
-@dataclass(slots=True, frozen=True)
-class Init:
-    is_steam_running: str
-    is_dayz_running: str
-    requires_steam: str
-
-
 # General
 dz = "DayZ"
 dz_exp = "DayZ Experimental"
@@ -83,12 +76,6 @@ dlc_none = "None"
 # platform
 windows = "Windows"
 linux = "Linux"
-
-init = Init(
-    is_steam_running="Is Steam running? DZGUI must be run on top of Steam.",
-    is_dayz_running="Is DayZ already running? DZGUI cannot launch DayZ if another process is using it.",
-    requires_steam="Your chosen client (Steam/Flatpak Steam) must be installed on the system.",
-)
 
 
 server_labels = ServerLabels(
