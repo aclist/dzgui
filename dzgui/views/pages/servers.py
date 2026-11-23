@@ -60,7 +60,7 @@ class ServerNotebook(Gtk.ScrolledWindow):
             (self.browser, labels.servers_browser),
             (self.saved, labels.servers_saved),
             (self.recent, labels.servers_recent),
-            (self.lan, labels.server_lan),
+            (self.lan, labels.servers_lan),
         ]
 
         for tree, label in tabs:
