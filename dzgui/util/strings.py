@@ -1,8 +1,3 @@
-# General
-dz = "DayZ"
-dz_exp = "DayZ Experimental"
-delimiter = "␞"
-
 # Wait dialogs
 ping = "Ping"
 mod = "Mod"

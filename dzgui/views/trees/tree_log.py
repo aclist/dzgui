@@ -2,7 +2,7 @@ import logging
 
 from typing import Any, TYPE_CHECKING
 
-from dzgui.const.constants import APP_NAME, LOG_FILTERS
+from dzgui.const.constants import APP_NAME, LOG_DELIMITER, LOG_FILTERS
 from dzgui.const.enum import ContextMenuGroup
 from dzgui.model.model_factory import ModelFactory
 from dzgui.util import strings
@@ -92,7 +92,7 @@ class LogTreeView(ContextMixin, TreeView):  # type: ignore
         for record in records:
             raw_record = model[record]
             els: tuple[Any] = tuple(raw_record)  # type: ignore
-            concat = strings.delimiter.join(map(str, els))
+            concat = LOG_DELIMITER.join(map(str, els))
             final.append(concat)
         text = "\n".join(final)
         return text
