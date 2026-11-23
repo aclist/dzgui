@@ -22,8 +22,12 @@ From Steam
 --------------
 DZGUI will also ask you if you want to add a "non-Steam game" shortcut to Steam.
 This shortcut will launch DZGUI directly and comes with integrated grid and cover artwork.
-
 You must restart Steam for this shortcut to take effect in your library.
+
+.. attention::
+   Steam shortcut integration is not supported on the Snap package version of steam
+   due to its containerized nature. Snap users should run DZGUI directly from the system.
+
 
 .. note::
    You can also pass DZGUI launch parameter's to the Steam shortcut via Steam's right-click menu. See :doc:`flags`.

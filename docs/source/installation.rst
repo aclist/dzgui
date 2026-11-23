@@ -1,7 +1,7 @@
 Installation
 ==================
 
-.. note::
+.. attention::
    Version 6 of DZGUI 6 has been fully replaced with DZGUI 7.
    Users on existing DZGUI 6 installations should migrate to the DZGUI 7 build.
 
