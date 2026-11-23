@@ -23,13 +23,3 @@ browser_cols = [
     "Qport",
     "Ping",
 ]
-
-# Errors
-server_timeout = "Timed out when querying server(s). Check IP or try again later."
-
-
-# buttons
-ping_servers = "Ping servers"
-ping_tooltip = (
-    "Refresh the ping for visible servers.\n" "Available once per unique filter context"
-)
