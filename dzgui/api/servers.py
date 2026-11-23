@@ -16,7 +16,6 @@ from dzgui.const.endpoints import STEAM_SERVERS
 from dzgui.model.proxy_model import ServerRow
 from dzgui.util.format import format_exception
 from dzgui.strings import metadata
-from dzgui.util import strings
 
 import a2s
 import dayzquery

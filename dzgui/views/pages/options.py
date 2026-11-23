@@ -19,7 +19,7 @@ from dzgui.const.endpoints import STEAM_API_SETUP
 from dzgui.const.enum import Preferences, ServerTab
 from dzgui.const.icons import ICON_VIEW_CONCEAL, ICON_VIEW_REVEAL
 from dzgui.strings import errors, metadata, options
-from dzgui.util import strings, css, open_links
+from dzgui.util import css, open_links
 from dzgui.views.components.box import ShortHBox, VBox
 from dzgui.views.components.eventbox import InfoEventBox
 from dzgui.views.components.labels import LeftLabel
