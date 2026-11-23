@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 
 from dzgui.const.enum import NotebookPage
-from dzgui.util.strings import label_main_menu, crumbs
+from dzgui.strings import crumbs as _crumbs
 from dzgui.util.format import embolden
 
 import gi
@@ -19,7 +19,7 @@ class Breadcrumbs(Gtk.Label):
     def __init__(self, controller: "Controller") -> None:
         super().__init__(halign=Gtk.Align.START)
 
-        crumbs = embolden(label_main_menu)
+        crumbs = embolden(_crumbs.main_menu)
         self.set_markup(crumbs)
 
         notebook = controller.get_notebook()
@@ -47,7 +47,7 @@ class Breadcrumbs(Gtk.Label):
             self.set_crumbs(crumbs)
 
     def set_server_crumbs(self, suffix: str) -> None:
-        self.set_crumbs(crumbs.default + suffix)
+        self.set_crumbs(_crumbs.default + suffix)
 
     def set_crumbs(self, crumbs: str) -> None:
         text = embolden(crumbs)

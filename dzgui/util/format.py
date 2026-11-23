@@ -2,8 +2,7 @@ import re
 from typing import Any
 
 from dzgui.util.localize import number
-from dzgui.strings.generic import selectable_tree
-from dzgui.util.strings import no_mods, no_servers, workshop
+from dzgui.strings import crumbs, errors, generic
 
 import gi
 
@@ -45,10 +44,10 @@ def format_hyperlinks(text: str) -> str:
 
 def format_mods(size: int, mods: int) -> str:
     if mods == 0:
-        return no_mods
+        return errors.no_mods
     l_size = number(size)
     plural = pluralize("mods", mods)
-    suffix = selectable_tree
+    suffix = generic.selectable_tree
     return f"Found {mods:n} {plural} taking up {l_size} MiB. {suffix}"
 
 
@@ -58,7 +57,7 @@ def format_mib(bits: int) -> float:
 
 def format_server_mods(mods: int) -> str:
     plural = pluralize("mods", mods)
-    return f"Found {mods:n} {plural}. {workshop}"
+    return f"Found {mods:n} {plural}. {crumbs.workshop}"
 
 
 def format_player_count(model: Gtk.TreeModel | None, control: list[Any]) -> str:
@@ -66,7 +65,7 @@ def format_player_count(model: Gtk.TreeModel | None, control: list[Any]) -> str:
     hits: int
     status: str
     if model is None:
-        return no_servers
+        return errors.no_servers
     else:
         hits = len(model)
         for row in model:

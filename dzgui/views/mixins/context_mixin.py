@@ -2,8 +2,8 @@ import logging
 
 from dzgui.const.constants import APP_NAME
 from dzgui.const.enum import ContextMenuItem
+from dzgui.strings import context_menu
 from dzgui.util.keys import is_ctrl_mask, is_navkey
-from dzgui.util.strings import edit_note
 from dzgui.views.trees.tree_base import TreeView
 
 import gi
@@ -70,7 +70,7 @@ class ContextMixin(TreeView):
 
         if row == ContextMenuItem.ADD_NOTE:
             if self.controller.has_note():
-                item.set_label(edit_note)
+                item.set_label(context_menu.edit_note)
 
         return item
 

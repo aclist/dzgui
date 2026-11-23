@@ -2,10 +2,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from enum import Enum
 
-from dzgui.strings import mod_panel
-from dzgui.strings import rows
-from dzgui.strings import side_buttons
-from dzgui.util import strings
+from dzgui.strings import crumbs, context_menu, mod_panel, rows, side_buttons
 
 
 class Port(Enum):
@@ -86,21 +83,21 @@ class ContextMenuMeta:
 
 
 class ContextMenuItem(Enum):
-    ADD_NOTE = ContextMenuMeta(strings.add_note)
-    ADD_SERVER = ContextMenuMeta(strings.add)
-    CONNECT = ContextMenuMeta(strings.connect)
-    COPY_LOG_CLIPBOARD = ContextMenuMeta(strings.copy_log)
-    COPY_SERVER_IP = ContextMenuMeta(strings.copy_ip)
-    COPY_SERVER_NAME = ContextMenuMeta(strings.copy_name)
-    UNSUB_MOD = ContextMenuMeta(strings.unsub_mod)
-    VALIDATE_MOD = ContextMenuMeta(strings.validate_mod)
-    OPEN_WORKSHOP = ContextMenuMeta(strings.open_workshop)
-    REFRESH_PLAYERS = ContextMenuMeta(strings.refresh_players)
-    REMOVE_HISTORY = ContextMenuMeta(strings.remove_history)
-    REMOVE_SERVER = ContextMenuMeta(strings.remove)
-    SET_FAV = ContextMenuMeta(strings.add_fav)
-    SHOW_DETAILS = ContextMenuMeta(strings.show_details)
-    SHOW_MODS = ContextMenuMeta(strings.show_mods)
+    ADD_NOTE = ContextMenuMeta(context_menu.add_note)
+    ADD_SERVER = ContextMenuMeta(context_menu.add)
+    CONNECT = ContextMenuMeta(context_menu.connect)
+    COPY_LOG_CLIPBOARD = ContextMenuMeta(context_menu.copy_log)
+    COPY_SERVER_IP = ContextMenuMeta(context_menu.copy_ip)
+    COPY_SERVER_NAME = ContextMenuMeta(context_menu.copy_name)
+    UNSUB_MOD = ContextMenuMeta(context_menu.unsub_mod)
+    VALIDATE_MOD = ContextMenuMeta(context_menu.validate_mod)
+    OPEN_WORKSHOP = ContextMenuMeta(context_menu.open_workshop)
+    REFRESH_PLAYERS = ContextMenuMeta(context_menu.refresh_players)
+    REMOVE_HISTORY = ContextMenuMeta(context_menu.remove_history)
+    REMOVE_SERVER = ContextMenuMeta(context_menu.remove)
+    SET_FAV = ContextMenuMeta(context_menu.set_fav)
+    SHOW_DETAILS = ContextMenuMeta(context_menu.show_details)
+    SHOW_MODS = ContextMenuMeta(context_menu.show_mods)
 
     @property
     def label(self) -> str:
@@ -184,17 +181,17 @@ class Preferences(Enum):
 
 
 class NotebookPage(Enum):
-    OFFLINE = NotebookMeta(strings.crumbs.offline, True)
-    CHANGELOG = NotebookMeta(strings.crumbs.changelog, True)
-    DEVELOPERS = NotebookMeta(strings.crumbs.developers, False)
-    HELP = NotebookMeta(strings.crumbs._help, True)
-    KEYS = NotebookMeta(strings.crumbs.keys, True)
-    LOG = NotebookMeta(strings.crumbs.log, True)
-    MODS = NotebookMeta(strings.crumbs.mods, True)
-    OPTIONS = NotebookMeta(strings.crumbs.options, False)
-    SERVERS = NotebookMeta(strings.crumbs.servers, True)
-    THANKS = NotebookMeta(strings.crumbs.thanks, True)
-    CONNECTION = NotebookMeta(strings.crumbs.connect, True)
+    OFFLINE = NotebookMeta(crumbs.offline, True)
+    CHANGELOG = NotebookMeta(crumbs.changelog, True)
+    DEVELOPERS = NotebookMeta(crumbs.developers, False)
+    HELP = NotebookMeta(crumbs._help, True)
+    KEYS = NotebookMeta(crumbs.keys, True)
+    LOG = NotebookMeta(crumbs.log, True)
+    MODS = NotebookMeta(crumbs.mods, True)
+    OPTIONS = NotebookMeta(crumbs.options, False)
+    SERVERS = NotebookMeta(crumbs.servers, True)
+    THANKS = NotebookMeta(crumbs.thanks, True)
+    CONNECTION = NotebookMeta(crumbs.connect, True)
 
     @property
     def crumbs(self) -> str:

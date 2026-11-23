@@ -18,6 +18,7 @@ from dzgui.const.constants import (
 from dzgui.const.endpoints import STEAM_API_SETUP
 from dzgui.const.enum import Preferences, ServerTab
 from dzgui.const.icons import ICON_VIEW_CONCEAL, ICON_VIEW_REVEAL
+from dzgui.strings import errors
 from dzgui.strings import options
 from dzgui.util import strings, css, open_links
 from dzgui.views.components.box import ShortHBox, VBox
@@ -440,7 +441,7 @@ class Options(ScrollableMixin, Gtk.ScrolledWindow):  # type: ignore
         prefs = self.controller.get_prefs()
         # NOTE: re-check in case file was removed by user between runs
         if prefs.paths.config.is_file() is False:
-            dialog = ExceptionDialog(self.controller, strings.config_not_found)
+            dialog = ExceptionDialog(self.controller, errors.config_not_found)
             dialog.show_all()
             dialog.run()  # type: ignore[no-untyped-call]
             raise OSError(f"Config file '{prefs.paths.config}' not found")
