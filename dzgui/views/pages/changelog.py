@@ -29,6 +29,8 @@ class Changelog(HelpMenuMixin, ScrollableMixin, Gtk.ScrolledWindow):  # type: ig
         try:
             changelog = resources.read_text(APP_NAME_LOWER, CHANGELOG_PATH)
         except OSError as e:
+            # TODO: this string will never be parsable by self._parse()
+            # need to update entire label area
             logger.critical(e)
             changelog = clog.missing_changelog
 
