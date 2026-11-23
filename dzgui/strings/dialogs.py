@@ -1,5 +1,4 @@
 caught_cancel_signal = "Caught cancel signal, cleaning up"
-checking_api = "Checking API key"
 confirm = "Confirmation"
 custom_mod_dialog = "Set location to a custom mods folder"
 debug_heading = "Debug"

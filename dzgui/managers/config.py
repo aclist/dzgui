@@ -99,7 +99,7 @@ class ConfigManager:
             logger.critical(e)
             raise e
 
-    @call_on_thread(dialogs.checking_api, show_dialog=False)
+    @call_on_thread("", show_dialog=False)
     def update_steam_api_key(self, text: str) -> None:
         res = test_steam_api(text)
         if res is True:
