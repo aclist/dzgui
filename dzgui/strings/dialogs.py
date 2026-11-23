@@ -1,6 +1,6 @@
 caught_cancel_signal = "Caught cancel signal, cleaning up"
 confirm = "Confirmation"
-custom_mod_dialog = "Set location to a custom mods folder"
+custom_mod_dialog = "Set a custom mod location"
 debug_heading = "Debug"
 debug_secondary = "Launch arguments"
 default_header = "DZGUI - Dialog"
