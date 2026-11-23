@@ -2,109 +2,98 @@
 
 ## [7.0.0] Unreleased
 ### Added
-- Setup wizard
-- Uninstall wizard
-- Descriptive details panel to certain error dialogs
-- Changelog text wrapping and formatting
-- Changelog ships with source
-- Documentation ships with source
-- Decouple UI components into modules
-- Choose from kilometer or miles distance display
-- More granular haversine calculation
-- Parse XDG data dirs with fallbacks
+- Turnkey setup wizard
+- Turnkey uninstall wizard
+- Support for Nasdara (Badlands) DLC
 - Dedicated mods page
 - Dedicated thanks page
-- Rearrange menus/breadcrumbs
+- Automatically generate Steam shortcuts and cover art
+- Load offline mods/missions (primarily intended for use with specific mods like DayZ Editor)
+- Descriptive details panel to certain error dialogs
+- Choose from kilometer or miles distance display
+- More granular server distance calculation
 - Open filepicker when generating system log
-- Developers page (and -d flag)
-- Redact API key in log table
-- Integrate add/connect widgets into main menu
+- Integrated server tabs in a single pane
 - Favorite/connect/LAN panels integrated with server views
-- Abort on first LAN server found
-- Colorized IP/ID validation fields
+- Choice to abort on first LAN server found
+- Colorized IP/ID validation in text entry fields
 - Copy favorite server IP to clipboard
-- Set favorite server from tables
 - Detailed/copyable trace in critical error dialogs
-- Visual icons
+- Visual icons to most buttons
 - Unset favorite server button
-- Integrated server notebook
-- Propagate width changes to all tables
-- Remember tree position in menus
+- Propagate column width changes to all tables
+- Remember row position in menus
 - Show hidden server count after filtering
 - Atomic map filters per server context
-- Use concurrency when checking stale mods (performance uplift)
-- Copy version by clicking label
-- Add server name to server mod dialogs
-- Lazy load ping cell data func
-- Refresh servers button
-- Early load alerts button
-- Preconnect dialog
-- Preconnect warnings/failsafes like filesize
+- Concurrency when checking stale mods (performance uplift)
+- Copy DZGUI version by clicking corner label
+- Server name to server mod dialogs
+- Application preboot progress dialog
+- Lazy load server ping values on demand
+- Dedicated refresh servers button
+- Server preconnect area with warnings
+- Choose to jump into game splash screen instead of server
 - Save filters per server context between sessions
-- Preboot progress dialog
-- Choose to jump into splash screen instead of server
 - Collapsible connection panel
-- Play offline (load mods directly)
-- Generate Steam shortcuts and cover art
-- Warn user if background downloads are disabled
-- Dynamic copy button
-- Update map count (-u flag)
-- Filter button tooltips
-- Expand/collapse changelog versions
-- Support local light/dark mode changes on system theme
-- Server time calculator
-- Add "Unmodded" filter to servers
+- Warn user if background downloads are disabled on Steam
+- Prompt to update map count during setup (-u flag)
+- Tooltips to filter button
+- Changelog node collapse/expand capability
+- Support for local light/dark mode changes on system theme
+- Server time calculator in server details dialogs
+- "Unmodded" filter to servers filters panel
 - List timestamp of last DayZ client update
-- Validate mods via Mod page to pull in updates
-- Support for Nasdara (Badlands) DLC
-- Load offline mods
+- Support Snap package version of Steam
+- Export debug log to a named file
 
 ### Changed
-- Conform to PEP 440 versioning for beta versions
+- Moved to prebuilt package and release structure
+- Conform to PEP 440 version numbering
+- Changelog file bundled inside application
 - Enforce fullscreen mode on Steam Deck
-- Reduce padding on keys button
-- Boldface breadcrumbs
+- Reduce padding on some buttons
+- Made navigation breadcrumbs boldface
 - Changed some dialog error messages from popups to popovers
-- Changed how filter buttons are packed in sidebar
-- Bold labels inside frames
-- Sidebar buttons do not steal focus
-- Copy IP copies IP:queryport only instead of IP:gameport:queryport, mimics syntax needed by add by ip method
-- Load new model into view without flushing
-- Cull servers with abnormal queue values (integer overflow: 2147483647)
-- Packaging structure
+- Packed filter checkboxes in a symmetrically flowed box
+- Added boldface labels to frames
+- Prevent sidebar buttons from stealing focus when clicked
+- Copy IP method copies "ip:queryport" only instead of "ip:gameport:queryport
+- Dynamically load new server model into view without flushing
+- Cull servers with abnormal queue values (e.g., integer overflow: 2147483647)
 - Suppress log messages from imported modules
 - Embed Workshop link in Options menu
-- Disable overlay scrollbars on server tables
-- Reduce size of geolocation DB on disk (~100MB)
-- Enable LAN page Empty/Full filters on first run of app
-- Propagate subscribed mods to Steam client
+- Remove occlusion on scrollbars positioned next to tables
+- Use SQLite for geolocation records
+- Initialize LAN page with inclusive default server filters
+- Redact API keys in debug log table
+- Propagate subscribed mod selections to Steam client
 - Make j/k keys in context menus follow same wraparound logic as down arrow/up arrow
-- Use SQLite DB for geolocation records
+- Changed "force update" mod logic to "validate mod" for better integration with Steam client
+- More robust configuration and state file directory parsing
 
 ### Dropped
 - Battlemetrics API support
 - Unused metadata from system log files
-- Branch switching
-- Manual mod install mode (describe rationale)
-- Force update mods
+- Branch switching logic
+- Manual mod install mode
+- Remnants of legacy Bash script logic
 
 ### Fixed
 - Longstanding issue with left clicks not registering as tree selection changes after spamming keyboard input
 - In-game time field missing certain ranges of time at night
-- Wrap long entries in changelog
+- Long text entries not being wrapped in changelog
 - Certain server descriptions with special characters not rendering correctly
 - Center server title text on server dialogs
-- Rare segfaults when changing maps (threading)
-- Moved dialogs out of threads
-- History table not being in lock-step with state file
+- Rare segmentation faults when changing maps
+- Rare segmentation faults when spawning dialogs
+- History table not being in lock-step with actual history file
+- History records only being cosmetically removed
 - Current keyword filter not being applied when refreshing table
 - Steam Flatpak cannot run DZGUI as a non-Steam game
 - Collisions between native Steam and Steam Flatpak clients
-- Sticky toggle signal on radio buttons when reloading Options
-
-### Developer-facing
-- Options -> Dev page
-- Raw debug command in preconnect menu
+- Signals becoming stacked each time Options page was reloaded
+- Handle missing mods directory if not installed previously
+- Keyboard input not being blocked when filter area is grayed out
 
 ## [6.0.5] 2026-05-17
 ### Changed
