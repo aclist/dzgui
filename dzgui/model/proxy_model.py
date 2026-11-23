@@ -6,8 +6,7 @@ from typing import TYPE_CHECKING
 
 from dzgui.const.enum import FilterMode
 from dzgui.model.model_factory import ModelFactory
-from dzgui.util import strings
-from dzgui.strings import filters as str_filters
+from dzgui.strings import metadata
 
 if TYPE_CHECKING:
     from dzgui.managers.filter import FilterManager
@@ -68,32 +67,32 @@ class FiltrationManager:
     def __init__(self) -> None:
 
         self.filter_map = {
-            strings.filter_3pp: self.filter_3pp,
-            strings.filter_1pp: self.filter_1pp,
-            strings.filter_official: self.filter_official,
-            strings.filter_unofficial: self.filter_unofficial,
-            strings.filter_empty: self.filter_empty,
-            strings.filter_full: self.filter_full,
-            strings.filter_duplicate: self.filter_duplicate,
-            strings.filter_day: self.filter_day,
-            strings.filter_night: self.filter_night,
-            strings.filter_nonascii: self.filter_nonascii,
-            strings.filter_lowpop: self.filter_lowpop,
-            strings.filter_modded: self.filter_modded,
-            strings.filter_unmodded: self.filter_unmodded,
+            metadata.filter_3pp: self.filter_3pp,
+            metadata.filter_1pp: self.filter_1pp,
+            metadata.filter_official: self.filter_official,
+            metadata.filter_unofficial: self.filter_unofficial,
+            metadata.filter_empty: self.filter_empty,
+            metadata.filter_full: self.filter_full,
+            metadata.filter_duplicate: self.filter_duplicate,
+            metadata.filter_day: self.filter_day,
+            metadata.filter_night: self.filter_night,
+            metadata.filter_nonascii: self.filter_nonascii,
+            metadata.filter_lowpop: self.filter_lowpop,
+            metadata.filter_modded: self.filter_modded,
+            metadata.filter_unmodded: self.filter_unmodded,
         }
 
     def filter_3pp(self, rows: list[ServerRow]) -> list[ServerRow]:
-        return [row for row in rows if row.view != strings.filter_3pp]
+        return [row for row in rows if row.view != metadata.filter_3pp]
 
     def filter_1pp(self, rows: list[ServerRow]) -> list[ServerRow]:
-        return [row for row in rows if row.view != strings.filter_1pp]
+        return [row for row in rows if row.view != metadata.filter_1pp]
 
     def filter_official(self, rows: list[ServerRow]) -> list[ServerRow]:
-        return [row for row in rows if row.provider != strings.filter_official]
+        return [row for row in rows if row.provider != metadata.filter_official]
 
     def filter_unofficial(self, rows: list[ServerRow]) -> list[ServerRow]:
-        return [row for row in rows if row.provider != strings.filter_unofficial]
+        return [row for row in rows if row.provider != metadata.filter_unofficial]
 
     def filter_empty(self, rows: list[ServerRow]) -> list[ServerRow]:
         return [row for row in rows if row.players != 0]
@@ -292,7 +291,7 @@ class ProxyModelManager:
         rows = self.filtered
         sel_map = self.filter_man.get_active_map_name()
 
-        if sel_map == str_filters.all_maps:
+        if sel_map == metadata.all_maps:
             return rows
 
         rows = [row for row in rows if row.mapname == sel_map]
@@ -321,9 +320,9 @@ class ProxyModelManager:
         Sub-filtration of the current model
         """
         pairs = {
-            strings.filter_3pp: strings.filter_1pp,
-            strings.filter_day: strings.filter_night,
-            strings.filter_official: strings.filter_unofficial,
+            metadata.filter_3pp: metadata.filter_1pp,
+            metadata.filter_day: metadata.filter_night,
+            metadata.filter_official: metadata.filter_unofficial,
         }
         for k, v in pairs.items():
             if k in filters and v in filters:

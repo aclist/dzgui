@@ -1,8 +1,7 @@
 from typing import TYPE_CHECKING
 
 from dzgui.model.model_factory import ModelFactory
-from dzgui.util import strings
-from dzgui.strings.filters import all_maps
+from dzgui.strings import metadata
 
 if TYPE_CHECKING:
     from dzgui.model.model_factory import FastInsertListStore
@@ -13,43 +12,43 @@ class FilterManager:
 
         self.map_store = ModelFactory().make_map_store()
 
-        # TODO: namespace under own file: strings.filters
+        # TODO: namespace under own file: metadata.filters
         self.default_filters = {
-            strings.filter_1pp: True,
-            strings.filter_day: True,
-            strings.filter_empty: show_empty,
-            strings.filter_3pp: True,
-            strings.filter_night: True,
-            strings.filter_full: show_full,
-            strings.filter_official: True,
-            strings.filter_modded: True,
-            strings.filter_lowpop: True,
-            strings.filter_unofficial: True,
-            strings.filter_unmodded: True,
-            strings.filter_duplicate: False,
-            strings.filter_nonascii: False,
+            metadata.filter_1pp: True,
+            metadata.filter_day: True,
+            metadata.filter_empty: show_empty,
+            metadata.filter_3pp: True,
+            metadata.filter_night: True,
+            metadata.filter_full: show_full,
+            metadata.filter_official: True,
+            metadata.filter_modded: True,
+            metadata.filter_lowpop: True,
+            metadata.filter_unofficial: True,
+            metadata.filter_unmodded: True,
+            metadata.filter_duplicate: False,
+            metadata.filter_nonascii: False,
         }
 
         # TODO: strings
         self.tooltips = {
-            strings.filter_1pp: "First-person perspective",
-            strings.filter_day: "In-game time between 0600 and 1759",
-            strings.filter_empty: "Servers with no players",
-            strings.filter_3pp: "Third-person perspective",
-            strings.filter_night: "In-game time between 1800 and 0559",
-            strings.filter_full: "Servers with no open slots",
-            strings.filter_official: "Bohemia official servers",
-            strings.filter_nonascii: "Server names using non-standard, complex glyphs",
-            strings.filter_lowpop: "Current population is under 30% of total",
-            strings.filter_unofficial: "Third-party servers",
-            strings.filter_duplicate: "Duplicates of existing servers (usually spoofed)",
-            strings.filter_modded: "Servers with one or more mods",
-            strings.filter_unmodded: "Servers with no mods",
+            metadata.filter_1pp: "First-person perspective",
+            metadata.filter_day: "In-game time between 0600 and 1759",
+            metadata.filter_empty: "Servers with no players",
+            metadata.filter_3pp: "Third-person perspective",
+            metadata.filter_night: "In-game time between 1800 and 0559",
+            metadata.filter_full: "Servers with no open slots",
+            metadata.filter_official: "Bohemia official servers",
+            metadata.filter_nonascii: "Server names using non-standard, complex glyphs",
+            metadata.filter_lowpop: "Current population is under 30% of total",
+            metadata.filter_unofficial: "Third-party servers",
+            metadata.filter_duplicate: "Duplicates of existing servers (usually spoofed)",
+            metadata.filter_modded: "Servers with one or more mods",
+            metadata.filter_unmodded: "Servers with no mods",
         }
 
         self.active_keyword = ""
-        self.active_map = (0, all_maps)
-        self.prior_map = all_maps
+        self.active_map = (0, metadata.all_maps)
+        self.prior_map = metadata.all_maps
 
         self.enabled_filters = dict(self.default_filters)
 
@@ -89,9 +88,9 @@ class FilterManager:
 
     def reinit_map_store(self) -> None:
         model = ModelFactory().make_map_store()
-        model.append([all_maps])
+        model.append([metadata.all_maps])
         self.map_store = model
-        self.active_map = (0, all_maps)
+        self.active_map = (0, metadata.all_maps)
 
     def append_map(self, row: list[str]) -> None:
         self.map_store.append(row)
@@ -105,7 +104,7 @@ class FilterManager:
 
         self.reinit_map_store()
         maps.sort()
-        clean = [m for m in maps if m != all_maps]
+        clean = [m for m in maps if m != metadata.all_maps]
         for m in clean:
             self.append_map([m])
 
