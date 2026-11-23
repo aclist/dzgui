@@ -147,7 +147,7 @@ class ConnectionManager:
                 self.missing_mods = missing_mods
                 self.remote_mod_ids = [mod[1] for mod in remote_mods]
             except Exception as e:
-                logger.warning(e)
+                logger.critical(e)
                 self.thread_man.set_cleanup_func(failure_func, destroy_first=True)
                 return
 

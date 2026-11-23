@@ -205,7 +205,7 @@ class ServerModelManager:
             res = Servers.query_by_ip(addr)
             self._parse_single_record(res)
         except Exception as e:
-            logger.warning(e)
+            logger.critical(e)
             self.thread_man.set_cleanup_func(
                 StoredFunc(self._cleanup_on_failure), destroy_first=True
             )
@@ -219,7 +219,7 @@ class ServerModelManager:
             res = Servers.query_by_record(record)
             self._parse_single_record(res)
         except Exception as e:
-            logger.warning(e)
+            logger.critical(e)
             self.thread_man.set_cleanup_func(
                 StoredFunc(self._cleanup_on_failure), destroy_first=True
             )
@@ -232,7 +232,7 @@ class ServerModelManager:
             res = Servers.query_by_record(record)
             self._parse_single_record(res, delete=True)
         except Exception as e:
-            logger.warning(e)
+            logger.critical(e)
             self.thread_man.set_cleanup_func(
                 StoredFunc(self._cleanup_on_failure), destroy_first=True
             )

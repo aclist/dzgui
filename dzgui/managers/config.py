@@ -13,7 +13,6 @@ from dzgui.api.probe import test_steam_api
 from dzgui.const.enum import Preferences
 from dzgui.managers.threading import call_on_thread, StoredFunc, ThreadingManager
 from dzgui.views.dialogs.generic import ExceptionDialog
-from dzgui.strings import dialogs
 from dzgui.util._json import read_json, write_json
 
 if TYPE_CHECKING:

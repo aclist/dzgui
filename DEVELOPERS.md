@@ -29,3 +29,8 @@ sphinx-build -M html source build -a
 2. Set up the build target: `rustup target add x86_64-unknown-linux-musl`
 3. Run `python3 scripts/release.py`
 4. Generate a release and tag against the resulting tarfile generated in `dist`
+
+### Running tests
+
+Some tests are environment specific and require real configuration files.
+For a generally environment-agnostic test suite, invoke `pytest -m "not realconfig, not flatpak"`

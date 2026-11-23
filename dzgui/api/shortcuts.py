@@ -114,6 +114,7 @@ class Shortcuts:
             make_parents(dest)
             b = images.joinpath(img).with_suffix(".png").read_bytes()
             dest.write_bytes(b)
+            logger.debug(f"Wrote grid image to '{dest}'")
 
         # NOTE: legacy Big Picture header
         b = images.joinpath("_hero.png").read_bytes()
@@ -127,6 +128,7 @@ class Shortcuts:
         except Exception:
             n = 0
         self.shortcuts["shortcuts"][str(n)] = entry
+        logger.debug(f"Added shortcut at index {n}")
 
     @classmethod
     def _create_entry(cls, meta: ShortcutMetadata) -> dict[str, Any]:
