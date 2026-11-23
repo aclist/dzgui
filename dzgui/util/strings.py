@@ -1,14 +1,3 @@
-from dataclasses import dataclass
-
-
-@dataclass(slots=True, frozen=True)
-class ServerLabels:
-    browser: str
-    saved: str
-    recent: str
-    lan: str
-
-
 # General
 dz = "DayZ"
 dz_exp = "DayZ Experimental"
@@ -76,11 +65,3 @@ dlc_none = "None"
 # platform
 windows = "Windows"
 linux = "Linux"
-
-
-server_labels = ServerLabels(
-    browser="Server Browser",
-    saved="Saved Servers",
-    recent="Recent",
-    lan="LAN",
-)

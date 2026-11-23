@@ -6,7 +6,7 @@ from dzgui.const.constants import APP_NAME
 from dzgui.const.enum import ContextMenuGroup, ServerTab
 from dzgui.views.trees.tree_servers import ServerTreeView
 from dzgui.strings.generic import tab_changed_label
-from dzgui.util.strings import server_labels
+from dzgui.strings import labels
 
 import gi
 
@@ -57,10 +57,10 @@ class ServerNotebook(Gtk.ScrolledWindow):
         )
 
         tabs = [
-            (self.browser, server_labels.browser),
-            (self.saved, server_labels.saved),
-            (self.recent, server_labels.recent),
-            (self.lan, server_labels.lan),
+            (self.browser, labels.servers_browser),
+            (self.saved, labels.servers_saved),
+            (self.recent, labels.servers_recent),
+            (self.lan, labels.server_lan),
         ]
 
         for tree, label in tabs:
@@ -89,7 +89,7 @@ class ServerNotebook(Gtk.ScrolledWindow):
         if label is None:
             return
         if hasattr(label, "set_text"):
-            label.set_text(f"{server_labels.saved}*")
+            label.set_text(f"{labels.servers_saved}*")
 
     def _on_servers_loaded(self, emitter: "Emitter", tab: "ServerTab") -> None:
         # NOTE: workaround for GTK bug where fullscreen causes headers to vanish when model is None
