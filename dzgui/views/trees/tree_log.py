@@ -5,7 +5,7 @@ from typing import Any, TYPE_CHECKING
 from dzgui.const.constants import APP_NAME, LOG_DELIMITER, LOG_FILTERS
 from dzgui.const.enum import ContextMenuGroup
 from dzgui.model.model_factory import ModelFactory
-from dzgui.util import strings
+from dzgui.strings import labels
 from dzgui.views.trees.tree_base import TreeView
 from dzgui.views.mixins.context_mixin import ContextMixin
 
@@ -36,7 +36,7 @@ class LogTreeView(ContextMixin, TreeView):  # type: ignore
         self.set_model(None)
 
         self.filters = list(LOG_FILTERS)
-        for i, column_title in enumerate(strings.log_cols):
+        for i, column_title in enumerate(labels.log_cols):
             renderer = Gtk.CellRendererText()
             column = Gtk.TreeViewColumn(column_title, renderer, text=i)
             column.set_sizing(Gtk.TreeViewColumnSizing.FIXED)
