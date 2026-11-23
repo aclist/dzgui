@@ -50,7 +50,7 @@ class UpdateManager:
         except Exception as e:
             func = StoredFunc(self._on_update_failure, str(e))
             self.thread_man.set_cleanup_func(func, destroy_first=True)
-            logger.warning(e)
+            logger.critical(e)
 
     def _on_update_success(self) -> None:
         msg = dialogs.update_success
