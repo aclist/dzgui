@@ -128,7 +128,7 @@ class Shortcuts:
         except Exception:
             n = 0
         self.shortcuts["shortcuts"][str(n)] = entry
-        logger.debug("Added shortcut at index {n}")
+        logger.debug(f"Added shortcut at index {n}")
 
     @classmethod
     def _create_entry(cls, meta: ShortcutMetadata) -> dict[str, Any]:
