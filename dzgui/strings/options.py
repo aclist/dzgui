@@ -5,6 +5,7 @@ api_placeholder = "Enter API key"
 api_validate = "Validate"
 developers = "Developers"
 distance = "Distance display"
+flatpak_combo = "Flatpak"
 flatpak_container = "Containerized (flatpak-spawn --host)"
 flatpak_container_combo = "Flatpak (container)"
 flatpak_info = (
