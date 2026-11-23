@@ -16,35 +16,6 @@ class Init:
     requires_steam: str
 
 
-@dataclass(slots=True, frozen=True)
-class Options:
-    header: str
-    steam_web: str
-    enter_steam: str
-    steam_placeholder: str
-    name_placeholder: str
-    last_used: str
-    always_fs: str
-    steam: str
-    flatpak: str
-    km: str
-    mi: str
-    client: str
-    window_size: str
-    distance: str
-    name: str
-    manual_dl: str
-    auto_dl: str
-    update: str
-    api_key: str
-    prefs: str
-    mods: str
-    version: str
-    branch: str
-    stable: str
-    testing: str
-
-
 # General
 dz = "DayZ"
 dz_exp = "DayZ Experimental"
@@ -119,34 +90,6 @@ init = Init(
     requires_steam="Your chosen client (Steam/Flatpak Steam) must be installed on the system.",
 )
 
-
-options = Options(
-    header="Options",
-    steam_web="Steam API page",
-    enter_steam="Enter your Steam API key",
-    steam_placeholder="Steam API key",
-    name_placeholder="Identifies you to other players in-game",
-    last_used="Last used dimensions",
-    always_fs="Always fullscreen",
-    steam="Steam",
-    flatpak="Flatpak (experimental)",
-    km="km (kilometers)",
-    mi="mi (miles)",
-    client="Steam client",
-    window_size="Window size at boot",
-    distance="Distance display",
-    name="Player name",
-    manual_dl="Manual",
-    auto_dl="Auto",
-    update="Update",
-    api_key="API Key",
-    prefs="Preferences",
-    mods="Mods",
-    version="Version",
-    branch="DZGUI branch",
-    stable="Stable",
-    testing="Testing",
-)
 
 server_labels = ServerLabels(
     browser="Server Browser",

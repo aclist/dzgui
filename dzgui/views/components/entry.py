@@ -3,9 +3,7 @@ from typing import Any, Callable, TYPE_CHECKING
 from dzgui.api.servers import validate_ip
 from dzgui.const.icons import ICON_VIEW_CONCEAL, ICON_VIEW_REVEAL
 from dzgui.util.css import add_class, remove_class
-from dzgui.strings import connect_panel
-from dzgui.strings.options import api_placeholder, api_validate
-from dzgui.strings.errors import api_popover
+from dzgui.strings import connect_panel, errors, options
 
 import gi
 
@@ -144,7 +142,7 @@ class APIEntry(Gtk.Box):
         self.func: Callable[[str], None] | None = None
 
         self.entry = Gtk.Entry(
-            width_chars=60, hexpand=True, placeholder_text=api_placeholder
+            width_chars=60, hexpand=True, placeholder_text=options.api_placeholder
         )
         self.entry.set_icon_from_icon_name(Gtk.EntryIconPosition.SECONDARY, ICON_VIEW_REVEAL)
         self.entry.set_icon_activatable(Gtk.EntryIconPosition.SECONDARY, True)
@@ -153,13 +151,13 @@ class APIEntry(Gtk.Box):
         self.entry.connect("icon-release", self._on_icon_release)
         self.entry.connect("activate", self._on_field_activated)
 
-        self.submit = Gtk.Button(label=api_validate)
+        self.submit = Gtk.Button(label=options.api_validate)
         self.submit.set_sensitive(False)
         self.submit.connect("clicked", self._on_submit)
 
         self.pop = Gtk.Popover()
         self.pop_label = Gtk.Label(
-            label=api_popover,
+            label=errors.api_popover,
             margin_start=10,
             margin_end=10,
         )

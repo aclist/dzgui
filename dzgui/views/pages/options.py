@@ -18,8 +18,7 @@ from dzgui.const.constants import (
 from dzgui.const.endpoints import STEAM_API_SETUP
 from dzgui.const.enum import Preferences, ServerTab
 from dzgui.const.icons import ICON_VIEW_CONCEAL, ICON_VIEW_REVEAL
-from dzgui.strings import errors
-from dzgui.strings import options
+from dzgui.strings import errors, options
 from dzgui.util import strings, css, open_links
 from dzgui.views.components.box import ShortHBox, VBox
 from dzgui.views.components.eventbox import InfoEventBox
@@ -289,12 +288,12 @@ class Options(ScrollableMixin, Gtk.ScrolledWindow):  # type: ignore
         self.steam_entry: Gtk.Entry
         self.pop: Gtk.Popover
 
-        self.steam = WebButton(label=strings.options.steam_web)
+        self.steam = WebButton(label=options.steam_web)
         self.steam.connect("clicked", self._on_link_button_clicked, STEAM_API_SETUP)
 
         self.steam_box = SteamSubmitField(controller)
         api_rows = [
-            [LeftLabel(strings.options.steam_placeholder), self.steam_box, self.steam],
+            [LeftLabel(options.steam_placeholder), self.steam_box, self.steam],
         ]
 
         self.player_box = NameSubmitField(controller)
@@ -304,13 +303,13 @@ class Options(ScrollableMixin, Gtk.ScrolledWindow):  # type: ignore
         self.flatpak_toggle = FlatpakToggleField(self.controller)
         self.fullscreen_toggle = ToggleField(
             self.controller,
-            strings.options.last_used,
-            strings.options.always_fs,
+            options.last_used,
+            options.always_fs,
             Preferences.WINDOW,
         )
 
         self.distance_toggle = ToggleField(
-            self.controller, strings.options.km, strings.options.mi, Preferences.DIST
+            self.controller, options.km, options.mi, Preferences.DIST
         )
 
         combo_store = Gtk.ListStore(str, object)
@@ -332,10 +331,10 @@ class Options(ScrollableMixin, Gtk.ScrolledWindow):  # type: ignore
         self.start_tab_combo.connect("changed", self._on_start_tab_changed)
 
         pref_rows = [
-            [LeftLabel(strings.options.window_size), self.fullscreen_toggle],
-            [LeftLabel(strings.options.distance), self.distance_toggle],
+            [LeftLabel(options.window_size), self.fullscreen_toggle],
+            [LeftLabel(options.distance), self.distance_toggle],
             [LeftLabel(options.start_tab), start_tab_hbox],
-            [LeftLabel(strings.options.name), self.player_box],
+            [LeftLabel(options.name), self.player_box],
         ]
         default = self.controller.query_config(Preferences.DEFAULT)
         if FLATPAK_STEAM_PATH in default:
@@ -377,16 +376,16 @@ class Options(ScrollableMixin, Gtk.ScrolledWindow):  # type: ignore
             grid.attach(developers, 1, 0, self.DEFAULT_WIDTH, self.DEFAULT_HEIGHT)
 
         for pair in [
-            (api_box, strings.options.api_key),
-            (prefs_grid, strings.options.prefs),
-            (version_grid, strings.options.version),
+            (api_box, options.api_key),
+            (prefs_grid, options.prefs),
+            (version_grid, options.version),
         ]:
 
             frame = HeadingFrame.new_with_widget_and_label(*pair)
             grid.attach(frame, col, row, self.DEFAULT_WIDTH, self.DEFAULT_HEIGHT)
             row += 1
 
-        label = Gtk.Label(label=strings.options.header)
+        label = Gtk.Label(label=options.header)
         label.set_halign(Gtk.Align.CENTER)
         css.add_class(label, "page-heading")
 
